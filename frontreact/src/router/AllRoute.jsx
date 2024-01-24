@@ -1,9 +1,11 @@
-import HomePage from "./Home"
+// import HomePage from "../components/Home"
+import Nav from "../reuseable/Navbar"
 
 
 function RouterList(){
    return (
-    <HomePage/>
+    <Nav/>
    )
 }
 export default RouterList;
+
