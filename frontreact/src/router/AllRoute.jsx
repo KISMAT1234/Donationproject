@@ -1,6 +1,7 @@
 import HomePage from "../components/Home"
 import Nav from "../reuseable/Navbar"
-import Login from "../components/Login"
+// import Login from "../components/Login"
+import Signup from "../components/Signup"
 
 
 function RouterList(){
@@ -12,7 +13,8 @@ function RouterList(){
       </Routes> */}
     <Nav/>
     <HomePage/>
-    <Login/>
+    {/* <Login/> */}
+    <Signup/>
     </>
 
    )
