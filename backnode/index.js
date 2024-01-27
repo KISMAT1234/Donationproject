@@ -11,8 +11,11 @@ exp.get('/',(req,res)=>{
 
 const port= process.env.PORT 
 
+const httpServer = process.env.SERVER
+
+
 exp.listen(port,()=>{
-    console.log(`Server running at port ${port}`);
+    console.log(`Server running at port ${httpServer}:${port}`);
 })
 
 
