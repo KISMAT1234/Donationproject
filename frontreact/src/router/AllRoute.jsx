@@ -1,5 +1,5 @@
 // import HomePage from "../components/beforelogin/Home"
-// import Nav from "../reuseable/Navbar"
+import Nav from "../reuseable/Navbar"
 // import Login from "../components/Login"
 // import Signup from "../components/beforelogin/Signup"
 import Post from "../components/afterlogin/Post"
@@ -13,8 +13,8 @@ function RouterList(){
          
       </Routes> */}
       <Post/>
-    {/* <Nav/>
-    <HomePage/> */}
+    <Nav/>
+    {/* <HomePage/> */}
     {/* <Login/> */}
     {/* <Signup/> */}
     </>
