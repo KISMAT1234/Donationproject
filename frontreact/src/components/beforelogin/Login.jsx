@@ -1,6 +1,8 @@
+import Nav from "./Navbar"
 function Login(){
     return (
         <>
+        <Nav/>
         <form>
             <div className="border-4 border-red-400 w-[90%] h-[70vh] mx-[10px] my-[20px] rounded-2xl bg-green-400">
                <h1 className="text-center text-6xl">Login Form</h1><br></br>

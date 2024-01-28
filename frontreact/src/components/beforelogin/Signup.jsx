@@ -1,6 +1,8 @@
+import Nav from "./Navbar"
 function Signup(){
   return(
     <>
+    <Nav/>
     <div className="border-2 border-green-400 h-[80vh] w-[80%] bg-red-600 ">
       <form>
         <input type=""  className=" border-b-2 border-blue-600 w-[80%] text-3xl  mx-10 mt-4" placeholder="First Name"/><br></br><br></br>
