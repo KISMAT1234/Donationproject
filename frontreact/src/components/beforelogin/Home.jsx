@@ -2,7 +2,16 @@
 import { Link } from 'react-router-dom';
 import Nav from "./Navbar"
 import image from './ride.jpg'
+import axios from "axios";
+
+
 function HomePage(){
+    axios.get('http://localhost:8000/user').then((res)=>{
+      console.log(res.data);
+    }).catch((err)=>{
+      console.log(err);
+    })
+  
  return(
    <>
    <Nav/>

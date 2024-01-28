@@ -1,7 +1,9 @@
 import express from "express"
-import dotenv from 'dotenv';
+import dotenv from 'dotenv'
+import cors from  'cors'
+import mainRouter from './src/router/mainRouter.js'
 import Database from './src/connection/databaseconn.js'
-import  mainRouter from './src/router/mainRouter.js'
+
 dotenv.config();
 
 const exp= express();
@@ -9,6 +11,8 @@ const exp= express();
 exp.use(express.json())
 
 exp.use(mainRouter);
+
+exp.use(cors());
 
 exp.get('/',(req,res)=>{
     res.send("hello world");

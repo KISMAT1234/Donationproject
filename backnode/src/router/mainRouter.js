@@ -3,7 +3,7 @@ import express from 'express'
 
 const mainRouter= express.Router();
 
-mainRouter.use('/user-profile',userRouter)
+mainRouter.use('/user',userRouter);
 
 export default mainRouter;
 
