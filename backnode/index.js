@@ -1,10 +1,14 @@
 import express from "express"
 import dotenv from 'dotenv';
 import Database from './src/connection/databaseconn.js'
-
+import  mainRouter from './src/router/mainRouter.js'
 dotenv.config();
 
 const exp= express();
+
+exp.use(express.json())
+
+exp.use(mainRouter);
 
 exp.get('/',(req,res)=>{
     res.send("hello world");
