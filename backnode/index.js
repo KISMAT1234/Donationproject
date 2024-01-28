@@ -1,5 +1,6 @@
 import express from "express"
 import dotenv from 'dotenv';
+import Database from './src/connection/databaseconn.js'
 
 dotenv.config();
 
@@ -8,6 +9,9 @@ const exp= express();
 exp.get('/',(req,res)=>{
     res.send("hello world");
 })
+
+Database();
+
 
 const port= process.env.PORT 
 
