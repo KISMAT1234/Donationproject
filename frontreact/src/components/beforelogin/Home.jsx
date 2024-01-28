@@ -1,10 +1,12 @@
 // import ".../App.css"
 // import React from 'react';
 // import {Link } from 'react-router-dom';
+import Nav from "./Navbar"
 import image from './ride.jpg'
 function HomePage(){
  return(
    <>
+   <Nav/>
     <div>
       <div>
        <img src={image} alt="" />
