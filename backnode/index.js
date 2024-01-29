@@ -4,15 +4,19 @@ import cors from  'cors'
 import mainRouter from './src/router/mainRouter.js'
 import Database from './src/connection/databaseconn.js'
 
+
 dotenv.config();
 
 const exp= express();
 
 exp.use(express.json())
 
+
 exp.use(mainRouter);
 
 exp.use(cors());
+
+
 
 exp.get('/',(req,res)=>{
     res.send("hello world");

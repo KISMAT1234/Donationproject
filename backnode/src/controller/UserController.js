@@ -5,7 +5,7 @@ class UserController{
                 "username":"admin",
                 "password":'123456'
             }]
-            return res.status(400).json(data);
+            return res.status(200).json(data);
         }
 }
 

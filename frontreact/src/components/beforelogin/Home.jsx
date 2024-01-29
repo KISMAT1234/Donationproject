@@ -1,8 +1,8 @@
 // import React from 'react';
 import { Link } from 'react-router-dom';
 import Nav from "./Navbar"
-import image from './ride.jpg'
-import axios from "axios";
+import image from '../image/ride.jpg'
+import axios from 'axios';
 
 
 function HomePage(){
