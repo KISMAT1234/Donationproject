@@ -1,3 +1,4 @@
+// before LoginPage
 import HomePage from "../components/beforelogin/Home"
 import {Routes, Route} from "react-router-dom"
 import AboutPage from "../components/beforelogin/About"
@@ -6,9 +7,13 @@ import Event from "../components/beforelogin/Event"
 import Contact from "../components/beforelogin/Contact"
 import Signup from "../components/beforelogin/Signup"
 import Login from "../components/beforelogin/Login"
-// import Login from "../components/Login"
-// import Signup from "../components/beforelogin/Signup"
-// import Post from "../components/afterlogin/Post"
+
+import LoginMiddleware from "../middleware/LoginMiddleware"
+
+// After Login Page
+import Mainpage from "../components/afterlogin/Mainpage";
+
+
 
 
 function RouterList(){
@@ -24,6 +29,14 @@ function RouterList(){
 
          <Route path="/signup-form" element={<Signup/>}/>
          <Route path="/login-form" element={<Login/>}/>
+
+
+         {/* Middleware */}
+         <Route path="Mainpage" element={<LoginMiddleware/>}>
+
+             <Route path="/Mainpage" element={<Mainpage/>}/>
+
+         </Route>
 
        </Routes>
   
