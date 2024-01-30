@@ -33,11 +33,11 @@ function RouterList(){
 
 
 
-         {/* <Route path="Mainpage" element={<LoginMiddleware/>}>
+         <Route path="Mainpage" element={<LoginMiddleware/>}>
 
              <Route path="/Mainpage" element={<Mainpage/>}/>
 
-         </Route> */}
+         </Route>
 
        </Routes>
  
