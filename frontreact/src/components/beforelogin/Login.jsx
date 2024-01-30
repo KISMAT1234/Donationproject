@@ -19,6 +19,7 @@ function Login(){
     
       const unReload = (e) => {
         e.preventDefault();
+        localStorage.setItem("token", kismatislove);
       }
     return (
         <>

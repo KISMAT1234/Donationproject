@@ -8,10 +8,16 @@ function  Mainpage(){
   return (
     <>
     <Topbar/>
-    <div className="flex">
+    <div className="sm:flex sm:flex-wrap">
+        <div className="hidden sm:block">
         <Leftbar/>
+        </div>
+        <div className="">
         <Centercontent/>
+        </div>
+        <div className="hidden sm:block">
         <Rightbar/>
+        </div>
     </div>
 
 

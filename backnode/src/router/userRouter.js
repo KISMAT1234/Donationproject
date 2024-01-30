@@ -1,6 +1,6 @@
 import express from 'express'
 import UserController from "../controller/UserController.js"
-import FileUpload from "../Allfile/Upload.js";
+import FileUpload from "../multerfile/Upload.js";
 
 const userRouter = express.Router();
 

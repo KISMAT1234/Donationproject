@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
-import bcrypt from "bcrypt";
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
+dotenv.config();
 
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true },
@@ -50,6 +53,17 @@ userSchema.methods.toJSON = function () {
     }
     delete obj.password;
     return obj;
+}
+
+userSchema.methods.generateToken = function(){
+    let obj = {
+        id: this._id,
+        name: this.name,
+        // role: this.role,
+    }
+    const token = jwt.sign(obj, process.env.JWT_SECRET);
+    console.log(token);
+    return token;
 }
 
 

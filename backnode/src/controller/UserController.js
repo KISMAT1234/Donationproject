@@ -1,7 +1,5 @@
 import User from "../model/User.js";
 
-
-
 class UserController{
 
     async index(req,res){
@@ -21,6 +19,16 @@ class UserController{
             return res.status(201).json(data);
         }catch(err){
             return res.status(500).json(err);
+        }
+    }
+
+    async login(req,res){
+        try{
+         
+
+            
+        }catch(err){
+           return  res.send.status(200).json(err)
         }
     }
 }
