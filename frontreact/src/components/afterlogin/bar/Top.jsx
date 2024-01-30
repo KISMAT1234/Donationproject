@@ -1,15 +1,15 @@
 function Topbar() {
    return(
     <>
-       <div className="">
+       <div className="bg-green-400 h-[10vh]  flex justify-between">
            
            <div className="">
               <h1>image</h1>
            </div>
 
            <div className="">
-               <h1 className="">DONATE CLOTHES</h1>
-               <h1>SAVE LIFE</h1>
+               <h1 className="">DONATE CLOTHES SAVELIFE</h1>
+            
            </div>
 
            <div className="">
