@@ -48,6 +48,7 @@ function Signup(){
         {errors.confirmpassword?.message && <a style ={errorColor}> <p>{errors.confirmpassword?.message}</p></a>}
         </div>
         <input type="password" {...register('confirmpassword')} name="confirmpassword" className=" border-b-2 border-blue-600 w-[80%] text-3xl  mx-10 mt-4" placeholder="Confirm Password"/>
+        <input type="file" name="image" placeholder="profile photo"/>
         <button className="hover:bg-orange-600 bg-green-900  w-[70%] text-3xl  mx-10 mt-4 text-amber-50"> Signup </button>
         <Link to="/login-form">
         <button className="hover:bg-orange-600 bg-green-900  w-[70%] text-3xl text-amber-50 mx-10 mt-4"> Login </button>

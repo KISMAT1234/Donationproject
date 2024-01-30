@@ -6,6 +6,7 @@ const userRouter = express.Router();
 const routerInstance = new UserController();
 
 userRouter.get('/',routerInstance.index)
+userRouter.post('/',routerInstance.store)
 
 
 
