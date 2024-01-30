@@ -8,6 +8,7 @@ import Contact from "../components/beforelogin/Contact"
 import Signup from "../components/beforelogin/Signup"
 import Login from "../components/beforelogin/Login"
 
+
 import LoginMiddleware from "../middleware/LoginMiddleware"
 
 // After Login Page
@@ -31,15 +32,15 @@ function RouterList(){
          <Route path="/login-form" element={<Login/>}/>
 
 
-         {/* Middleware */}
-         <Route path="Mainpage" element={<LoginMiddleware/>}>
+
+         {/* <Route path="Mainpage" element={<LoginMiddleware/>}>
 
              <Route path="/Mainpage" element={<Mainpage/>}/>
 
-         </Route>
+         </Route> */}
 
        </Routes>
-  
+ 
 
     </>
 
