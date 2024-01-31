@@ -5,7 +5,7 @@ const loginRouter = express.Router();
 const loginInstance = new LoginController();
 
 loginRouter.post('/', loginInstance.login);
-// loginRouter.get('/tokenmatch', loginInstance.tokenMatch);
+loginRouter.get('/tokenmatch', loginInstance.tokenMatch);
 
 
 

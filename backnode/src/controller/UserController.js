@@ -1,10 +1,35 @@
 import User from "../model/Userprofile.js";
+import TokenVerify from "../middleware/TokenVerify.js";
+
 
 class UserController{
 
     async index(req,res){
-           const data= await User.find({});
-            return res.status(200).json(data);
+        let token = req.headers.authorization;
+        token = token.split(' ')[1];
+        if(token){
+            let response = TokenVerify.verifyToken(token);
+            if(response){
+                let role = response.role;
+                if(role === "admin"){
+                    let users = await User.find({});
+                    return res.status(200).json(users);
+                }else{
+                    let user = await User.findById(response.id);
+                    let users = [];
+                    users.push(user);
+                    return res.status(200).json(users);
+                }
+            }else{
+                return res.status(200).json({
+                    error: "Token is not valid"
+                });
+            }
+        }else{
+            return res.status(200).json({
+                error: "No token found"
+            });
+        }
         }
     
     async store(req,res){
