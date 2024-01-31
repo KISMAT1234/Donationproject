@@ -16,8 +16,9 @@ const userSchema = new mongoose.Schema({
     // },
     image:{type:String}
 
+},{
+versionKey: false,
 });
-
 
 // hashing  the password before saving it to database
 userSchema.pre("save", async function(next){
@@ -48,7 +49,8 @@ userSchema.methods.toJSON = function () {
     console.log(obj);
     if (obj.image) {
         obj.image = process.env.BASE_URL + "/uploads/users/" + obj.image;
-    }else{
+    }
+    else{
         obj.image = process.env.BASE_URL + "/uploads/icons/user.jpg";
     }
     delete obj.password;

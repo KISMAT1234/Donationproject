@@ -16,7 +16,7 @@ const Signupschema = yup.object().shape({
 
 function Signup(){
 
-  const { register,  reset,  handleSubmit, formState: {errors} } = useForm({
+  const {setValue, register,  reset,  handleSubmit, formState: {errors} } = useForm({
     resolver: yupResolver(Signupschema),
   });
   
@@ -24,8 +24,18 @@ function Signup(){
     color:"white"
   }
 
+
+
   const unReload = (data) => {
-    axiosUrl.post("/user", data).then((response)=>{
+
+    let sendData = new FormData();
+    sendData.append("username", data.username);
+    sendData.append("email", data.email);
+    sendData.append("password", data.password);
+    sendData.append("gender", data.gender);
+    sendData.append("image", data.image);
+
+    axiosUrl.post("/user", sendData).then((response)=>{
       alert('register succesfull')
       console.log(response.data);
         reset();
@@ -55,7 +65,7 @@ function Signup(){
         {errors.confirmpassword?.message && <a style ={errorColor}> <p>{errors.confirmpassword?.message}</p></a>}
         </div>
         <input type="password" {...register('confirmpassword')} name="confirmpassword" className=" border-b-2 border-blue-600 w-[80%] text-3xl  mx-10 mt-4" placeholder="Confirm Password"/>
-        <input type="file" className="mx-10 mt-4 text-2xl" name="image" placeholder="profile photo"/>
+        <input type="file" className="mx-10 mt-4 text-2xl" name="image" placeholder="profile photo" onChange={(e)=>{setValue("image", e.target.files[0])}}/>
         <button className="hover:bg-orange-600 bg-green-900  w-[70%] text-3xl  mx-10 mt-4 text-amber-50"> Signup </button>
         <Link to="/login-form">
         <button className="hover:bg-orange-600 bg-green-900  w-[70%] text-3xl text-amber-50 mx-10 mt-4"> Login </button>
