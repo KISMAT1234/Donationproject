@@ -8,14 +8,14 @@ function  Mainpage(){
   return (
     <>
     <Topbar/>
-    <div className="sm:flex sm:flex-wrap">
-        <div className="hidden sm:block">
+    <div className="grid  md:grid-cols-3 sm:grid-cols-2 gap-4">
+        <div className="hidden sm:block ">
         <Leftbar/>
         </div>
-        <div className="">
+        <div className=" ">
         <Centercontent/>
         </div>
-        <div className="hidden sm:block">
+        <div className="hidden md:block">
         <Rightbar/>
         </div>
     </div>

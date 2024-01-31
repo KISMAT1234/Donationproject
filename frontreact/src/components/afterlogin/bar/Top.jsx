@@ -1,7 +1,7 @@
 function Topbar() {
    return(
     <>
-       <div className="bg-green-400 h-[10vh]  sm:flex sm:justify-between">
+       <div className="bg-green-400 h-[10vh]  sm:flex sm:justify-between ">
            
            <div className="hidden sm:block">
               <h1>image</h1>
