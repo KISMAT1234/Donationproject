@@ -2,6 +2,9 @@ import Nav from "./Navbar"
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import axiosUrl from "../url/Axiosurl";
+
+
 
 const Signupschema = yup.object().shape({
     email: yup.string().required().email(),
@@ -10,7 +13,7 @@ const Signupschema = yup.object().shape({
 
 function Login(){
 
-    const { register, handleSubmit, formState: {errors} } = useForm({
+    const { register,setError,reset, handleSubmit, formState: {errors} } = useForm({
         resolver: yupResolver(Signupschema),
       });
       
@@ -18,9 +21,23 @@ function Login(){
         color:"white"
       }
     
-      const unReload = (e) => {
-        e.preventDefault();
-        localStorage.setItem("token", kismatislove);
+      const unReload = (data) => {
+        axiosUrl.post("/login", data).then((response)=>{
+          if(response.data.notfound){
+            setError("email", {type: "manual", message: response.data.notfound});
+          }
+          else if(response.data.incorrect){
+              setError("password", {type: "manual", message: response.data.incorrect});
+          } 
+          else{
+                localStorage.setItem("token", response.data.token);
+               reset();
+               window.location.href="/Mainpage";
+           }
+         }).catch((err)=>{
+          console.log(err);
+        })
+
       }
     return (
         <>

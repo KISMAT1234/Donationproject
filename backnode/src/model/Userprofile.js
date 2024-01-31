@@ -43,7 +43,7 @@ userSchema.methods.comparePassword = async function(password){
     }
 }
 
-// removing only password  on toJSON method so it will not be visible when we send the response of a particular user
+//showing image url in /user and removing only password  on toJSON method so it will not be visible when we send the response of a particular user
 userSchema.methods.toJSON = function () {
     let obj = this.toObject();
     console.log(obj);
@@ -57,6 +57,7 @@ userSchema.methods.toJSON = function () {
     return obj;
 }
 
+// generating token 
 userSchema.methods.generateToken = function(){
     let obj = {
         id: this._id,
@@ -64,7 +65,6 @@ userSchema.methods.generateToken = function(){
         // role: this.role,
     }
     const token = jwt.sign(obj, process.env.JWT_SECRET);
-    console.log(token);
     return token;
 }
 

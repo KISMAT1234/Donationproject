@@ -32,7 +32,6 @@ function Signup(){
     sendData.append("username", data.username);
     sendData.append("email", data.email);
     sendData.append("password", data.password);
-    sendData.append("gender", data.gender);
     sendData.append("image", data.image);
 
     axiosUrl.post("/user", sendData).then((response)=>{
