@@ -15,11 +15,11 @@ class UserController{
                 }
                 const user = new User({...req.body,image:imageName});      
                 const data= await user.save();
-                console.log(hashedPassword);
-            return res.status(201).json(data);
-        }catch(err){
-            return res.status(500).json(err);
-        }
+                return res.status(201).json(data);
+            }
+            catch(err){
+                 return res.status(500).json(err);
+            }
     }
 
     async login(req,res){

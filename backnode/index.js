@@ -11,10 +11,10 @@ const exp= express();
 
 exp.use(express.json())
 
+exp.use(cors());
 
 exp.use(mainRouter);
 
-exp.use(cors());
 
 
 
