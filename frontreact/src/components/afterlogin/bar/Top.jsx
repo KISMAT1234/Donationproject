@@ -14,7 +14,7 @@ function Topbar() {
 
            <div className="hidden sm:block">
               <input type="text" className="" placeholder="Search Items Here"/>
-           </div>
+           </div> 
 
        </div>
        

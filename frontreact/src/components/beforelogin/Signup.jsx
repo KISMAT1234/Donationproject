@@ -3,6 +3,7 @@ import {Link } from "react-router-dom"
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import axiosUrl from "../url/Axiosurl";
 
 const Signupschema = yup.object().shape({
     username: yup.string().required(),
@@ -25,8 +26,11 @@ function Signup(){
 
   const unReload = (e) => {
     e.preventDefault();
-    
-    
+    axiosUrl.post("/login",data).then((response)=>{
+        console.log(response.data);
+    }).catch((err)=>{
+      console.log(err);
+    })
   }
 
   return(
@@ -54,9 +58,7 @@ function Signup(){
         <button className="hover:bg-orange-600 bg-green-900  w-[70%] text-3xl  mx-10 mt-4 text-amber-50"> Signup </button>
         <Link to="/login-form">
         <button className="hover:bg-orange-600 bg-green-900  w-[70%] text-3xl text-amber-50 mx-10 mt-4"> Login </button>
-        </Link>
-    
-        
+        </Link>    
       </form>
       
     </div>
