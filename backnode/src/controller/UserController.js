@@ -6,7 +6,7 @@ class UserController{
 
     async index(req,res){
         let token = req.headers.authorization;
-        token = token.split(' ')[1];
+        // token = token.split('')[1];
         if(token){
             let response = TokenVerify.verifyToken(token);
             if(response){

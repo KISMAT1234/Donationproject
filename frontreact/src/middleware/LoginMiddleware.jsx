@@ -31,15 +31,13 @@ function LoginMiddleware(){
 
     if(loading){
         return(
-             setTimeout(()=>{   
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12 text-center">
-                            <h1>Loading...</h1>
-                        </div>
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-12 text-center">
+                        <h1>Loading...</h1>
                     </div>
                 </div>
-             },3000)   
+            </div>
         );
     }else{
         if(isLogin){

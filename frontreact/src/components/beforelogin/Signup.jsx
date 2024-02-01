@@ -47,6 +47,7 @@ function Signup(){
     <>
     <Nav/>
     <div className="border-2 border-green-400 h-[100vh] w-[100%] bg-red-600 ">
+    <h1 className="text-6xl text-blue-400 font-bold ml-10 mt-2 mb-5" >SIGNUP FORM</h1>
       <form onSubmit={handleSubmit(unReload)}>
         <div className="mx-10 text-2xl font-thin">
         {errors.username?.message && <a style ={errorColor}> <p>{errors.username?.message}</p></a>}
