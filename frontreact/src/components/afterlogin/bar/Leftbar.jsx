@@ -15,7 +15,7 @@ function  Leftbar(){
 
         <div className="sm:mx-[5%] my-3 sm:text-4xl sm:mt-5px font-bold text-xl hover:text-blue-900 ">
            <button className="">
-             <Link to ="/" clasnmae="">Upload</Link>
+             <Link to ="/upload" clasnmae="">Upload</Link>
            </button>
         </div>
 

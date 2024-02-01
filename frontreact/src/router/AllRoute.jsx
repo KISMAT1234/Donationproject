@@ -14,6 +14,7 @@ import LoginMiddleware from "../middleware/LoginMiddleware"
 // After Login Page
 import Mainpage from "../components/afterlogin/Mainpage";
 import MemberList from "../components/afterlogin/Members"
+import Uploadcontent from "../components/afterlogin/Upload"
 
 
 
@@ -33,11 +34,13 @@ function RouterList(){
          <Route path="/signup-form" element={<Signup/>}/>
          <Route path="/login-form" element={<Login/>}/>
 
+
+         <Route path="upload" element={<Uploadcontent/>}/>
+
          <Route path="Mainpage" element={<LoginMiddleware/>}>
 
              <Route path="/Mainpage" element={<Mainpage/>}/>
-             {/* <Route path="/members-list" element={<MemberList/>}/> */}
-             
+             <Route path="members-list" element={<MemberList/>}/>
 
          </Route>
 

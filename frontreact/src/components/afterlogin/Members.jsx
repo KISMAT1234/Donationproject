@@ -37,26 +37,26 @@ function MemberList(){
 
               
        
-        // <main id="main" className="main">
-        //     <section className="section dashboard">
-        //       <div className="row">
-        //         <div className="col-md-12">
-        //           <div className="card">
-        //             <div className="card-body">
-        //               <h1 className="mt-3 mb-3" >Show Users</h1>
-        //               {loading ? (<div>Loading...</div>) : <div>
-        //               <table className="table table-hover">
-        //                     <thead>
-        //                     <tr>
-        //                         <th>Id</th>
-        //                         <th>Name</th>
-        //                         <th>Email</th>
-        //                         <th>Gender</th>
-        //                         <th>Image</th>
-        //                     </tr>
-        //                     </thead>
-        //                     <tbody>
-        //                     {
+          <main id="main" className="main">
+            <section className="section dashboard">
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="card">
+                    <div className="card-body">
+                      <h1 className="mt-3 mb-3" >Show Users</h1>
+                      {loading ? (<div>Loading...</div>) : <div>
+                      <table className="table table-hover">
+                            <thead>
+                            <tr>
+                                  <th>Id</th>
+                                  <th>Name</th>
+                                  <th>Email</th>
+                                  <th>Gender</th>
+                                  <th>Image</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {
                            users && users.map((user,index)=>(
                                 <tr key={index}>
                                 <td>{++index}</td>
@@ -81,10 +81,6 @@ function MemberList(){
                     </div>
                   </div>
                 </div>
-
-
-                
-              
               </div>
             </section>
           </main>
