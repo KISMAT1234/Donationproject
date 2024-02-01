@@ -12,6 +12,8 @@ const routerInstance = new UserController();
 
 userRouter.get('/',routerInstance.index)
 userRouter.post('/', upload.single('image'), routerInstance.store)
+userRouter.get('/loginuser', routerInstance.loginuser);
+
 
 
 

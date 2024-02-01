@@ -6,7 +6,7 @@ class UserController{
 
     async index(req,res){
         let token = req.headers.authorization;
-        // token = token.split('')[1];
+        token = token.split('')[1];
         if(token){
             let response = TokenVerify.verifyToken(token);
             if(response){
@@ -47,14 +47,25 @@ class UserController{
             }
     }
 
-    async login(req,res){
-        try{
-         
-
-            
-        }catch(err){
-           return  res.send.status(200).json(err)
+    async loginuser(req, res){
+        let token = req.headers.authorization;
+        token = token.split(' ')[1];
+        if(token){
+            let response = TokenVerify.verifyToken(token);
+            if(response){
+               let user = await User.findById(response.id);
+               return res.status(200).json(user);
+            }else{
+                return res.status(200).json({
+                    error: "Token is not valid"
+                });
+            }
+        }else{
+            return res.status(200).json({
+                error: "No token found"
+            });
         }
+
     }
 }
 

@@ -1,21 +1,47 @@
-import logo from "./logo.jpg"
+import logo from "../../image/logo.jpg"
+import React,{useEffect, useState} from "react";
+import axiosUrl from "../../url/Axiosurl";
 
 function Topbar() {
+   let token=localStorage.getItem("token") ?? "";
+
+   const [user,setUser]=useState({});
+
+   useEffect(()=>{
+     const getUser=async ()=>{
+       axiosUrl.get("/user/loginuser",{
+         headers:{
+             Authorization: `Bearer ${token}`
+         }
+       }).then((response)=>{
+         console.log(response.data)
+         setUser(response.data);
+          }).catch((err)=>{
+         console.log(err);
+         })
+     }
+ 
+     getUser();
+ 
+   },[]);
+
+
    return(
     <>
-       <div className="bg-green-400 h-[10vh]  sm:flex sm:justify-between ">
+       <div className="bg-green-400 h-[10vh] flex sm:flex justify-between ">
            
-           <div className="hidden sm:block">
-           <img src={logo} className="w-[30%] my-[20px] "  alt="" />
+           <div className="w-[10%]">
+           <img src={logo} className="w-[100%] my-[px] "  alt="" />
            </div>
 
-           <div className="text-4xl">
-               <h1 className="">DONATE CLOTHES SAVELIFE</h1>
+           <div className="md:text-6xl sm:text-3xl md:font-thin text-xsm">
+               <h1 className="">DONATE CLOTHES SAVE LIFE</h1>
             
            </div>
 
-           <div className="hidden sm:block">
-              <input type="text" className="" placeholder="Search Items Here"/>
+           <div className="">
+              <input type="text" className="mt-2 mr-3 md:mr-10 " placeholder="Search Items Here"/>
+              <h1 className="font-mono text-xl">Welcome:{user.username}</h1>
            </div> 
 
        </div>
