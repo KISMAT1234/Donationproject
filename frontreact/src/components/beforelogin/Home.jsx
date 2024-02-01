@@ -1,7 +1,7 @@
 // import React from 'react';
 import { Link } from 'react-router-dom';
 import Nav from "./Navbar"
-import image from '../image/ride.jpg'
+import image from '../image/center.jpg'
 import axios from 'axios';
 
 
@@ -17,7 +17,9 @@ function HomePage(){
    <Nav/>
     <div>
       <div>
-       <img src={image}  alt="" />
+        <div className="sm:pl-[10%]">
+          <img src={image} classsName=" w-[100%] h-[70vh]"  alt="" />
+         </div>
        <hr></hr>
         <Link to="/signup-form">
        <button className="hover:bg-orange-600 bg-green-900  w-[70%] h-[10vh] text-3xl text-amber-50 mx-10 mt-4">Signup</button><br></br>
