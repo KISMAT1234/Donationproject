@@ -9,13 +9,13 @@ function  Mainpage(){
     <>
     <Topbar/>
     <div className="grid  md:grid-cols-3 sm:grid-cols-2 gap-4">
-        <div className="hidden sm:block ">
+        <div className=" ">
         <Leftbar/>
         </div>
         <div className=" ">
         <Centercontent/>
         </div>
-        <div className="hidden md:block">
+        <div className="">
         <Rightbar/>
         </div>
     </div>

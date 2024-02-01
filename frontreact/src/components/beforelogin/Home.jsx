@@ -29,8 +29,8 @@ function HomePage(){
        </Link>
       </div>
       <hr></hr>
-      <div>
-         <h1 className="text-7xl text-center mx-10 my-10">DONATE ANYTHING<br></br> FOR POOR <br></br> PEOPLE </h1>
+      <div className="bg-teal-600 hover:bg-violet-600 hover:text-slate-300 sm:h-[100vh] mt-[20px] sm:pt-[95px]">
+         <h1 className=" font-bold text-6xl sm:text-9xl text-center ">DONATE ANYTHING<br></br> FOR POOR <br></br> PEOPLE </h1>
       </div>
       <hr></hr>
       <div>
