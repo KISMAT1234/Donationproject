@@ -1,8 +1,9 @@
 function Uploadcontent (){
  return (
     <>
-       <h1>Uploads</h1>
-       <div className="border-4 border-red-600 bg-blue-400 h-[80vh]  ">
+       <div className="border-4 border-red-600 bg-blue-400 h-[80vh] p-5 ">
+        <form>
+          <h1 className="text-3xl">UPLOAD YOUR POST HERE</h1>
           <input type="file" className="w-[%]"/>
           <h1>description</h1>
           <input type="text" className=""/>
@@ -20,7 +21,8 @@ function Uploadcontent (){
                 <option value ='music'>Room</option>
             </select>
           </option>
-          
+          <button className="bg-green-700 text-2xl rounded w-[20%] h-[5vh]">Post</button>
+        </form>
        </div>
     </>
  )
