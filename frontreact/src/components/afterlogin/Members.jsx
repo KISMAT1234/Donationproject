@@ -53,6 +53,7 @@ function MemberList(){
                                   <th>Email</th>
                                   <th>Gender</th>
                                   <th>Image</th>
+                                  <th>ROle</th>
                               </tr>
                               </thead>
                               <tbody>
@@ -62,8 +63,10 @@ function MemberList(){
                                 <td>{++index}</td>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                {/* <td>{user.gender}</td> */}
+                                <td>{user.gender}</td>
                                 <td><img src={user.image} alt={user.name} width="100" /></td>
+                                <td>{user.role}</td>
+                                
                                 <td>
                                     <Link to="#" className="btn btn-success btn-sm">Edit</Link>
                                     <button className="btn btn-danger btn-sm">Delete</button>

@@ -4,7 +4,7 @@ import FileUpload from "../multerfile/Upload.js";
 
 const userRouter = express.Router();
 
-
+                                                                                                                                                                                                  
 const fpInstance = new FileUpload()
 let upload = fpInstance.custom_upload("uploads/users")
 

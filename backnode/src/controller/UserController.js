@@ -6,6 +6,7 @@ class UserController{
 
     async index(req,res){
         let token = req.headers.authorization;
+        console.log(token)
         token = token.split(' ')[1];
         if(token){
             let response = TokenVerify.verifyToken(token);
@@ -49,6 +50,7 @@ class UserController{
 
     async loginuser(req, res){
         let token = req.headers.authorization;
+        console.log(token)
         token = token.split(' ')[1];
         if(token){
             let response = TokenVerify.verifyToken(token);

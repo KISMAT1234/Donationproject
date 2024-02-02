@@ -10,6 +10,8 @@ const Signupschema = yup.object().shape({
     email: yup.string().required().email(),
     password: yup.string().required(),
     confirmpassword: yup.string().required().oneOf([yup.ref('password'),null],'password not match'),
+    gender: yup.string().required(),
+  
   })
   .required();
 
@@ -33,6 +35,7 @@ function Signup(){
     sendData.append("email", data.email);
     sendData.append("password", data.password);
     sendData.append("image", data.image);
+    sendData.append("gender", data.gender);
 
     axiosUrl.post("/user", sendData).then((response)=>{
       alert('register succesfull')
@@ -46,7 +49,7 @@ function Signup(){
   return(
     <>
     <Nav/>
-    <div className="border-2 border-green-400 h-[100vh] w-[100%] bg-red-600 ">
+    <div className="border-2 border-green-400 h-[120vh] w-[100%] bg-red-600 ">
     <h1 className="text-6xl text-blue-400 font-bold ml-10 mt-2 mb-5" >SIGNUP FORM</h1>
       <form onSubmit={handleSubmit(unReload)}>
         <div className="mx-10 text-2xl font-thin">
@@ -66,10 +69,24 @@ function Signup(){
         </div>
         <input type="password" {...register('confirmpassword')} name="confirmpassword" className=" border-b-2 border-blue-600 w-[80%] text-3xl  mx-10 mt-4" placeholder="Confirm Password"/>
         <input type="file" className="mx-10 mt-4 text-2xl" name="image" placeholder="profile photo" onChange={(e)=>{setValue("image", e.target.files[0])}}/>
-        <button className="hover:bg-orange-600 bg-green-900  w-[70%] text-3xl  mx-10 mt-4 text-amber-50"> Signup </button>
-        <Link to="/login-form">
-        <button className="hover:bg-orange-600 bg-green-900  w-[70%] text-3xl text-amber-50 mx-10 mt-4"> Login </button>
-        </Link>    
+
+        <div className="">
+           <label htmlFor="gender" className="md:text-4xl text-2xl mx-10 mt-4">Gender:
+               {errors.gender && <a style={errorColor}>{errors.gender.message}</a>}
+           </label> <br/>
+           <label> <input type="radio" className="ml-10 mt-4 text-4xl"
+                          {...register("gender")}
+                          name="gender" value="male"/> Male </label>
+           <label> <input type="radio"
+                          {...register("gender")}
+                          name="gender" value="female"/> Female </label>
+         </div>
+        <div className="flex justify-between">
+           <button className="hover:bg-orange-600 bg-green-900  w-[30%] text-3xl mx-10 mt-4 text-amber-50"> Signup </button>
+           <Link to="/login-form">
+           <button className="hover:bg-orange-600 bg-green-900  w-[70%] text-3xl mr-40 text-amber-50  mt-4"> Login </button>
+           </Link>
+         </div>      
       </form>
       
     </div>
