@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axiosUrl from "../url/Axiosurl";
-
+import {Link} from "react-router-dom";
 
 
 const Signupschema = yup.object().shape({
@@ -53,7 +53,10 @@ function Login(){
                {errors.password?.message && <a style ={errorColor}> {errors.password?.message}</a>}
                </label><br></br>
                <input type="password" {...register("password")} name="password" className="h-[7vh] w-[70%] rounded-xl text-2xl mx-[2%] my-[2px]"/><br></br>
-               <button className="border-4 border-orange-600 h-[10vh] w-[70%] mx-[2%] mt-[6%] text-4xl  rounded-4xl hover:bg-orange-600">Login</button>
+               <button className="border-4 border-orange-600 h-[10vh] w-[70%] mx-[2%] mt-[4%] text-4xl  rounded-4xl hover:bg-orange-600">Login</button>
+               <Link to="/signup-form">
+               <button className="border-4 border-orange-600 h-[10vh] w-[70%] mx-[2%] mt-[2%] text-4xl  rounded-4xl hover:bg-orange-600">Signup</button>
+               </Link>
             </div>
         </form>
         </>

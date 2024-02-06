@@ -6,7 +6,6 @@ class UserController{
 
     async index(req,res){
         let token = req.headers.authorization;
-        console.log(token)
         token = token.split(' ')[1];
         if(token){
             let response = TokenVerify.verifyToken(token);
@@ -48,27 +47,27 @@ class UserController{
             }
     }
 
-    async loginuser(req, res){
-        let token = req.headers.authorization;
-        console.log(token)
-        token = token.split(' ')[1];
-        if(token){
-            let response = TokenVerify.verifyToken(token);
-            if(response){
-               let user = await User.findById(response.id);
-               return res.status(200).json(user);
-            }else{
-                return res.status(200).json({
-                    error: "Token is not valid"
-                });
-            }
-        }else{
-            return res.status(200).json({
-                error: "No token found"
-            });
-        }
+    // async loginuser(req, res){
+    //     let token = req.headers.authorization;
+    //     console.log(token)
+    //     token = token.split(' ')[1];
+    //     if(token){
+    //         let response = TokenVerify.verifyToken(token);
+    //         if(response){
+    //            let user = await User.findById(response.id);
+    //            return res.status(200).json(user);
+    //         }else{
+    //             return res.status(200).json({
+    //                 error: "Token is not valid"
+    //             });
+    //         }
+    //     }else{
+    //         return res.status(200).json({
+    //             error: "No token found"
+    //         });
+    //     }
 
-    }
+    // }
 }
 
 export default UserController;

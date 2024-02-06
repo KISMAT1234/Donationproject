@@ -39,7 +39,6 @@ function Signup(){
 
     axiosUrl.post("/user", sendData).then((response)=>{
       alert('register succesfull')
-      console.log(response.data);
         reset();
     }).catch((err)=>{
       console.log(err);
