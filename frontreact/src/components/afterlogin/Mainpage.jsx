@@ -12,12 +12,12 @@ function  Mainpage(){
         <div className=" ">
         <Leftbar/>
         </div>
-        <div className=" ">
+        {/* <div className=" ">
         <Centercontent/>
         </div>
         <div className="">
         <Rightbar/>
-        </div>
+        </div> */}
     </div>
 
 

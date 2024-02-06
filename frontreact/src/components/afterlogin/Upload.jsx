@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import axiosUrl from "../url/Axiosurl";
 import Topbar from "./bar/Top";
+import Leftbar from "./bar/Leftbar"
 
 const Uploadschema = yup.object().shape({
     username: yup.string().required(),
@@ -52,6 +53,9 @@ function Upload(){
   return(
     <>
     <Topbar/>
+    <div className="md:flex">
+
+    <Leftbar/>
     <div className="border-2 border-green-400 h-[120vh] w-[100%] bg-violet-900 ">
     <h1 className="text-6xl text-blue-400 font-bold ml-10 mt-2 mb-5" >Post Form</h1>
       <form onSubmit={handleSubmit(unReload)}>
@@ -83,6 +87,7 @@ function Upload(){
         </div>
       </form>
       
+    </div>
     </div>
     </>
   )
