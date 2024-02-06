@@ -42,7 +42,7 @@ function RouterList(){
              <Route path="/Mainpage" element={<Mainpage/>}/>
              <Route path="members-list" element={<MemberList/>}/>
              <Route path="content" element={<Content/>}/>
-           <Route path="upload" element={<Uploadcontent/>}/>
+            <Route path="upload" element={<Uploadcontent/>}/>
   
 
          </Route>

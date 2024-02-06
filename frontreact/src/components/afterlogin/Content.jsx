@@ -1,25 +1,23 @@
+import React,{useState, useEffect} from "react"
 import axiosUrl from "../url/Axiosurl";
 
 function Content(){
 
     const [content,setContent]=useState([]);
+    const [loading,setLoading]=useState([]);
     
     useEffect(()=>{
         const getContent=async ()=>{
-          axiosUrl.get("/upload",{
-            headers:{
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>{
-          // console.log(response.data);
-            setUsers(response.data);
+          axiosUrl.get("/upload").then((response)=>{
+          console.log(response.data);
+            setContent(response.data);
               setLoading(false);
         }).catch((err)=>{
             console.log(err);
         
         })
         }
-    
+
         getContent();
     
       },[]);

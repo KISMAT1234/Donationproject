@@ -2,36 +2,37 @@ import Upload from "../model/Upload.js";
 
 class UploadController{
 
-    // async index(req, res){
-    //     try{
-    //         let newsData = await Upload.aggregate([
-    //             {
-    //                 $lookup:{
-    //                     from:"categories",
-    //                     localField:"categories_id",
-    //                     foreignField: "_id",
-    //                     as :"categories"
-    //                 }
-    //             },
-    //             {
-    //                 $unwind:"$category"
-    //             }
-    //         ]);
+    async index(req, res){
+        try{
+            let uploadData = await Upload.aggregate([
+                {
+                    $lookup:{
+                        from:"categories",
+                        localField:"categories_id",
+                        foreignField: "_id",
+                        as :"categories"
+                    }
+                },
+                {
+                    $unwind:"$category"
+                }
+            ]);
 
-    //         newsData= newsData.map((news) => {
-    //           if(news.image){
-    //             news.image = process.env.BASE_URL + "/uploads/news" + news.image;              
-    //         }else{
-    //             news.image = process.env.BASE_URL + "/uploads/icons/hope-hostal-about.jpg";             
+            uploadData= uploadData.map((news) => {
+              if(news.image){
+                news.image = process.env.BASE_URL + "/uploads/news" + news.image;              
+            }else{
+                news.image = process.env.BASE_URL + "/uploads/icons/hope-hostal-about.jpg";             
                
-    //         }
-    //         return newsData;
-    //     })
-    //         res.status(200).json(newsData);
-    //     }catch(err){
-    //         res.send(err);
-    //     }
-    // }
+            }
+            console.log(uploadData)
+            return uploadData;
+        })
+            res.status(200).json(uploadData);
+        }catch(err){
+            res.send(err);
+        }
+    }
 
     // async show(req, res){
     //     try{
