@@ -38,7 +38,8 @@ function Signup(){
     sendData.append("gender", data.gender);
 
     axiosUrl.post("/user", sendData).then((response)=>{
-      alert('register succesfull')
+      alert(`${response.data.message}`);
+      // alert('register succesfull')
         reset();
     }).catch((err)=>{
       console.log(err);

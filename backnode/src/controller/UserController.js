@@ -38,8 +38,13 @@ class UserController{
                     imageName = req.file.filename;
                 }
                 const user = new User({...req.body,image:imageName});      
-                const data= await user.save();
-                return res.status(201).json(data);
+                 await user.save();
+                 const sendData={
+                    "message":"User Created Successfully",
+                    "success":true,
+                }
+
+                return res.status(201).json(sendData);
             }
             catch(err){
                  return res.status(500).json(err);

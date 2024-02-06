@@ -12,13 +12,21 @@ const uploadSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    quantity:{
-     type: Number, 
+    username:{
+        type:String,
+        required:true,
     },
-    image:{
-        type: String,
+    location:{
+        type:String,
+        requires:true
+    },
+    quantity:{
+     type: Number
     },
     description:{
+        type: String,
+    },
+    image:{
         type: String,
     },
 
