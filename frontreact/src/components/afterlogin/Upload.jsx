@@ -9,9 +9,9 @@ const Uploadschema = yup.object().shape({
     username: yup.string().required(),
     location: yup.string().required(),
     quantity: yup.string().required(),
+    slug: yup.string().required(),
     description: yup.string().required(),
-    image: yup.mixed().required()
-  
+    image: yup.mixed(),
   })
   .required();
 
@@ -29,21 +29,25 @@ function Upload(){
 
 
   const unReload = (data) => {
-
     let sendData = new FormData();
     sendData.append("username", data.username);
     sendData.append("location", data.location);
     sendData.append("quantity", data.quantity);
+    sendData.append("slug", data.slug);
     sendData.append("description", data.description);
     sendData.append("image", data.image);
 
     axiosUrl.post("/upload", sendData).then((response)=>{
+     if(response.data.success){
       alert('register succesfull')
         reset();
+     } else{
+      console.log(response.data);
+    }
     }).catch((err)=>{
       console.log(err);
     })
-  }
+  };
 
   return(
     <>
@@ -62,7 +66,11 @@ function Upload(){
         <div className="mx-10 text-2xl font-thin">
         {errors.quantity?.message && <a style ={errorColor}> <p>{errors.quantity?.message}</p></a>}
         </div>
-        <input type="text" {...register("quantity")} name="quantity" className=" border-b-2 border-blue-600 w-[80%] text-3xl  mx-10 mt-4" placeholder="quantity"/>
+        <input type="number" {...register("quantity")} name="quantity" className=" border-b-2 border-blue-600 w-[80%] text-3xl  mx-10 mt-4" placeholder="quantity"/>
+         <div className="mx-10 text-2xl font-thin">
+        {errors.slug?.message && <a style ={errorColor}> <p>{errors.slug?.message}</p></a>}
+        </div>
+        <input type="text" {...register("slug")}  name="slug" className=" mt-2 border-b-2 border-blue-900 w-[80%] text-3xl  mx-10" placeholder=" UserName " />
         <div className="mx-10 text-2xl font-thin">
         {errors.description?.message && <a style ={errorColor}> <p>{errors.description?.message}</p></a>}
         </div>

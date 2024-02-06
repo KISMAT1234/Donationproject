@@ -55,9 +55,9 @@ class UploadController{
             if(req.file){
                 imageName= req.file.filename;
             }
-            // console.log(req.body);
-            const news  = new Upload({...req.body,image:imageName});
-            await news.save();
+            const post  = new Upload({...req.body,image:imageName});
+            console.log(post)
+            await post.save();
             const sendData={
                 "message":"News Created Successfully", 
                 "success":true,

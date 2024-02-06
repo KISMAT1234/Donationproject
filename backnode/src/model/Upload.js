@@ -7,11 +7,7 @@ const uploadSchema = new mongoose.Schema({
     //     ref: "Category",
     //     required: true,
     // },
-    slug:{
-        type: String,
-        required: true,
-        unique: true,
-    },
+ 
     username:{
         type:String,
         required:true,
@@ -21,13 +17,21 @@ const uploadSchema = new mongoose.Schema({
         requires:true
     },
     quantity:{
-     type: Number
+     type: Number,
+     requires:true
+    },
+    slug:{
+        type: String,
+   
     },
     description:{
         type: String,
+     requires:true
+
     },
     image:{
         type: String,
+
     },
 
        
