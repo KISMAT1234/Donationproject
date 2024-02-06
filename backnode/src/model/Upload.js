@@ -2,15 +2,18 @@ import mongoose from "mongoose";
 import slugify from "slugify";
 
 const uploadSchema = new mongoose.Schema({
-    category_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Category",
-        required: true,
-    },
+    // category_id: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Category",
+    //     required: true,
+    // },
     slug:{
         type: String,
         required: true,
         unique: true,
+    },
+    quantity:{
+     type: Number, 
     },
     image:{
         type: String,

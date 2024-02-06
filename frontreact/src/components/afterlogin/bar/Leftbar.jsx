@@ -9,7 +9,7 @@ function  Leftbar(){
         </div>
             <div className="sm:mx-[5%] my-3 sm:text-4xl sm:mt-5px font-bold text-xl hover:text-blue-900 ">
              <button className="">
-               <Link to ="/">Items</Link>
+               <Link to ="/">Category</Link>
             </button>
         </div>
 

@@ -25,7 +25,7 @@ class UploadController{
                 news.image = process.env.BASE_URL + "/uploads/icons/hope-hostal-about.jpg";             
                
             }
-            return news;
+            return newsData;
         })
             res.status(200).json(newsData);
         }catch(err){
@@ -44,7 +44,8 @@ class UploadController{
             }
             res.status(200).json(news);
         }catch(err){
-            res.send(err);
+            return res.status(500).json(err);
+
         }
     }
 
