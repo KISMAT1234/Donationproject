@@ -1,30 +1,30 @@
 import {Link} from "react-router-dom";
 function  Leftbar(){
     return <>
-     <div className=" rounded-2xl border-2 md:w-[15%] mt-[20px]  border-red-500 h-[8vh] sm:h-[80vh] justify-between flex sm:block">
-        <div className="sm:mx-[5%] my-3 sm:text-4xl sm:mt-5px font-bold text-xl hover:text-blue-900 ">
+     <div className=" rounded-2xl border-2 md:w-[15%] mt-[20px]  border-red-500 h-[8vh] md:h-[80vh] justify-between flex md:block">
+        <div className="md:mx-[5%] my-3 md:text-4xl md:mt-5px font-bold text-xl hover:text-blue-900 ">
            <button className="">
               <Link to ="/Mainpage">Content</Link>
            </button>
         </div>
-            <div className="sm:mx-[5%] my-3 sm:text-4xl sm:mt-5px font-bold text-xl hover:text-blue-900 ">
+            <div className="md:mx-[5%] my-3 md:text-4xl md:mt-5px font-bold text-xl hover:text-blue-900 ">
              <button className="">
                <Link to ="/">Category</Link>
             </button>
         </div>
 
-        <div className="sm:mx-[5%] text-green-500 my-3 sm:text-4xl sm:mt-5px font-bold text-xl  ">
+        <div className="md:mx-[5%] text-green-500 my-3 md:text-4xl md:mt-5px font-bold text-xl  ">
            <button className="">
              <Link to ="/Mainpage/upload" clasnmae="">Upload</Link>
            </button>
         </div>
 
-        <div className="sm:mx-[5%] my-3 sm:text-4xl sm:mt-5px font-bold text-xl hover:text-blue-900 ">
+        <div className="md:mx-[5%] my-3 md:text-4xl md:mt-5px font-bold text-xl hover:text-blue-900 ">
             <button className="">
                <Link to ="/Mainpage/members-list">Member</Link>
             </button>
         </div>
-        <div className="sm:mx-[5%] my-3 sm:text-4xl sm:mt-5px font-bold text-xl hover:text-blue-900 ">
+        <div className="md:mx-[5%] my-3 md:text-4xl md:mt-5px font-bold text-xl hover:text-blue-900 ">
             <button className="">
                <Link to ="/">Rightbar</Link>
             </button>
