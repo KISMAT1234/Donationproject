@@ -1,5 +1,12 @@
 import {Link} from "react-router-dom";
 function  Leftbar(){
+
+const logOut = () => {
+   localStorage.clear()
+   window.location.href="/"
+}
+
+
     return <>
      <div className=" rounded-2xl border-2 md:w-[15%] mt-[20px]  border-red-500 h-[8vh] md:h-[80vh] justify-between flex md:block">
         <div className="md:mx-[5%] my-3 md:text-4xl md:mt-5px font-bold text-xl hover:text-blue-900 ">
@@ -25,8 +32,8 @@ function  Leftbar(){
             </button>
         </div>
         <div className="md:mx-[5%] my-3 md:text-4xl md:mt-5px font-bold text-xl hover:text-blue-900 ">
-            <button className="">
-               <Link to ="/">Rightbar</Link>
+            <button className="" onClick={logOut}>
+               Logout
             </button>
         </div>
          

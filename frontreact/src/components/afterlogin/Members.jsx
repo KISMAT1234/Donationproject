@@ -18,7 +18,7 @@ function MemberList(){
               Authorization: `Bearer ${token}`
           }
       }).then((response)=>{
-        // console.log(response.data);
+        console.log(response.data);
           setUsers(response.data);
             setLoading(false);
       }).catch((err)=>{
