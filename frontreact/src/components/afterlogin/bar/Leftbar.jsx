@@ -4,7 +4,7 @@ function  Leftbar(){
      <div className=" rounded-2xl border-2 md:w-[15%] mt-[20px]  border-red-500 h-[8vh] sm:h-[80vh] justify-between flex sm:block">
         <div className="sm:mx-[5%] my-3 sm:text-4xl sm:mt-5px font-bold text-xl hover:text-blue-900 ">
            <button className="">
-              <Link to ="/Mainpage/content">Content</Link>
+              <Link to ="/Mainpage">Content</Link>
            </button>
         </div>
             <div className="sm:mx-[5%] my-3 sm:text-4xl sm:mt-5px font-bold text-xl hover:text-blue-900 ">
