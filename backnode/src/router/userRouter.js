@@ -6,6 +6,7 @@ const userRouter = express.Router();
 const routerInstance = new UserController();
 
 userRouter.post('/', routerInstance.store)
+userRouter.get('/', routerInstance.getUser)
 
 
 
