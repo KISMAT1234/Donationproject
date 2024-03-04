@@ -34,8 +34,8 @@ function Topbar() {
            <img src={logo} className="w-[100%] my-[px] "  alt="" />
            </div>
 
-           <div className="md:text-6xl sm:text-3xl md:font-thin text-xsm">
-               <h1 className="">DONATE CLOTHES SAVE LIFE</h1>
+           <div className=" md:font-thin ">
+               <h1 className="">DONATE ANYTHING YOU WANT</h1>
             
            </div>
 

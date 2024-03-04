@@ -6,19 +6,14 @@ import { Link } from "react-router-dom";
 
 function MemberList(){
   
-    let token=localStorage.getItem("token") ?? "";
 
     const [loading, setLoading] = useState(true);
     const [users,setUsers]=useState({});
 
     useEffect(()=>{
       const getUser=async ()=>{
-        axiosUrl.get("/user",{
-          headers:{
-              Authorization: `Bearer ${token}`
-          }
-      }).then((response)=>{
-        console.log(response.data);
+        axiosUrl.get("/user").then((response)=>{
+        console.log(response);
           setUsers(response.data);
             setLoading(false);
       }).catch((err)=>{
@@ -26,10 +21,8 @@ function MemberList(){
       
       })
       }
-  
       getUser();
-  
-    },[]);
+  },[]);
 
     return(
         
@@ -52,25 +45,19 @@ function MemberList(){
                                   <th>Id</th>
                                   <th>Name</th>
                                   <th>Email</th>
-                                  <th>Gender</th>
-                                  <th>Image</th>
-                                  <th>ROle</th>
+                                   <th>Action</th>
                               </tr>
                               </thead>
                               <tbody>
-                              {
-                           users && users.map((user,index)=>(
+                              { users.map((user,index)=>(
                                 <tr key={index}>
                                 <td>{++index}</td>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
-                                <td>{user.gender}</td>
-                                <td><img src={user.image} alt={user.name} width="100" /></td>
-                                <td>{user.role}</td>
                                 
                                 <td>
-                                    <Link to="#" className="btn btn-success btn-sm">Edit</Link>
-                                    <button className="btn btn-danger btn-sm">Delete</button>
+                                    <Link to="#" className="bg-green-600   rounded-xl h-20 mx-10  text-2xl">Edit</Link>
+                                    <button className="bg-red-500 text-2xl rounded-xl h-10 ">Delete</button>
                                 </td>
                             </tr>
                             ))
