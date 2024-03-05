@@ -32,12 +32,8 @@ function Content(){
     return (
         <>
         <Topbar/>
-    <div className="md:flex md:justify-between">
-        <div className="">
+  
         <Leftbar/>
-        </div>
-       
-     </div>
           
 
 

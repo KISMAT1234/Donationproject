@@ -1,8 +1,4 @@
 
-
-
-
-
 import Nav from "./Navbar"
 import axiosUrl from "../url/Axiosurl";
 import React, { useState } from 'react';
@@ -62,52 +58,15 @@ const App = () => {
     })
   };
 
-  
-  const onSubmit = (data) =>{
-    console.log(data);
-  }
 
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
-  const suffixSelector = (
-    <Form.Item name="suffix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="USD">$</Option>
-        <Option value="CNY">¥</Option>
-      </Select>
-    </Form.Item>
-  );
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-  const onWebsiteChange = (value) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(['.com', '.org', '.net'].map((domain) => `${value}${domain}`));
-    }
-  };
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website,
-  }));
+
+
+
+
   return (
     <>
     <Nav/>
     <Form
-    onSubmit={handleSubmit(onSubmit)}
     className="mt-10"
       {...formItemLayout}
       form={form}
@@ -209,7 +168,7 @@ const App = () => {
         </Checkbox>
       </Form.Item>
       <Form.Item {...tailFormItemLayout}>
-        <Button className="bg-violet-600" type="primary" htmlType="submit">
+        <Button className="bg-violet-600 h"  type="primary" htmlType="submit">
           Register
         </Button>
       </Form.Item>
