@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import React from 'react'
-import image from '../image/donate.jpg'
 import logo from '../image/logo.jpg'
 
 function Nav(){

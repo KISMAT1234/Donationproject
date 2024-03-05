@@ -50,6 +50,13 @@
 //     //     }
 //     // }
 
+
+
+
+
+
+
+
 //     async store(req, res){
 //         try{
 //             let imageName="";

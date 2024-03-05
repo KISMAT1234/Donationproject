@@ -1,7 +1,7 @@
 // import React from 'react';
 import { Link } from 'react-router-dom';
 import Nav from "./Navbar"
-import image from '../image/center.jpg'
+import image from '../image/donate.jpg'
 import axios from 'axios';
 
 
@@ -16,9 +16,15 @@ function HomePage(){
    <>
    <Nav/>
    <div>
-    <div>
-        <div className="sm:pl-[10%]">
-          <img src={image} classsName=" w-[100%] h-[70vh]"  alt="" />
+    <div className="flex">
+        <div className="">
+          <img src={image} classsName=" w-[1%] h-[100vh]"  alt="" />
+         </div>
+         <div className="ml-10">
+          <img src={image} classsName=" w-[1%] h-[100vh]"  alt="" />
+         </div>
+         <div className="ml-10">
+          <img src={image} classsName=" w-[1%] h-[100vh]"  alt="" />
          </div>
        <hr></hr>
     </div>

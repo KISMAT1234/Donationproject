@@ -10,6 +10,7 @@ class UserController{
               return res.status(500).json(err)
         } 
     }
+    
     async store(req,res){
         try{
                 // let imageName="";
@@ -17,6 +18,7 @@ class UserController{
                 //     imageName = req.file.filename;
                 // }
                 const user = new User({...req.body});  
+                console.log(user,req.body,'jijij ');
                 await user.save();
                 return res.status(201).json(user);
             }
