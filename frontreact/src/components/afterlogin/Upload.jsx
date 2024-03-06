@@ -28,8 +28,19 @@ const validateMessages = {
 /* eslint-enable no-template-curly-in-string */
 
 const onFinish = (values) => {
-  console.log(values);
+  const data = values.user
+  console.log('Received values of form: ', data);
+
+  axiosUrl.post("/upload",data).then((response)=>{
+    if(response){
+      alert("datasend successfull");
+    }
+  }).catch((err)=>{
+    console.log(err);
+  })
 };
+
+
 const App = () => (
   <>
   <Topbar/>
@@ -56,18 +67,19 @@ const App = () => (
     >
       <Input />
     </Form.Item>
+
     <Form.Item
-      name={['user', 'email']}
-      label="Email"
+      name={['user', 'address']}
+      label="Address"
       rules={[
         {
-          type: 'email',
           required: true,
         },
       ]}
     >
       <Input />
     </Form.Item>
+  
     <Form.Item
       name={['user', 'age']}
       label="Age"
@@ -81,12 +93,11 @@ const App = () => (
     >
       <InputNumber />
     </Form.Item>
-    <Form.Item name={['user', 'website']} label="Website">
-      <Input />
-    </Form.Item>
-    <Form.Item name={['user', 'introduction']} label="Introduction">
-      <Input.TextArea />
-    </Form.Item>
+        <Form.Item name={['user', 'description']} label="Description">
+        <Input.TextArea />
+      </Form.Item>
+ 
+  
     <Form.Item
       wrapperCol={{
         ...layout.wrapperCol,
