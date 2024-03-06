@@ -8,10 +8,7 @@ const userSchema = new mongoose.Schema({
     username: { type: String },
     email:{type: String},
     password :{type:String},
-    // gender:{
-    //     type:String,
-    //     enum:["Male","Female"],
-    // },
+
   
 
 },{
@@ -19,6 +16,7 @@ versionKey: false,
 });
 
 // hashing  the password before saving it to database
+
 userSchema.pre("save", async function(next){
     try{
         if(this.isModified("password")){

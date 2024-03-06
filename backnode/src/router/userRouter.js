@@ -8,8 +8,4 @@ const routerInstance = new UserController();
 userRouter.post('/', routerInstance.store)
 userRouter.get('/', routerInstance.getUser)
 
-
-
-
-
 export default userRouter;
