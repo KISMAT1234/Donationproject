@@ -12,7 +12,8 @@ function MemberList(){
     const [loading, setLoading] = useState(true);
     const [users,setUsers]=useState({});
 
-    useEffect(()=>{
+      useEffect(()=>{
+
       const getUser=async ()=>{
         axiosUrl.get("/user").then((response)=>{
         console.log(response);
@@ -24,7 +25,9 @@ function MemberList(){
       })
       }
       getUser();
-  },[]);
+    })
+
+
 
     return(
         <>
