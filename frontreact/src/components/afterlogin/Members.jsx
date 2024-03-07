@@ -34,14 +34,15 @@ function MemberList(){
         <Topbar/>
         <div className="md:flex"> 
           <Leftbar/>
-          <h1>Members</h1>
-            <main id="main" className="main">
+            <main id="main" className="main mt-5">
               <section className="section dashboard">
                 <div className="row">
                   <div className="col-md-12">
                     <div className="card">
                       <div className="card-body">
-                        {loading ? (<div>Loading...</div>) : <div>
+                        {loading ? (<div>Loading...</div>) : 
+                        
+                        <div className="border-2  px-5 py-5 shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)]">
                         <table className="table table-hover">
                               <thead>
                               <tr>
