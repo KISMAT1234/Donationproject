@@ -47,7 +47,7 @@ const App = () => (
   <div className="md:flex ">
   <Leftbar/>
   <Form
-  className="mt-10 md:ml-10"
+  className="mt-5 px-5 py-5 md:ml-10 shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)]"
     {...layout}
     name="nest-messages"
     onFinish={onFinish}
