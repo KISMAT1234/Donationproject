@@ -8,7 +8,6 @@ const uploadSchema = new mongoose.Schema({
     address:{type: String},
     age :{type:Number},
     description:{type:String},
- 
 },{
 versionKey: false,
 });
