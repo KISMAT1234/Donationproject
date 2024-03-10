@@ -30,7 +30,9 @@ function Content(){
      },[])
 
 
-    const onSubmit = () =>{
+    const onSubmit = (content) =>{
+      console.log(content);
+
       alert("added to favourite");
     }
 

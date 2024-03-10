@@ -14,6 +14,7 @@ import LoginMiddleware from "../middleware/LoginMiddleware"
 // After Login Page
 import Mainpage from "../components/afterlogin/Mainpage";
 import MemberList from "../components/afterlogin/Members"
+import Favourites from "../components/afterlogin/Favourites"
 import Uploadcontent from "../components/afterlogin/Upload"
 
 
@@ -39,7 +40,7 @@ function RouterList(){
          <Route path="Mainpage" element={<LoginMiddleware/>}>
              <Route path="/Mainpage" element={<Mainpage/>}/>
              <Route path="members-list" element={<MemberList/>}/>
-             {/* <Route path="content" element={<Content/>}/> */}
+             <Route path="favourites" element={<Favourites/>}/>
             <Route path="upload" element={<Uploadcontent/>}/>
   
 
