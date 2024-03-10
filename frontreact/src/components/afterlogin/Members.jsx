@@ -3,6 +3,8 @@ import axiosUrl from "../url/Axiosurl";
 import { Link } from "react-router-dom";
 import Topbar from "./bar/Top";
 import Leftbar from "./bar/Leftbar"
+import member from "../image/member.jpg"
+
 
 
 
@@ -34,6 +36,7 @@ function MemberList(){
         <Topbar/>
         <div className="md:flex"> 
           <Leftbar/>
+          <div className="md:flex">
             <main id="main" className="main mt-5">
               <section className="section dashboard">
                 <div className="row">
@@ -79,6 +82,10 @@ function MemberList(){
                 </div>
               </section>
             </main>
+            <div>
+              <img src={member} className="w-[600px] m-[20px]"/>
+            </div>
+            </div>
          </div>   
         </>
         )

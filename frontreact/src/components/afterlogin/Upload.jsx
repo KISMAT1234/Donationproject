@@ -1,10 +1,9 @@
-
-
 import axiosUrl from "../url/Axiosurl";
 import Topbar from "./bar/Top";
 import Leftbar from "./bar/Leftbar"
 import React from 'react';
 import { Button, Form, Input, InputNumber } from 'antd';
+import post from "../image/post.jpg"
 const layout = {
   labelCol: {
     span: 8,
@@ -46,8 +45,9 @@ const App = () => (
   <Topbar/>
   <div className="md:flex ">
   <Leftbar/>
+  <div className="md:flex w-[100%]">
   <Form
-  className="mt-5 px-5 py-5 md:ml-10 shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)]"
+  className="mt-5 py-5 md:w-[40%] shadow-[0_10px_20px_rgba(240,_46,_170,_0.7)]"
     {...layout}
     name="nest-messages"
     onFinish={onFinish}
@@ -109,6 +109,10 @@ const App = () => (
       </Button>
     </Form.Item>
   </Form>
+  <div className="">
+      <img src={post} className="w-[600px] m-[20px]"/>
+    </div>
+  </div>
   </div>
   </>
 );
