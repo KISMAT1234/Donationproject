@@ -1,11 +1,16 @@
 import express from 'express'
 import UploadController from "../controller/UploadController.js"
+import FileUpload from '../multerfile/Upload.js';
+
 
 const uploadRouter = express.Router();
 
+let fPInstance = new FileUpload();
+let upload = fPInstance.custom_upload("uploads/posts")
+
 const routerInstance = new UploadController();
 
-uploadRouter.post('/', routerInstance.insert)
+uploadRouter.post('/',upload.single('image'), routerInstance.insert)
 uploadRouter.get('/', routerInstance.content)
 
 export default uploadRouter;
