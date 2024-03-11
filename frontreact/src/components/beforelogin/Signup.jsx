@@ -1,4 +1,3 @@
-
 import Nav from "./Navbar"
 import axiosUrl from "../url/Axiosurl";
 import React, { useState } from 'react';
@@ -48,7 +47,6 @@ const tailFormItemLayout = {
 };
 const App = () => {
   const [form] = Form.useForm();
-
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
     axiosUrl.post("/user",values).then((response)=>{

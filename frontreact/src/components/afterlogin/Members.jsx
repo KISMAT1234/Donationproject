@@ -63,7 +63,7 @@ function MemberList(){
                                   <td>{user.email}</td>
                                   
                                   <td>
-                                      <Link to="#" className="bg-green-600   rounded-xl h-20 mx-10  text-2xl">Edit</Link>
+                                      <Link to="#" className="bg-green-600   rounded-xl h-20 mx-5  text-2xl">Edit</Link>
                                       <button className="bg-red-500 text-2xl rounded-xl h-10 ">Delete</button>
                                   </td>
                               </tr>
@@ -83,7 +83,7 @@ function MemberList(){
               </section>
             </main>
             <div>
-              <img src={member} className="w-[600px] m-[20px]"/>
+              <img src={member} className="w-[500px] m-[20px]"/>
             </div>
             </div>
          </div>   

@@ -16,7 +16,7 @@ const logOut = () => {
         </div>
             <div className="md:mx-[5%] my-3 md:text-4xl md:mt-5px font-bold text-xl hover:text-blue-900 ">
              <button className="">
-               <Link to ="/Mainpage/favourites">Favourites</Link>
+               <Link to ="/Mainpage/favouriteswe">Favourites</Link>
             </button>
         </div>
 

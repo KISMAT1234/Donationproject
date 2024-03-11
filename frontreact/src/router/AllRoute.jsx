@@ -42,8 +42,6 @@ function RouterList(){
              <Route path="members-list" element={<MemberList/>}/>
              <Route path="favourites" element={<Favourites/>}/>
             <Route path="upload" element={<Uploadcontent/>}/>
-  
-
          </Route>
 
        </Routes>
