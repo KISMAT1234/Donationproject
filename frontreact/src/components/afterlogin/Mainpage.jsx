@@ -51,6 +51,7 @@ function Content(){
                    <div>{data.address}</div>
                    <div>{data.age}</div>
                    <div>{data.description}</div>
+                   <td><img src={data.image} width="100" /></td>
                    <button onClick={onSubmit} className="mt-5 ">
                      <img src={save} className="h-[5vh]"/>
                    </button>
