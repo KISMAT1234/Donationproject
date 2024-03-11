@@ -8,9 +8,19 @@ const uploadSchema = new mongoose.Schema({
     address:{type: String},
     age :{type:Number},
     description:{type:String},
+    image:String,
 },{
 versionKey: false,
 });
-
+uploadSchema.methods.toJSON = function () {
+    let obj = this.toObject();
+    if (obj.image) {
+        obj.image = process.env.BASE_URL + "/uploads/posts/" + obj.image;
+    }else{
+        obj.image = process.env.BASE_URL + "/uploads/icons/user.jpg";
+    }
+    delete obj.password;
+    return obj;
+}
 
 export default mongoose.model("Upload", uploadSchema);
