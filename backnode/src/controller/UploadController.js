@@ -5,8 +5,12 @@ class UploadController{
     
     async insert(req,res){
         try{
+                let imageName="";
+                if(req.file){
+                    imageName= req.file.filename;
+                }
                 // const user = new Upload({...req.body});  
-                const user =new Upload({...req.body});  
+                const user =new Upload({...req.body,image:imageName});  
                 console.log(user) 
                 await user.save();
                 return res.status(201).json(user);
