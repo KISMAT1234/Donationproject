@@ -2,7 +2,8 @@ import axiosUrl from "../url/Axiosurl";
 import Topbar from "./bar/Top";
 import Leftbar from "./bar/Leftbar"
 import React from 'react';
-import { Button, Form, Input, InputNumber } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Form, Input, InputNumber, Upload } from 'antd';
 import post from "../image/post.jpg"
 const layout = {
   labelCol: {
@@ -25,6 +26,13 @@ const validateMessages = {
   },
 };
 /* eslint-enable no-template-curly-in-string */
+
+const normFile = (e) => {
+  if (Array.isArray(e)) {
+    return e;
+  }
+  return e?.fileList;
+};
 
 const onFinish = (values) => {
   const data = values.user
@@ -104,10 +112,19 @@ const App = () => (
         offset: 8,
       }}
     >
-      <Button className="bg-red-600" type="primary" htmlType="submit">
+    </Form.Item>
+
+    <Form.Item label="Upload" valuePropName="fileList" getValueFromEvent={normFile}>
+      <Upload action="/upload.do" listType="picture-card">
+        <button style={{ border: 0, background: 'none' }} type="button">
+          <PlusOutlined />
+          <div style={{ marginTop: 8 }}>Upload</div>
+        </button>
+      </Upload>
+    </Form.Item>
+      <Button className="bg-red-600 flex ml-[50%]" type="primary" htmlType="submit">
         Submit
       </Button>
-    </Form.Item>
   </Form>
   <div className="">
       <img src={post} className="w-[600px] m-[20px]"/>
