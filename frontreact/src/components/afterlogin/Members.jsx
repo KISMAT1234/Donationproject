@@ -52,6 +52,7 @@ function MemberList(){
                                     <th>Id</th>
                                     <th>Name</th>
                                     <th>Email</th>
+                                    <th>Images</th>
                                      <th>Action</th>
                                 </tr>
                                 </thead>
@@ -61,6 +62,8 @@ function MemberList(){
                                   <td>{++index}</td>
                                   <td>{user.name}</td>
                                   <td>{user.email}</td>
+                                  <td>  <img src={user.image} width="100" /></td> 
+                                  <td></td>
                                   
                                   <td>
                                       <Link to="#" className="bg-green-600   rounded-xl h-20 mx-5  text-2xl">Edit</Link>

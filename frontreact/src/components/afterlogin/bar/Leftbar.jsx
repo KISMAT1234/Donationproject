@@ -20,7 +20,7 @@ const logOut = () => {
             </button>
         </div>
 
-        <div className="md:mx-[5%] text-green-500 my-3 md:text-4xl md:mt-5px font-bold text-xl  ">
+        <div className="md:mx-[5%] text-green-500 my-3 md:text-4xl md:mt-5px font-bold text-xl  px-2">
            <button className="">
              <Link to ="/Mainpage/upload" clasnmae="">Upload</Link>
            </button>
