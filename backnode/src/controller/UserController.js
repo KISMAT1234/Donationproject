@@ -15,6 +15,7 @@ class UserController{
         try{
                 const user = new User({...req.body}); 
                 await user.save();
+                console.log(user);
                 return res.status(201).json(data);
             }
             catch(err){
