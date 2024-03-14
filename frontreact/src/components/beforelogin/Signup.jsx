@@ -1,62 +1,83 @@
 import Nav from "./Navbar"
 import axiosUrl from "../url/Axiosurl";
 import React, { useState } from 'react';
+import { UploadOutlined } from '@ant-design/icons';
 import {
-  AutoComplete,
   Button,
-  Cascader,
-  Checkbox,
-  Col,
   Form,
   Input,
-  InputNumber,
-  Row,
-  Select,
+  Upload,
+  message
 } from 'antd';
 
-const { Option } = Select;
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 8,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 16,
-    },
-  },
-};
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-};
+
 const App = () => {
+
+  const formItemLayout = {
+    labelCol: {
+      xs: {
+        span: 24,
+      },
+      sm: {
+        span: 8,
+      },
+    },
+    wrapperCol: {
+      xs: {
+        span: 24,
+      },
+      sm: {
+        span: 16,
+      },
+    },
+  };
+  const tailFormItemLayout = {
+    wrapperCol: {
+      xs: {
+        span: 24,
+        offset: 0,
+      },
+      sm: {
+        span: 16,
+        offset: 8,
+      },
+    },
+  };
+
+
   const [form] = Form.useForm();
+  const [imageFile, setImageFile] = useState(null);
+
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
-    axiosUrl.post("/user",values).then((response)=>{
+    if (!imageFile) {
+      message.error('Please upload an image');
+      return;
+    }
+    // const values =  form.validateFields(); 
+    const formData = new FormData();
+    formData.append('username', values.username);
+    formData.append('email', values.email);
+    formData.append('password', values.password);
+    formData.append('confirmpassword', values.confirmpassword);
+    formData.append('image', imageFile);
+
+    console.log('data: ', formData);
+    axiosUrl.post("/user",formData).then((response)=>{
       alert("datasend successfull");
     }).catch((err)=>{
       console.log(err);
     })
-  };
+};
 
-
+const beforeUpload = (file) => {
+  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+  if (!isJpgOrPng) {
+    message.error('You can only upload JPG/PNG file!');
+  } else {
+    setImageFile(file);
+  }
+  return false; // Prevent automatic upload
+};
 
 
 
@@ -70,10 +91,6 @@ const App = () => {
       form={form}
       name="register"
       onFinish={onFinish}
-      initialValues={{
-        residence: ['zhejiang', 'hangzhou', 'xihu'],
-        prefix: '86',
-      }}
       style={{
         maxWidth: 600,
       }}
@@ -129,7 +146,7 @@ const App = () => {
       </Form.Item>
 
       <Form.Item
-        name="confirm"
+        name="confirmpassword"
         label="Confirm Password"
         dependencies={['password']}
         hasFeedback
@@ -150,21 +167,19 @@ const App = () => {
       >
         <Input.Password />
       </Form.Item>
-      <Form.Item
-        name="agreement"
-        valuePropName="checked"
-        rules={[
-          {
-            validator: (_, value) =>
-              value ? Promise.resolve() : Promise.reject(new Error('Should accept agreement')),
-          },
-        ]}
-        {...tailFormItemLayout}
-      >
-        <Checkbox>
-          I have read the <a href="">agreement</a>
-        </Checkbox>
-      </Form.Item>
+
+      <Form.Item name="image" label="Image">
+              <Upload
+                beforeUpload={beforeUpload}
+                maxCount={1}
+                listType="picture"
+                accept=".jpg,.jpeg,.png"
+                showUploadList={false}
+              >
+                <Button icon={<UploadOutlined />} className="bg-gray-400" >Click to upload</Button>
+              </Upload>
+        </Form.Item>
+
       <Form.Item {...tailFormItemLayout}>
         <Button className="bg-violet-600 h"  type="primary" htmlType="submit">
           Register
