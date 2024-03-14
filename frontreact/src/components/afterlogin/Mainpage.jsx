@@ -43,18 +43,30 @@ function Content(){
         <div className="md:flex">
            <Leftbar/>
     
-             {loading ? (<div>Loading content...</div>) : <div className="flex flex-wrap">
+             {loading ? (<div>Loading content...</div>) : <div className="sm:grid sm:grid-cols-2 md:grid-cols-3">
              {
-                content.map((data)=>(
-                  <div className="px-5 h-max ml-5 py-5 mt-5 shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
+                content.map((data,index)=>(
+                  <div className="md:w-[90%] h-[70vh] px-5 h-max ml-5 mr-5 py-5 mt-5 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
                    <div>{data.name}</div>
                    <div>{data.address}</div>
                    <div>{data.age}</div>
                    <div>{data.description}</div>
-                   <td><img src={data.image} width="100" /></td>
-                   <button onClick={onSubmit} className="mt-5 ">
-                     <img src={save} className="h-[5vh]"/>
-                   </button>
+                   <div className="">
+                       <img src={data.image} width="100" className="w-[90%]" />
+                    </div>
+                   <div className="mt-5 flex justify-between">
+                      <div>
+                         <button className="bg-green-500 h-[45px] text-2xl w-[120%] rounded hover:bg-red-600">
+                            Donate Now
+                         </button>
+                      </div>
+                      <div>
+                        <button onClick={onSubmit} className="">
+                          <img src={save} className="h-[5vh]"/>
+                        </button>
+                      </div>
+                   </div>
+                   
                    </div>
                 ))
              }
