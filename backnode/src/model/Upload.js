@@ -12,6 +12,7 @@ const uploadSchema = new mongoose.Schema({
 },{
 versionKey: false,
 });
+
 uploadSchema.methods.toJSON = function () {
     let obj = this.toObject();
     if (obj.image) {
