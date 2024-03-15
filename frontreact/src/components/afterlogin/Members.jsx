@@ -3,7 +3,6 @@ import axiosUrl from "../url/Axiosurl";
 import { Link } from "react-router-dom";
 import Topbar from "./bar/Top";
 import Leftbar from "./bar/Leftbar"
-import member from "../image/member.jpg"
 
 
 
@@ -36,59 +35,29 @@ function MemberList(){
         <Topbar/>
         <div className="md:flex"> 
           <Leftbar/>
-          <div className="md:flex">
-            <main id="main" className="main mt-5">
-              <section className="section dashboard">
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="card">
-                      <div className="card-body">
-                        {loading ? (<div>Loading...</div>) : 
-                        
-                        <div className="border-2  px-5 py-5 shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)]">
-                        <table className="table table-hover">
-                              <thead>
-                              <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Images</th>
-                                     <th>Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                { users.map((user,index)=>(
-                                  <tr key={index}>
-                                  <td>{++index}</td>
-                                  <td>{user.name}</td>
-                                  <td>{user.email}</td>
-                                  <td>  <img src={user.image} width="100" /></td> 
-                                  <td></td>
-                                  
-                                  <td>
-                                      <Link to="#" className="bg-green-600   rounded-xl h-20 mx-5  text-2xl">Edit</Link>
-                                      <button className="bg-red-500 text-2xl rounded-xl h-10 ">Delete</button>
-                                  </td>
-                              </tr>
-                              ))
-                              }
-                             
-                              
-                              </tbody>
-                          </table>
-                          
-                          </div>}
-                        
+          <div className="md:flex px-5 py-1 mx-5 my-5 shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)]">
+             {loading ? (<div>Loading...</div>) : 
+               <div className="">
+                  {
+                  users.map((data,index)=>(
+                    <div className="flex mt-10 justify-between"> 
+                      <div className="w-[40%] md:w-[20%] rounded-[50%] ">
+                        <img src={data.image} className="rounded-[50%] "/>
+                      </div>
+                      <div>{data.username}</div>
+                      <div>{data.email}</div>
+                      <div>
+                        <button class=" md:text-2xl bg-green-400 rounded-2xl px-3 py-2 hover:bg-green-600 hover:text-slate-100">Add Member</button>
                       </div>
                     </div>
-                  </div>
+
+                  ))
+                  }
                 </div>
-              </section>
-            </main>
-            <div>
-              <img src={member} className="w-[500px] m-[20px]"/>
-            </div>
-            </div>
+             
+             }
+              </div>
+              
          </div>   
         </>
         )
