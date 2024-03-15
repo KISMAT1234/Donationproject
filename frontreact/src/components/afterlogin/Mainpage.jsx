@@ -3,6 +3,8 @@ import axiosUrl from "../url/Axiosurl";
 import Topbar from "./bar/Top";
 import Leftbar from "./bar/Leftbar"
 import save from  '../image/save.gif'
+import { useDispatch } from 'react-redux'
+import {Star} from "../../slices/addSlice"
 
 
 
@@ -12,13 +14,14 @@ function Content(){
 
     const [loading, setLoading] = useState(true);
     const [content,setContent]=useState({});
+    const dispatch = useDispatch()
 
  
 
      useEffect(()=>{
       const getContent=async ()=>{
         axiosUrl.get("/upload").then((response)=>{
-        console.log(response);
+        // console.log(response);
           setContent(response.data);
             setLoading(false);
       }).catch((err)=>{
@@ -31,7 +34,11 @@ function Content(){
 
 
     const onSubmit = (content) =>{
-      console.log(content);
+      let data=[];
+      data.push(content);
+      // console.log(data);
+      dispatch(Star(data));
+
 
       alert("added to favourite");
     }
@@ -46,7 +53,7 @@ function Content(){
              {loading ? (<div>Loading content...</div>) : <div className="sm:grid sm:grid-cols-2 md:grid-cols-3">
              {
                 content.map((data,index)=>(
-                  <div className="md:w-[90%] h-[70vh] px-5 h-max ml-5 mr-5 py-5 mt-5 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
+                  <div key={index}  className="md:w-[90%] h-[70vh] px-5 h-max ml-5 mr-5 py-5 mt-5 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
                    <div>{data.name}</div>
                    <div>{data.address}</div>
                    <div>{data.age}</div>
@@ -61,7 +68,7 @@ function Content(){
                          </button>
                       </div>
                       <div>
-                        <button onClick={onSubmit} className="">
+                        <button onClick={()=>onSubmit(data)} className="">
                           <img src={save} className="h-[5vh]"/>
                         </button>
                       </div>
