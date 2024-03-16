@@ -1,10 +1,9 @@
 import React,{useEffect,useState,useRef} from "react";
 import axiosUrl from "../url/Axiosurl";
-import Topbar from "./bar/Top";
-import Leftbar from "./bar/Leftbar"
 import save from  '../image/save.gif'
 import { useDispatch } from 'react-redux'
 import {Star} from "../../slices/addSlice"
+import {Outlet} from "react-router-dom";
 
 
 
@@ -46,14 +45,12 @@ function Content(){
  
     return (
         <>
-        <Topbar/>
-        <div className="md:flex">
-           <Leftbar/>
     
-             {loading ? (<div>Loading content...</div>) : <div className="sm:grid sm:grid-cols-2 md:grid-cols-3">
+    
+             {loading ? (<div>Loading content...</div>) : <div className=" sm:grid sm:grid-cols-2 md:grid-cols-3">
              {
                 content.map((data,index)=>(
-                  <div key={index}  className="md:w-[90%] h-[70vh] px-5 h-max ml-5 mr-5 py-5 mt-5 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
+                  <div key={index}  className="md:w-[90%] h-[70vh] px-5 h-max ml-5 mr-5 py-5 mt-10 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
                    <div>{data.name}</div>
                    <div>{data.address}</div>
                    <div>{data.age}</div>
@@ -79,9 +76,6 @@ function Content(){
              }
              </div>
              }
-           
-            </div>
-
     </>
   )
 } 

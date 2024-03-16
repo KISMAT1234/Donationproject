@@ -1,8 +1,7 @@
 import React,{useEffect,useState} from "react";
 import axiosUrl from "../url/Axiosurl";
 import { Link } from "react-router-dom";
-import Topbar from "./bar/Top";
-import Leftbar from "./bar/Leftbar"
+
 
 
 
@@ -32,15 +31,13 @@ function MemberList(){
 
     return(
         <>
-        <Topbar/>
-        <div className="md:flex"> 
-          <Leftbar/>
-          <div className="md:flex px-5 py-1 mx-5 my-5 shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)]">
+
+          <div className="md:flex px-5 py-1 mx-5 my-10 shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)]">
              {loading ? (<div>Loading...</div>) : 
                <div className="">
                   {
                   users.map((data,index)=>(
-                    <div className="flex mt-10 justify-between"> 
+                    <div className="flex  py-10 justify-between border-b-2 border-gray-600"> 
                       <div className="w-[40%] md:w-[20%] rounded-[50%] ">
                         <img src={data.image} className="rounded-[50%] "/>
                       </div>
@@ -49,6 +46,7 @@ function MemberList(){
                       <div>
                         <button class=" md:text-2xl bg-green-400 rounded-2xl px-3 py-2 hover:bg-green-600 hover:text-slate-100">Add Member</button>
                       </div>
+                      
                     </div>
 
                   ))
@@ -58,7 +56,6 @@ function MemberList(){
              }
               </div>
               
-         </div>   
         </>
         )
     }

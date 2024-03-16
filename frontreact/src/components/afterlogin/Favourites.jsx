@@ -1,6 +1,4 @@
 // import axiosUrl from "../url/Axiosurl";
-import Topbar from "./bar/Top";
-import Leftbar from "./bar/Leftbar"
 import { useSelector} from 'react-redux'
 
 const Favourites = () => {
@@ -11,9 +9,7 @@ const Favourites = () => {
 
 return (
     <>
-      <Topbar/>
-      <div className="md:flex">
-        <Leftbar/>
+    
         <div className=" w-[100%]">
           {
             data?
@@ -33,7 +29,6 @@ return (
             :<h1>you dont have data</h1>
           }
         </div>
-      </div>
     </>
 )
 }
