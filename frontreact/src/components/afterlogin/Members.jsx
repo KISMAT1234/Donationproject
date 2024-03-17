@@ -25,7 +25,7 @@ function MemberList(){
       })
       }
       getUser();
-    })
+    },[]);
 
 
 
