@@ -5,8 +5,14 @@ import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 const App = () => {
+
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
+    axiosUrl.post("/login",values).then((response)=>{
+      console.log(response.data.token);
+    }).catch((err)=>{
+      console.log(err)
+    })
   };
   return (
     <>
@@ -20,11 +26,11 @@ const App = () => {
       onFinish={onFinish}
     >
       <Form.Item
-        name="username"
+        name="email"
         rules={[
           {
             required: true,
-            message: 'Please input your Username!',
+            message: 'Please input your E-mail!',
           },
         ]}
       >
