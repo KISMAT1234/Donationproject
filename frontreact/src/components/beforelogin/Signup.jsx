@@ -1,6 +1,7 @@
 import Nav from "./Navbar"
 import axiosUrl from "../url/Axiosurl";
 import React, { useState } from 'react';
+import signup from "../image/signup.jpg"
 import { UploadOutlined } from '@ant-design/icons';
 import {
   Button,
@@ -85,8 +86,10 @@ const beforeUpload = (file) => {
   return (
     <>
     <Nav/>
+    <div className="px-10 py-10 md:flex md:justify-around">
+
     <Form
-    className="mt-10"
+    className="w-[90%] px-2 py-5  shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset]"
       {...formItemLayout}
       form={form}
       name="register"
@@ -186,6 +189,12 @@ const beforeUpload = (file) => {
         </Button>
       </Form.Item>
     </Form>
+
+    <div>
+       <img src={signup} className="md:ml-5  rounded-2xl"/>
+    </div>
+
+    </div>
     </>
   );
 };
