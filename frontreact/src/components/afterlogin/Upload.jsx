@@ -11,6 +11,7 @@ const FormWithUpload = () => {
   const [imageFile, setImageFile] = useState(null);
 
   const onFinish = (values) => {
+    console.log(values);
     if (!imageFile) {
       message.error('Please upload an image');
       return;
