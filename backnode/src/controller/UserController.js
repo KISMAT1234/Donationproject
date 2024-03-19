@@ -4,6 +4,7 @@ import User from "../model/Userprofile.js";
 class UserController{
     async getUser(req,res){
         try{
+            // console.log(req.headers)
              const user =  await User.find({});
              return res.status(201).json(user)
         }catch(err){
