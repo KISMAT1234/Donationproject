@@ -6,5 +6,6 @@ const loginInstance = new LoginController();
 
 
 loginRouter.post("/",loginInstance.login)
+loginRouter.get("/token",loginInstance.tokenCheck)
 
 export default loginRouter;

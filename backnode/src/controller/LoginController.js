@@ -1,4 +1,5 @@
 import User from "../model/Userprofile.js";
+import TokenCheck from "../middleware/TokenVerify.js";
 
  class LoginController {
 
@@ -22,6 +23,36 @@ import User from "../model/Userprofile.js";
             res.status(200).json(err);
         }
     }
+    
+    async tokenCheck(req,res){
+      try{
+           let token = req.headers.authorization
+           console.log(token);
+           token = token.split(' ')[1];
+           console.log(token);
+           if(token){
+            let response = TokenCheck.verifyToken(token);
+            if(response){
+                return res.status(200).json({
+                    success: true
+                });
+            }else{
+                return res.status(200).json({
+                    error: "Token is not valid"
+                });
+            }
+        }else{
+            return res.status(200).json({
+                error: "No token found"
+            });
+        }
+      }
+      catch(err){
+         
+      }
+    }
  }
+
+   
 
  export default LoginController;
