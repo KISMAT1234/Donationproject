@@ -28,6 +28,16 @@ class UploadController{
         } 
     }
 
+    async donate(req,res){
+        try{
+         const info = await Upload.findById(req.params.id)
+        //  console.log(info);
+        res.status(200).json(info)
+        }catch(err){
+        res.status(500).json(err);
+        }
+    }
+
 }
 
 export default  UploadController;
