@@ -3,8 +3,7 @@ import axiosUrl from "../url/Axiosurl";
 import save from  '../image/save.gif'
 import { useDispatch } from 'react-redux'
 import {Star} from "../../slices/addSlice"
-import {Outlet} from "react-router-dom";
-
+import {Link} from "react-router-dom";
 
 
 
@@ -60,9 +59,12 @@ function Content(){
                     </div>
                    <div className="mt-5 flex justify-between">
                       <div>
+                      <Link to={"donate/"+data._id}>
                          <button className="bg-green-500 h-[45px] text-2xl w-[120%] rounded hover:bg-red-600">
                             Donate Now
                          </button>
+                       </Link>
+
                       </div>
                       <div>
                         <button onClick={()=>onSubmit(data)} className="">
