@@ -12,5 +12,6 @@ const routerInstance = new UploadController();
 
 uploadRouter.post('/',upload.single('image'), routerInstance.insert)
 uploadRouter.get('/', routerInstance.content)
+uploadRouter.get('/:id', routerInstance.donate)
 
 export default uploadRouter;
