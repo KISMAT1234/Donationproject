@@ -9,7 +9,12 @@ const userSchema = new mongoose.Schema({
     username: { type: String },
     email:{type: String},
     password :{type:String},
-    image:{type:String}
+    image:{type:String},
+    role:{
+        type: String,
+        enum: ["user", "admin"],
+        default: "user",
+    },
 },{
 versionKey: false,
 });
@@ -20,6 +25,7 @@ userSchema.pre("save", async function(next){
     try{
         if(this.isModified("password")){
             const hashedPassword = await bcrypt.hash(this.password, 10);
+            // console.log(hashedPassword)
             this.password = hashedPassword;
         }
         next();
@@ -30,6 +36,7 @@ userSchema.pre("save", async function(next){
 
 userSchema.methods.toJSON = function () {
     let obj = this.toObject();
+    // console.log(obj)
     if (obj.image) {
         obj.image = process.env.BASE_URL + "/uploads/users/" + obj.image;
     }else{
@@ -43,7 +50,7 @@ userSchema.methods.comparePassword = async function(password){
     try{
         
         const isPass = await bcrypt.compare(password, this.password);
-        console.log(isPass);
+        // console.log(isPass);
         return isPass;
     }catch(err){
         throw err;
