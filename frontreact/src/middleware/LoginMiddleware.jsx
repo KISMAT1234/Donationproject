@@ -1,8 +1,9 @@
 import Layout from "../components/afterlogin/bar/Outlet";
 import React, {useState,useEffect} from "react";
 import axiosUrl from "../components/url/Axiosurl";
-import Topbar from "../components/afterlogin/bar/Top";
-import Leftbar from "../components/afterlogin/bar/Leftbar"
+
+import Swal from 'sweetalert2'
+
 
 
 function LoginMiddleware(){
@@ -33,16 +34,14 @@ function LoginMiddleware(){
         },[]);
     useEffect(()=>{},[loading])
         if(loading){
-            return(
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12 text-center">
-                            <h1>Loading...</h1>
-                        </div>
-                    </div>
-                </div>
-            );
-        }else{
+                    Swal.fire({
+                      icon: "success",
+                      title: "Login Successfull",
+                      showConfirmButton: false,
+                      timer: 1500
+                    });
+                 }
+            else{
             if(isLogin){
                 return(
                     <>

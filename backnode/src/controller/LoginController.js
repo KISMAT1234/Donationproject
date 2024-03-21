@@ -6,15 +6,14 @@ import TokenCheck from "../middleware/TokenVerify.js";
     async login(req,res){
         try{
              const {email,password} = req.body
-             console.log(req.body);
+            //  console.log(req.body);
              let mail = await User.findOne({email: email})
              if(!mail){
-                res.status(200).json({notfound:"user not found"});
+                return res.status(200).json({notfound:"user not found"});
              }
              let isPass = await mail.comparePassword(password)
-             console.log(isPass);
              if(!isPass){
-                res.status(200).json({notfound:"Password not found"})
+               return res.status(200).json({notfound:"Password not found"})
              }
              let userToken = mail.generateToken(); 
              res.status(200).json({token: userToken});
@@ -27,9 +26,7 @@ import TokenCheck from "../middleware/TokenVerify.js";
     async tokenCheck(req,res){
       try{
            let token = req.headers.authorization
-           console.log(token);
            token = token.split(' ')[1];
-           console.log(token);
            if(token){
             let response = TokenCheck.verifyToken(token);
             if(response){

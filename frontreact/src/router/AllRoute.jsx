@@ -39,7 +39,7 @@ function RouterList(){
 
 
 
-         <Route path="/Mainpage" element={<LoginMiddleware/>}>
+         <Route path="Mainpage" element={<LoginMiddleware/>}>
              <Route path="/Mainpage" element={<Mainpage/>}/>
              <Route path="members-list" element={<MemberList/>}/>
              <Route path="favourites" element={<Favourites/>}/>
@@ -49,6 +49,7 @@ function RouterList(){
            {/* <Route path="/Mainpage" element={<Layout/>}>
             </Route> */}
          </Route>
+
        </Routes>
  
 
