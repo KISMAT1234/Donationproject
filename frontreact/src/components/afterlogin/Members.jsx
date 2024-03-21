@@ -7,15 +7,18 @@ import { Link } from "react-router-dom";
 
 
 function MemberList(){
-  
-
-    const [loading, setLoading] = useState(true);
-    const [users,setUsers]=useState({});
+      const [loading, setLoading] = useState(true);
+      const [users,setUsers]=useState({});
+      const token = localStorage.getItem("token") ?? ""
 
       useEffect(()=>{
 
       const getUser=async ()=>{
-        axiosUrl.get("/user").then((response)=>{
+        axiosUrl.get("/user",{
+          headers:{
+            Authorization: `Bearer ${token}`
+          }
+        }).then((response)=>{
         console.log(response);
           setUsers(response.data);
             setLoading(false);

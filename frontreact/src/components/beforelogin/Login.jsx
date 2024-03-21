@@ -4,6 +4,7 @@ import axiosUrl from "../url/Axiosurl";
 import React,{useState} from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
+// import Swal from 'sweetalert2'
 import login from "../image/login.jpeg"
 const App = () => {
 
@@ -17,8 +18,17 @@ const App = () => {
         console.log(response.data.notfound)
         alert(response.data.notfound)
       }else{
+ 
         localStorage.setItem("token",response.data.token);
         window.location.href="/Mainpage";
+        // if(response.data.token){
+        //   Swal.fire({
+        //     icon: "success",
+        //     title: "Login Successfull",
+        //     showConfirmButton: false,
+        //     timer: 9000
+        //   });
+        // }
       }
 
     }).catch((err)=>{

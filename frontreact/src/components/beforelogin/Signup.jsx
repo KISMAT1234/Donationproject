@@ -2,6 +2,7 @@ import Nav from "./Navbar"
 import axiosUrl from "../url/Axiosurl";
 import React, { useState } from 'react';
 import signup from "../image/signup.jpg"
+import Swal from 'sweetalert2'
 import { UploadOutlined } from '@ant-design/icons';
 import {
   Button,
@@ -64,7 +65,13 @@ const App = () => {
 
     console.log('data: ', formData);
     axiosUrl.post("/user",formData).then((response)=>{
-      alert("datasend successfull");
+      if(response.data.message){
+        Swal.fire({
+          icon: "success",
+          title: response.data.message,
+          timer: 1500
+        });
+      }
     }).catch((err)=>{
       console.log(err);
     })
