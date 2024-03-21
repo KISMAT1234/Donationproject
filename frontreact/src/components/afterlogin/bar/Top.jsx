@@ -1,4 +1,5 @@
 import logo from "../../image/logo.jpg"
+import { FaSearch } from "react-icons/fa";
 
 
 function Topbar() {
@@ -18,9 +19,15 @@ function Topbar() {
             
            </div>
 
-           <div className="">
-              <input type="text" className="mt-2 mr-3 md:mr-10 rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]" placeholder="Search Items Here"/>
-              <h1 className="font-mono text-xl">Welcome:</h1>
+           <div className=" md:w-[30%]">
+              <div className="relative top-9 left-48 ">
+              <FaSearch />
+              </div>
+              <div className="">
+                <input type="text" className="text-xl mt-2 h-[6vh]  mr-3 md:mr-10 rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]" placeholder="Search Items Here"/>
+              </div>
+
+              {/* <h1 className="font-mono text-xl">Welcome:</h1> */}
            </div> 
 
        </div>
