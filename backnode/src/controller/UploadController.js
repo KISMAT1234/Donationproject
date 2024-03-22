@@ -12,6 +12,7 @@ class UploadController{
                 // const user = new Upload({...req.body});  
                 const user =new Upload({...req.body,image:imageName});  
                 await user.save();
+                 res.send(user)
                 return res.status(201).json(user);
             }
             catch(err){
