@@ -17,7 +17,7 @@ function LoginMiddleware(){
                 Authorization: `Bearer ${token}`
             }
             }).then((response)=>{
-                console.log(response)
+                // console.log(response)
                 if(response.data.success){
                     setIsLogin(true);
                     setIsLoading(false);

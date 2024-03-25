@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+// import {Schema} from 'mongoose';
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -9,6 +10,7 @@ const uploadSchema = new mongoose.Schema({
     age :{type:Number},
     description:{type:String},
     image:{type:String},
+    uploadId: {type: mongoose.Schema.Types.ObjectId, ref:"User"},
 },{
 versionKey: false,
 });
