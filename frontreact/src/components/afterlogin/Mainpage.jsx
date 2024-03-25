@@ -9,44 +9,46 @@ import { Link } from "react-router-dom";
 import { CiStar } from "react-icons/ci";
 
 function Content() {
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [content, setContent] = useState([]);
   const [clickedIndex, setClickedIndex] = useState(-1); // Track which icon is clicked
-  const dispatch = useDispatch();
+
+  // const dispatch = useDispatch();
   // const { data, loading, error } = useSelector((state) => state);
+  // const data = useSelector((state)=> state.users);
+  // console.log(data,'data')
+  // useEffect(() => {
+  //   // Dispatch an action to fetch the data when the component mounts
+  //   dispatch(fetchUpload());
+  // }, []);
 
 
-
-
-
-
-
-  // const state = useSelector((state)=> state);
 
   // console.log(state);
 
-  // useEffect(() => {
-  //   const getContent = async () => {
-  //     axiosUrl.get("/upload")
-  //       .then((response) => {
-  //         setContent(response.data);
-  //         setLoading(false);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
-  //   getContent();
-  // }, []);
+  useEffect(() => {
+    const getContent = async () => {
+      axiosUrl.get("/upload")
+        .then((response) => {
+          console.log(response.data)
+          setContent(response.data);
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+    getContent();
+  }, []);
 
-  // const onSubmit = (data, index) => {
-  //   dispatch(Star([data]));
-  //   setClickedIndex(index); // Update the clicked index
-  // }
+  const onSubmit = (data, index) => {
+    dispatch(Star([data]));
+    setClickedIndex(index); // Update the clicked index
+  }
 
   return (
     <>
-      {/* {loading ? (
+      {loading ? (
         <div>Loading content...</div>
       ) : (
         <div className="sm:grid sm:grid-cols-2 md:grid-cols-3">
@@ -76,8 +78,11 @@ function Content() {
             </div>
           ))}
         </div>
-      )} */}
-      <button className="mt-10 text-4xl bg-red-500" onClick={e => dispatch(fetchUpload())}>fetch</button>
+      )}
+
+
+
+      {/* <button className="mt-10 text-4xl bg-red-500" onClick={e => dispatch(fetchUpload())}>fetch</button> */}
       {/* {
         state && state.map((item)=>(
           <div>{item.address}</div>
