@@ -3,21 +3,32 @@ import TokenCheck from "../middleware/TokenVerify.js";
 
 
 class UserController{
-    async getUser(req,res){
+    // async getUser(req,res){
+    //     try{
+    //          const user =  await User.find({});
+    //          return res.status(201).json(user)
+    //     }catch(err){
+    //           return res.status(500).json(err)
+    //     } 
+    // }
+
+    async getAllUser(req,res){
         try{
-            let token = req.headers.authorization;
-            token = token.split(' ')[1];
-            // console.log(token);
-            if(token){
-                let response = TokenCheck.verifyToken(token);
-                // console.log(response);
-                if(response){
-                    let answer = response.role
-                    console.log(answer)
-                }
+            let {userRole} = req.body
+            let userId = req.body.userId
+            // console.log(userId);
+            // console.log(req.body);
+            if(userRole == "user"){
+             const user =  await User.findById({_id :userId});
+             let users = [];
+             users.push(user);
+             console.log(users)
+             return res.status(201).json(users)
+            }else{
+                const user =  await User.find({});
+                console.log(user);
+                return res.status(201).json(user)
             }
-             const user =  await User.find({});
-             return res.status(201).json(user)
         }catch(err){
               return res.status(500).json(err)
         } 
