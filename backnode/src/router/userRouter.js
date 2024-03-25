@@ -1,7 +1,8 @@
 import express from 'express'
 import UserController from "../controller/UserController.js"
 import FileUpload from '../multerfile/Upload.js';
-
+import authorize from "../middleware/Authorize.js"
+import authenticate from "../middleware/Authenticate.js"
 
 const userRouter = express.Router();
 
@@ -11,6 +12,7 @@ let upload = fPInstance.custom_upload("uploads/users")
 const routerInstance = new UserController();
 
 userRouter.post('/',upload.single('image'), routerInstance.store)
-userRouter.get('/', routerInstance.getUser)
+// userRouter.get('/admin',restrictTo(["admin"]), routerInstance.getUser)
+userRouter.get('/',authenticate,authorize(["user","admin"]), routerInstance.getAllUser)
 
 export default userRouter;
