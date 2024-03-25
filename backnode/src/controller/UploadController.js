@@ -1,4 +1,5 @@
 import Upload from "../model/Upload.js";
+import User from "../model/Userprofile.js";
 
 class UploadController{
 
@@ -22,12 +23,17 @@ class UploadController{
 
     async content(req,res){
         try{
-             const user =  await Upload.find({});
+             const {uploadId} = req.body
+             console.log(uploadId)
+             const user =  await Upload.findById(req.params.id)
+             .populate("uploadId");
+             console.log(user);
              return res.status(201).json(user)
         }catch(err){
               return res.status(500).json(err)
         } 
     }
+
 
     async donate(req,res){
         try{
@@ -38,7 +44,6 @@ class UploadController{
         res.status(500).json(err);
         }
     }
-
 }
 
 export default  UploadController;
