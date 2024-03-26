@@ -14,7 +14,7 @@ function LoginMiddleware(){
     useEffect(()=>{
         axiosUrl.get("/login/token",{
             headers:{
-                Authorization: `Bearer ${token}`
+                authorization: `Bearer ${token}`
             }
             }).then((response)=>{
                 // console.log(response)
