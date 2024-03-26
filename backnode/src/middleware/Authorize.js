@@ -1,7 +1,7 @@
 const authorize = (roles = []) => {
   return (req, res, next) => {
     // console.log(req.body.userRole)
-    if (req.body.userId && roles.includes(req.body?.userRole)) {
+    if (req.user.userId && roles.includes(req.user?.userRole)) {
       next();
     } else {
       res.status(200).json({err:"error in authorization"});
@@ -9,4 +9,4 @@ const authorize = (roles = []) => {
   };
 };
 
-export default authorize
+export default authorize;

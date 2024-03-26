@@ -6,26 +6,29 @@ dotenv.config()
 const authenticate = async (req,res,next) => {
     try{
     let token = req.headers.authorization;
-    token = token.split(' ')[1];
-    // console.log(token)
+    if(token){
+      token = token.split(' ')[1];
+    }
+    // console.log(token,'token came')
+
 
   if(token){
     let tokenCheck = await jwt.verify(token, 
         process.env. JWT_SECRET,
         
-        function (err, decode) {
-            if (err) {
-              console.log("not verified");
-              return responseHandler(res, 401, "validation token invalid");
-            }
-            // console.log(decode, 'decode info')
-            let {id, role} = decode
-            const userId = id
-            const userRole = role
-            req.body = {...req.body, userId, userRole};
-            // console.log(req.body.userRole);
-            next()
+    function (err, decode) {
+        if (err) {
+          console.log("not verified");
+          return res.status(500).json(err);
         }
+        // console.log(decode, 'decode info')
+        let {id, role} = decode
+        const userId = id
+        const userRole = role
+        req.user = {...req.user, userId, userRole};
+        // console.log(req.user.userId,'auth id');
+        next()
+    }
         )
   }
 }catch(err){
