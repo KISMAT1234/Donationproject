@@ -10,6 +10,8 @@ const FormWithUpload = () => {
   const [form] = Form.useForm();
   const [imageFile, setImageFile] = useState(null);
 
+
+  const token = localStorage.getItem("token") ?? "";
   const onFinish = (values) => {
     console.log(values);
     if (!imageFile) {
@@ -25,7 +27,7 @@ const FormWithUpload = () => {
     formData.append('image', imageFile);
 
     // Now you can send formData to the backend using fetch or any other method
-    console.log('Data to send:', formData);
+    console.log('Data to send:',)
       axiosUrl.post("/upload",formData).then((response)=>{
     if(response){
       alert("datasend successfull");
