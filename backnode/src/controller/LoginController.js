@@ -15,7 +15,8 @@ import TokenCheck from "../middleware/TokenVerify.js";
              if(!isPass){
                return res.status(200).json({notfound:"Password not found"})
              }
-             let userToken = mail.generateToken(); 
+             let userToken = mail.generateToken();
+            //  console.log(userToken); 
              res.status(200).json({token: userToken});
         }
         catch(err){
@@ -26,6 +27,7 @@ import TokenCheck from "../middleware/TokenVerify.js";
     async tokenCheck(req,res){
       try{
            let token = req.headers.authorization
+        //    console.log(token)
            token = token.split(' ')[1];
            if(token){
             let response = TokenCheck.verifyToken(token);
