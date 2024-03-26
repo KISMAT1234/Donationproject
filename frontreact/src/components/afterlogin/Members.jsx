@@ -28,7 +28,7 @@ function MemberList() {
     };
     getUser();
   }, []);
-  console.log(users, 'users data') // Add token as a dependency to useEffect
+  // console.log(users, 'users data') // Add token as a dependency to useEffect
 
   return (
     <>
