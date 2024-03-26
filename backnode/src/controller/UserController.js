@@ -14,9 +14,9 @@ class UserController{
 
     async getAllUser(req,res){
         try{
-            let {userRole} = req.body
-            let userId = req.body.userId
-            // console.log(userId);
+            let {userRole} = req.user
+            let userId = req.user.userId
+            // console.log(userId,'get id');
             // console.log(req.body);
             if(userRole == "user"){
              const user =  await User.findById({_id :userId});
@@ -26,7 +26,7 @@ class UserController{
              return res.status(201).json(users)
             }else{
                 const user =  await User.find({});
-                console.log(user);
+                // console.log(user);
                 return res.status(201).json(user)
             }
         }catch(err){
