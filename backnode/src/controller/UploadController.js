@@ -6,14 +6,16 @@ class UploadController{
     
     async insert(req,res){
         try{
+            
                 let imageName="";
                 if(req.file){
                     imageName= req.file.filename;
                 }
-                // const user = new Upload({...req.body});  
-                const user =new Upload({...req.body,image:imageName});  
+                let userId = req.user.userId
+                console.log(userId,'get id');
+                const user =new Upload({...req.body,image:imageName, uploadId:userId})
                 await user.save();
-                 res.send(user)
+                //  res.send(user)
                 return res.status(201).json(user);
             }
             catch(err){
@@ -23,9 +25,9 @@ class UploadController{
 
     async content(req,res){
         try{
-             const {uploadId} = req.body
-             console.log(uploadId)
-             const user =  await Upload.findById(req.params.id)
+            //  const {uploadId} = req.body
+            //  console.log(uploadId)
+             const user =  await Upload.find()
              .populate("uploadId");
              console.log(user);
              return res.status(201).json(user)
