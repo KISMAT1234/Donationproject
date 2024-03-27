@@ -25,8 +25,9 @@ const authenticate = async (req,res,next) => {
         let {id, role} = decode
         const userId = id
         const userRole = role
+        // const {a,b,c}=req.body;
         req.user = {...req.user, userId, userRole};
-        // console.log(req.user.userId,'auth id');
+        console.log(req.user.userId,'auth id');
         next()
     }
         )
