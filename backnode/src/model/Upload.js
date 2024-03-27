@@ -9,13 +9,15 @@ const uploadSchema = new mongoose.Schema({
     age :{type:Number},
     description:{type:String},
     image:{type:String},
-    uploadId: {type: mongoose.Schema.Types.ObjectId, ref:"User"},
+    userId: {type: mongoose.Schema.Types.ObjectId, ref:"User"},
 },{
 versionKey: false,
 });
 
 uploadSchema.methods.toJSON = function () {
     let obj = this.toObject();
+    // console.log(obj);
+    // console.log(obj.image);
     if (obj.image) {
         obj.image = process.env.BASE_URL + "/uploads/posts/" + obj.image;
     }else{
