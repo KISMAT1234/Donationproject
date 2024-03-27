@@ -7,16 +7,11 @@ import Swal from 'sweetalert2'
 
 
 function LoginMiddleware(){
-    const token = localStorage.getItem("token");
     const [isLogin,setIsLogin]=useState(false);
     const [loading, setIsLoading] = useState(true);
 
     useEffect(()=>{
-        axiosUrl.get("/login/token",{
-            headers:{
-                authorization: `Bearer ${token}`
-            }
-            }).then((response)=>{
+        axiosUrl.get("/login/token").then((response)=>{
                 // console.log(response)
                 if(response.data.success){
                     setIsLogin(true);
