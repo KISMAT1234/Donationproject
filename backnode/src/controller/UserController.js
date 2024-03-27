@@ -22,7 +22,7 @@ class UserController{
              const user =  await User.findById({_id :userId});
              let users = [];
              users.push(user);
-             console.log(users)
+            //  console.log(users)
              return res.status(201).json(users)
             }else{
                 const user =  await User.find({});
@@ -43,7 +43,7 @@ class UserController{
                 const user = new User({...req.body, image:imageName}); 
                 // console.log(req.body);
                 await user.save();
-                // console.log(user);
+                console.log(user);
                 return res.status(201).json({message:'Signup Successfull'});
             }
             catch(err){
