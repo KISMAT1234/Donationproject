@@ -10,11 +10,10 @@ function MemberList() {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const response = await axiosUrl.get("/user", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await axiosUrl.get("/user")
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
         console.log(response.data);
         if (Array.isArray(response.data)) {
           setUsers(response.data);
