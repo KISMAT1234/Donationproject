@@ -36,7 +36,7 @@ userSchema.pre("save", async function(next){
 
 userSchema.methods.toJSON = function () {
     let obj = this.toObject();
-    // console.log(obj)
+    console.log(obj)
     if (obj.image) {
         obj.image = process.env.BASE_URL + "/uploads/users/" + obj.image;
     }else{
