@@ -12,8 +12,9 @@ class UploadController{
                     imageName= req.file.filename;
                 }
                 let userId = req.user.userId
-                console.log(userId,'get id');
-                const user =new Upload({...req.body,image:imageName, uploadId:userId})
+                // console.log(userId,'get id');
+                const user =new Upload({...req.body,image:imageName, userId:userId})
+                console.log(user);
                 await user.save();
                 //  res.send(user)
                 return res.status(201).json(user);
@@ -25,12 +26,22 @@ class UploadController{
 
     async content(req,res){
         try{
-            //  const {uploadId} = req.body
-            //  console.log(uploadId)
-             const user =  await Upload.find()
-             .populate("uploadId");
-             console.log(user);
-             return res.status(201).json(user)
+            //  const {userId} = req.body
+            //  console.log(userId)
+             const uploads =  await Upload.find()
+             const uploadsWithUser = await Promise.all(uploads.map(async (upload) => {
+                const user = await User.findById(upload.userId); // Fetch user by uploadId
+                upload = {...upload.toJSON()}
+                upload.userId = user
+                
+                return upload;
+            }));
+                
+
+               
+            // }));
+            //  console.log(user);
+             return res.status(201).json(uploadsWithUser)
         }catch(err){
               return res.status(500).json(err)
         } 
@@ -39,7 +50,7 @@ class UploadController{
 
     async donate(req,res){
         try{
-         const info = await Upload.findById(req.params.id)
+         const info = await Upload.findById(req.params.id).populate("userId")
         //  console.log(info);
         res.status(200).json(info)
         }catch(err){
