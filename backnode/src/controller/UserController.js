@@ -5,7 +5,8 @@ import TokenCheck from "../middleware/TokenVerify.js";
 class UserController{
     // async getUser(req,res){
     //     try{
-    //          const user =  await User.find({});
+    //         const userId = req.user.userId
+    //          const user =  await User.find({_id : userId});
     //          return res.status(201).json(user)
     //     }catch(err){
     //           return res.status(500).json(err)
@@ -16,8 +17,7 @@ class UserController{
         try{
             let {userRole} = req.user
             let userId = req.user.userId
-            // console.log(userId,'get id');
-            // console.log(req.body);
+    
             if(userRole == "user"){
              const user =  await User.findById({_id :userId});
              let users = [];
@@ -43,7 +43,7 @@ class UserController{
                 const user = new User({...req.body, image:imageName}); 
                 // console.log(req.body);
                 await user.save();
-                console.log(user);
+                // console.log(user);
                 return res.status(201).json({message:'Signup Successfull'});
             }
             catch(err){
