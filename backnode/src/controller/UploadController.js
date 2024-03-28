@@ -14,7 +14,7 @@ class UploadController{
                 let userId = req.user.userId
                 // console.log(userId,'get id');
                 const user =new Upload({...req.body,image:imageName, userId:userId})
-                console.log(user);
+                // console.log(user);
                 await user.save();
                 //  res.send(user)
                 return res.status(201).json(user);
@@ -26,21 +26,15 @@ class UploadController{
 
     async content(req,res){
         try{
-            //  const {userId} = req.body
-            //  console.log(userId)
-             const uploads =  await Upload.find()
-             const uploadsWithUser = await Promise.all(uploads.map(async (upload) => {
-                const user = await User.findById(upload.userId); // Fetch user by uploadId
-                upload = {...upload.toJSON()}
-                upload.userId = user
+            const uploads =  await Upload.find()   // Fetching upload post   
+            const uploadsWithUser = await Promise.all(uploads.map(async (upload) => {  // mapping over uploads inside Promise.all  to ensure all user queries are completed before continuing
+                const user = await User.findById(upload.userId); // Fetching  user information  which user is going to post
+                upload = {...upload.toJSON()}  //converting mongoose document into a plain Javascript object
+                // console.log(upload);
+                upload.userId = user   //Assign user information in userId
                 
                 return upload;
             }));
-                
-
-               
-            // }));
-            //  console.log(user);
              return res.status(201).json(uploadsWithUser)
         }catch(err){
               return res.status(500).json(err)
