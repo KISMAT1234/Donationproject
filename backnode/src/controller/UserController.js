@@ -24,11 +24,12 @@ class UserController{
              users.push(user);
             //  console.log(users)
              return res.status(201).json(users)
-            }else{
-                const user =  await User.find({});
-                // console.log(user);
-                return res.status(201).json(user)
             }
+            // else{
+            //     const user =  await User.find({});
+            //     // console.log(user);
+            //     return res.status(201).json(user)
+            // }
         }catch(err){
               return res.status(500).json(err)
         } 
