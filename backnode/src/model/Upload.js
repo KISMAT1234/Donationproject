@@ -10,6 +10,7 @@ const uploadSchema = new mongoose.Schema({
     description:{type:String},
     image:{type:String},
     userId: {type: mongoose.Schema.Types.ObjectId, ref:"User"},
+    comments:{type: mongoose.Schema.Types.ObjectId, ref:"Comment"},
 },{
 versionKey: false,
 });
