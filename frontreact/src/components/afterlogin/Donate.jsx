@@ -57,7 +57,6 @@ const Donate = () => {
 
     useEffect(() => {
         fetchComments();
-     
     }, []);
 
     useEffect(()=>{ 
@@ -77,7 +76,7 @@ const Donate = () => {
 
     const fetchComments = async () => {
         try {
-            const response = await axiosUrl.get('/comment');
+            const response = await axiosUrl.get("/comment");
             console.log(response.data,"response from backend")
             setCommentsList(response.data);       
         } catch (error) {
@@ -92,7 +91,7 @@ const Donate = () => {
         e.preventDefault();
         console.log(comment,'state comment')
         try {
-            await axiosUrl.post("/comment", { comment });
+            await axiosUrl.post(`/comment/${id}`, { comment });
             setComment(''); // Clear input after submitting
             fetchComments(); // Refresh comments after submitting
         } catch (error) {
