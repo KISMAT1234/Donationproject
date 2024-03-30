@@ -5,12 +5,12 @@ class CommentController{
         try{
         //   const {comment} = req.body
         //   console.log(comment)
-        const Post_id = req.params.id
+        const postId = req.params.id
+        console.log(postId, "post id");
         let userId = req.user.userId
-        // console.log(userId)
+        console.log(userId,"user Id")
 
-        console.log(Post_id);
-        const userCmt = new Comment({...req.body})
+        const userCmt = new Comment({...req.body,userId:userId,postId:postId})
         userCmt.save();
         console.log(userCmt, 'data send success')
         return res.status(200).json({data:"Comment send successfull"})
@@ -22,8 +22,12 @@ class CommentController{
      async getComment(req,res){
         try{
         //   const cmt = new Comment(...req.body)
-     
-        const cmtData = await Comment.find()
+        const postId = req.params.id
+        console.log(postId,"fetch id")
+        console.log("fetch")
+        
+        const cmtData = await Comment.findById(req.params.id).populate('comments')
+        console.log(cmtData,"fetch comment");
         return res.status(200).json(cmtData);
         }
         catch(err){
