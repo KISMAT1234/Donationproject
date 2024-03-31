@@ -55,37 +55,21 @@ const Donate = () => {
 
 
 
-    useEffect(() => {
-        fetchComments();
-    }, []);
-
-    useEffect(()=>{ 
-        const userFetch = () => {
-            axiosUrl.get("/user").then((response) => {
-                console.log(response.data,"user data ");
-                setUser(response.data)
-        
-            }).catch((err)=>{
-               console.log(err);
-            })
-        }
-        userFetch() 
-    },[])
+    // useEffect(() => {
+    //     fetchComments();
+    // }, []);
 
 
 
-    const fetchComments = async () => {
-        try {
-            const response = await axiosUrl.get("/comment");
-            console.log(response.data,"response from backend")
-            setCommentsList(response.data);       
-        } catch (error) {
-            console.error('Error fetching comments:', error);
-        }
-
-      
-   
-    };
+    // const fetchComments = async () => {
+    //     try {
+    //         const response = await axiosUrl.get("/comment");
+    //         console.log(response.data,"response from backend")
+    //         setCommentsList(response.data);       
+    //     } catch (error) {
+    //         console.error('Error fetching comments:', error);
+    //     }
+    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
