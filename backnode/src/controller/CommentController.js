@@ -26,7 +26,7 @@ class CommentController{
         console.log(postId,"fetch id")
         console.log("fetch")
         
-        const cmtData = await Comment.findById(req.params.id).populate('comments')
+        const cmtData = await Comment.find().populate('userId',['username','image'])
         console.log(cmtData,"fetch comment");
         return res.status(200).json(cmtData);
         }
