@@ -26,9 +26,10 @@ class UploadController{
 
     async content(req,res){
         try{
-            const uploads =  await Upload.find()   // Fetching upload post   
+            const uploads =  await Upload.find();   // Fetching upload post   
             const uploadsWithUser = await Promise.all(uploads.map(async (upload) => {  // mapping over uploads inside Promise.all  to ensure all user queries are completed before continuing
                 const user = await User.findById(upload.userId); // Fetching  user information  which user is going to post
+                
                 upload = {...upload.toJSON()}  //converting mongoose document into a plain Javascript object
                 // console.log(upload);
                 upload.userId = user   //Assign user information in userId
