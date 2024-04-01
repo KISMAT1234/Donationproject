@@ -1,5 +1,7 @@
 import User from "../model/Userprofile.js";
-import TokenCheck from "../middleware/TokenVerify.js";
+import ResponseHandler from "../helper/ResponseHandler.js"
+
+const responseInstance = new ResponseHandler();
 
 
 class UserController{
@@ -20,16 +22,16 @@ class UserController{
     
             if(userRole == "user"){
              const user =  await User.findById({_id :userId});
-             let users = [];
-             users.push(user);
-            //  console.log(users)
-             return res.status(201).json(users)
+           
+             console.log(user)
+            //  return res.status(201).json(users)
+             return responseInstance.successResponse(res,200,'data fetch success',user)
             }
-            // else{
-            //     const user =  await User.find({});
-            //     // console.log(user);
-            //     return res.status(201).json(user)
-            // }
+            else{
+                const user =  await User.find({});
+                // console.log(user);
+                return responseInstance.successResponse(res,200,'data fetch success',user)
+            }
         }catch(err){
               return res.status(500).json(err)
         } 
