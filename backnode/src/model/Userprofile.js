@@ -63,7 +63,7 @@ userSchema.methods.generateToken = function () {
         role: this.role,
     }
 
-    const getToken = jwt.sign(userData, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN})
+    const getToken = jwt.sign(userData, process.env.JWT_SECRET)
     // console.log(getToken);
     return getToken;
 }
