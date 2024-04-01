@@ -4,22 +4,16 @@ import axiosUrl from "../url/Axiosurl";
 
 function MemberList() {
   const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState([]); // Initialize users as an empty array
+  const [users, setUsers] = useState({}); // Initialize users as an empty array
   const token = localStorage.getItem("token") ?? "";
 
   useEffect(() => {
     const getUser = async () => {
       try {
         const response = await axiosUrl.get("/user")
-        //   headers: {
-        //     Authorization: `Bearer ${token}`,
-        //   },
-        console.log(response.data);
-        if (Array.isArray(response.data)) {
-          setUsers(response.data);
-        } else {
-          setError('Invalid user data received');
-        }
+       
+        console.log(response.data.data.username,'console data');
+          setUsers([response.data.data]);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching user data:", err);
@@ -27,7 +21,7 @@ function MemberList() {
     };
     getUser();
   }, []);
-  // console.log(users, 'users data') // Add token as a dependency to useEffect
+  console.log(users, 'users data') // Add token as a dependency to useEffect
 
   return (
     <>
@@ -40,7 +34,7 @@ function MemberList() {
             users && users.map((data, index) => (
               <div className="flex py-10 justify-between border-b-2 border-gray-600" key={index}>
                 <div className="w-[40%] md:w-[20%] rounded-[50%]">
-                  <img src={data.image} alt={data.username} className="rounded-[50%]" />
+                  <img src={data.image}  className="rounded-[50%]" />
                 </div>
                 <div>{data.username}</div>
                 <div>{data.email}</div>
