@@ -13,14 +13,13 @@ function Content() {
   const [content, setContent] = useState([]);
   const [clickedIndex, setClickedIndex] = useState(-1); // Track which icon is clicked
 
-  // const dispatch = useDispatch();
-  // const { data, loading, error } = useSelector((state) => state);
-  // const data = useSelector((state)=> state.users);
-  // console.log(data,'data')
-  // useEffect(() => {
-  //   // Dispatch an action to fetch the data when the component mounts
-  //   dispatch(fetchUpload());
-  // }, []);
+  const dispatch = useDispatch();
+  // const storeData = useSelector((state)=> state.users);
+  // console.log(storeData,'data')
+  useEffect(() => {
+    // Dispatch an action to fetch the data when the component mounts
+    dispatch(fetchUpload());
+  }, []);
 
 
 
@@ -55,15 +54,16 @@ function Content() {
           {content.map((data, index) => (
             <div key={index} className="md:w-[90%] h-[70vh] px-5 h-max ml-5 mr-5 py-5 mt-10 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
               <div className="flex">
-                 <div>
-                   <img src={data.userId.image} width="100" className="w-[20%] " />
+                 <div className="w-[10%] md:w-[20%]">
+                   <img src={data.userId.image} width="100" className=" rounded-[50%]" />
                  </div >
-                 <div className="ml-10 font-bold  text-2xl">{data.userId.username}</div>
+                 <div className="ml-5 font-bold  text-2xl">{data.userId.username}</div>
+                 <div> </div>
               </div>
-              <div>{data.name}</div>
-              <div>{data.address}</div>
-              <div>{data.age}</div>
-              <div>{data.description}</div>
+              <div className="my-2">Name: {data.name}</div>
+              <div className="my-2">Address: {data.address}</div>
+              <div className="my-2">Age: {data.age}</div>
+              <div className="my-2">Problem: {data.description}</div>
               <div className="">
                 <img src={data.image} width="100" className="w-[90%]" alt="Content" />
               </div>
