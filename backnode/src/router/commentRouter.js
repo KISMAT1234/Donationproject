@@ -7,6 +7,6 @@ const cmtRouter = express.Router()
 const commentInstance = new CommentController();
 
 cmtRouter.post("/:id",authenticate, commentInstance.storeComment)
-cmtRouter.get("/", commentInstance.getComment)
+cmtRouter.get("/:id", commentInstance.getComment)
 
 export default cmtRouter;

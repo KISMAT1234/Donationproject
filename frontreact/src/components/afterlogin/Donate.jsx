@@ -23,7 +23,7 @@ const Donate = () => {
 
        const getInfo = () =>{
            axiosUrl.get(`/upload/${id}`).then((response)=>{
-            console.log(response.data);
+            // console.log(response.data);
                setInfo(response.data)
            }).catch((err)=>{
                console.log(err)
@@ -55,29 +55,44 @@ const Donate = () => {
 
 
 
-    // useEffect(() => {
-    //     fetchComments();
-    // }, []);
+
+
+    const fetchComments = async () => {
+        try {
+            const response = await axiosUrl.get(`/comment/${id}`);
+            console.log(response.data,"response from backend")
+            setCommentsList(response.data); 
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+        }
+    };
+    
+  useEffect(() => {
+   
+    fetchComments();
+}, [id]);
 
 
 
-    // const fetchComments = async () => {
-    //     try {
-    //         const response = await axiosUrl.get("/comment");
-    //         console.log(response.data,"response from backend")
-    //         setCommentsList(response.data);       
-    //     } catch (error) {
-    //         console.error('Error fetching comments:', error);
-    //     }
-    // };
+useEffect(() => {
+    console.log(commentsList, "commentlists array extra useEffect");
+}, [commentsList]);
+
+useEffect(() => {
+    console.log(commentsList, "commentlists array another useEffect");
+}, [id, commentsList]);
+
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(comment,'state comment')
+        // console.log(comment,'state comment')
         try {
             await axiosUrl.post(`/comment/${id}`, { comment });
             setComment(''); // Clear input after submitting
-            fetchComments(); // Refresh comments after submitting
+             // Refresh comments after submitting
+             fetchComments()
         } catch (error) {
             console.error('Error adding comment:', error);
         }
@@ -86,25 +101,7 @@ const Donate = () => {
 
     return (
         <>
-        {/* <div>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Enter your comment"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                />
-                <button type="submit">Add Comment</button>
-            </form>
-            <div>
-                <h2>Comments:</h2>
-                <ul>
-                    {commentsList.map((item, index) => (
-                        <li key={index}>{item.comment}</li>
-                    ))}
-                </ul>
-            </div>
-        </div> */}
+   
 
         <div className=" px-5 py-10">
              <div className="md:flex">
@@ -137,37 +134,18 @@ const Donate = () => {
                    <label for="input-label" className="block text-4xl font-medium mb-2 dark:text-white">Comments</label>
                    <input  type="text" onChange={(e) => setComment(e.target.value)} value={comment} id="input-label" className="bg-slate-200  py-3 px-4 block w-full border-gray-200 rounded-lg text-xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" placeholder="write something..."/>
                 </form>
-                <div className="mt-5">
-                    <div className="">
-                    {/* <div>
-                      {commentsList.map((item, count) => (
-                        <div key={count}>
 
-                            {user.map((data, index) => (
-                              <div key={index}>
-                                  <li >{data.username}</li>
-                                  <li >{item.comment}</li>
-                              </div>
-                          ))}
-                        </div>
-                    ))}
-                   </div> */}
-                   {/* <ul>
-                    {user.map((item, index) => (
-                        <li key={index}>{item.username}</li>
-                    ))}
-                   </ul> */}
+                 <div className="mt-5">
                       {commentsList.map((cmt, count)=>(
                          <div key={count} className="mt-5">
-                            {user.map((userData, index) => (
-                                <div key={index} className="flex">
+                                <div className="flex">
                                     <div className="w-[7%]">
-                                        <img src={userData.image} className=" rounded-[50%]"/>
+                                        <img src={cmt.userId.image} className=" rounded-[50%]"/>
                                     </div>
                                     <div className="px-5 py-4 ml-3 w-[100%] bg-slate-400 rounded-2xl shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
                                         <div className="flex justify-between">
                                             <div className="flex ">
-                                              <div className="text-4xl font-medium">{userData.username}</div>
+                                              <div className="text-4xl font-medium">{cmt.userId.username}</div>
                                               <div className="mt-3 ml-2">{currentDateStr}</div>
                                             </div>
                                           <div className="mt-3">{currentTimeStr}</div>
@@ -194,10 +172,8 @@ const Donate = () => {
                                        </div>
                                     </div>
                                 </div>
-                             ))}
                           </div>
                        ))}
-                    </div>
                 </div>
             </div>
           </div> 
