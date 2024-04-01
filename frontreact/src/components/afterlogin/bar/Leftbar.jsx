@@ -4,6 +4,8 @@ import { FaStar } from "react-icons/fa";
 import { FaUpload } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
 import { FaSignOutAlt } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
+
 
 
 
@@ -27,14 +29,24 @@ const logOut = () => {
                </Link>
            </button>
         </div>
-            <div className="py-2 md:py-3 md:text-2xl md:text-2xl md:mt-5px font-bold text-md hover:text-slate-100 hover:bg-green-400 hover:rounded-2xl ">
+
+         <div className="py-2 md:py-3 md:text-2xl md:text-2xl md:mt-5px font-bold text-md hover:text-slate-100 hover:bg-green-400 hover:rounded-2xl ">
              <button className="">
-               <Link to ="/Mainpage/favourites" className="flex">
-                <FaStar className=" mx-4 text-4xl md:mx-0 md:2xl"/>
-                  <h1 className="hidden md:block md:ml-2">Favourite</h1>
-                  </Link>
+               <Link to ="/Mainpage/profile" className="flex">
+                  <FaUser className=" mx-4 text-4xl md:mx-0 md:2xl"/>
+                  <h1 className="hidden md:block md:ml-2">Profile</h1>
+               </Link>
             </button>
         </div>
+
+         <div className="py-2 md:py-3 md:text-2xl md:text-2xl md:mt-5px font-bold text-md hover:text-slate-100 hover:bg-green-400 hover:rounded-2xl ">
+            <button className="">
+              <Link to ="/Mainpage/favourites" className="flex">
+               <FaStar className=" mx-4 text-4xl md:mx-0 md:2xl"/>
+                 <h1 className="hidden md:block md:ml-2">Favourite</h1>
+                 </Link>
+            </button>
+         </div>
 
         <div className=" py-2 md:py-3 md:text-2xl md:text-2xl md:mt-5px font-bold text-md  ">
            <button className="">

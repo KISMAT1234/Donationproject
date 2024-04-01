@@ -17,6 +17,7 @@ import MemberList from "../components/afterlogin/Members"
 import Favourites from "../components/afterlogin/Favourites"
 import Uploadcontent from "../components/afterlogin/Upload"
 import Donate from "../components/afterlogin/Donate"
+import Profile from "../components/afterlogin/Profile"
 // import Layout from "../components/afterlogin/bar/Outlet"
 
 
@@ -41,6 +42,7 @@ function RouterList(){
 
          <Route path="Mainpage" element={<LoginMiddleware/>}>
              <Route path="/Mainpage" element={<Mainpage/>}/>
+             <Route path="profile" element={<Profile/>}/>
              <Route path="members-list" element={<MemberList/>}/>
              <Route path="favourites" element={<Favourites/>}/>
             <Route path="upload" element={<Uploadcontent/>}/>
