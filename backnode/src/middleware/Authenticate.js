@@ -14,7 +14,7 @@ const authenticate = async (req,res,next) => {
 
   if(token){
     let tokenCheck = await jwt.verify(token, 
-        process.env. JWT_SECRET,
+        process.env.JWT_SECRET,
         
     function (err, decode) {
         if (err) {
