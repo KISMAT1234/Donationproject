@@ -12,8 +12,8 @@ function MemberList() {
       try {
         const response = await axiosUrl.get("/user")
        
-        console.log(response.data.data.username,'console data');
-          setUsers([response.data.data]);
+        // console.log(response.data.data.username,'console data');
+          setUsers(response.data.data);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching user data:", err);
@@ -21,7 +21,7 @@ function MemberList() {
     };
     getUser();
   }, []);
-  console.log(users, 'users data') // Add token as a dependency to useEffect
+  // console.log(users, 'users data') // Add token as a dependency to useEffect
 
   return (
     <>
