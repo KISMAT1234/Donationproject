@@ -39,10 +39,12 @@ class UserController{
     
     async store(req,res){
         try{
+            console.log(req.file,'image file');
             let imageName="";
             if(req.file){
                 imageName= req.file.filename;
             }
+            console.log(imageName,'image filename store')
                 const user = new User({...req.body, image:imageName}); 
                 // console.log(req.body);
                 await user.save();
