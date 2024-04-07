@@ -36,14 +36,14 @@ userSchema.pre("save", async function(next){
 
 userSchema.methods.toJSON = function () {
     let obj = this.toObject();
-    console.log(obj,'object value')
+    // console.log(obj,'object value')
     if (obj.image) {
         obj.image = process.env.BASE_URL + "/uploads/users/" + obj.image;
     }else{
         obj.image = process.env.BASE_URL + "/uploads/icons/user.jpg";
     }
     delete obj.password;
-    console.log(obj,'obj after localhost')
+    // console.log(obj,'obj after localhost')
     return obj;
 }
 
