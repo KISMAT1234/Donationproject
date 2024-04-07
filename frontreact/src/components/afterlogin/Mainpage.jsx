@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from "react";
 import axiosUrl from "../url/Axiosurl";
 import { useDispatch,useSelector } from 'react-redux';
@@ -8,10 +6,20 @@ import { Star } from "../../slices/addSlice";
 import { Link } from "react-router-dom";
 import { CiStar } from "react-icons/ci";
 
+import { Pagination } from 'antd';
+
+
+
 function Content() {
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState([]);
-  const [clickedIndex, setClickedIndex] = useState(-1); // Track which icon is clicked
+  const [clickedIndex, setClickedIndex] = useState(-1); 
+  const [current, setCurrent] = useState(1);
+  const onChange = (page) => {
+    setCurrent(page);
+  };
+  console.log(current,'page');
+
 
   const dispatch = useDispatch();
   // const storeData = useSelector((state)=> state.users);
@@ -24,10 +32,13 @@ function Content() {
 
 
   // console.log(state);
-
   useEffect(() => {
+    getContent();
+  }, [current])
+
+  
     const getContent = async () => {
-      axiosUrl.get("/upload")
+      axiosUrl.get(`/upload?page=${current}`)
         .then((response) => {
           console.log(response.data)
           setContent(response.data);
@@ -37,8 +48,6 @@ function Content() {
           console.log(err);
         });
     }
-    getContent();
-  }, []);
 
   const onSubmit = (data, index) => {
     dispatch(Star([data]));
@@ -84,19 +93,14 @@ function Content() {
             </div>
           ))}
         </div>
+        
       )}
-
-
-
-      {/* <button className="mt-10 text-4xl bg-red-500" onClick={e => dispatch(fetchUpload())}>fetch</button> */}
-      {/* {
-        state && state.map((item)=>(
-          <div>{item.address}</div>
-        ))
-      } */}
+        <div className="my-20 flex justify-center">
+        <Pagination current={current} onChange={onChange} total={50} />;
+          </div>
     </>
   )
 }
 
-export default Content;
+export default Content
 
