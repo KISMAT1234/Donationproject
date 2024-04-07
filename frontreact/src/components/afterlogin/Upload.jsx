@@ -14,10 +14,10 @@ const FormWithUpload = () => {
   const token = localStorage.getItem("token") ?? "";
   const onFinish = (values) => {
     console.log(values);
-    if (!imageFile) {
-      message.error('Please upload an image');
-      return;
-    }
+    // if (!imageFile) {
+    //   message.error('Please upload an image');
+    //   return;
+    // }
 
     const formData = new FormData();
     formData.append('name', values.name);

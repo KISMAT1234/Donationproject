@@ -31,6 +31,7 @@ function Contact(){
                     <h1>admin123@gmail.com</h1>
                 </div>
             </div>
+            <input type="file"/>
        </div>
        
     </>

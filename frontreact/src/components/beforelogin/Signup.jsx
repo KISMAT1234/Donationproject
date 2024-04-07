@@ -51,10 +51,11 @@ const App = () => {
   const [imageFile, setImageFile] = useState(null);
 
   const onFinish = (values) => {
-    if (!imageFile) {
-      message.error('Please upload an image');
-      return;
-    }
+    console.log(values,'console value')
+    // if (!imageFile) {
+    //   message.error('Please upload an image');
+    //   return;
+    // }
     // const values =  form.validateFields(); 
     const formData = new FormData();
     formData.append('username', values.username);
