@@ -27,12 +27,18 @@ class PostController{
     async content(req,res){
         try{
             let page =Number(req.query.page) || 1;
-            console.log(page,'page value')
+            // console.log(page,'page value')
             let size = Number(req.query.size) || 3;
 
             let skip = (page-1) * size;
             // console.log(skip,'skip value');
-            const uploads =  await Post.find().skip(skip).limit(size);   // Fetching upload post   
+            let {name, address} = req.query;
+            let queryObject={}
+            if(name){
+                queryObject.name = {$regex: name, $options:"i"};
+            }
+            console.log(queryObject);
+            const uploads =  await Post.find(queryObject).skip(skip).limit(size);   // Fetching upload post   
             const uploadsWithUser = await Promise.all(uploads.map(async (upload) => {  // mapping over uploads inside Promise.all  to ensure all user queries are completed before continuing
                 const user = await User.findById(upload.userId); // Fetching  user information  which user is going to post
                 
