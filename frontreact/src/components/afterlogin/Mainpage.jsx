@@ -96,7 +96,7 @@ function Content() {
         
       )}
         <div className="my-20 flex justify-center">
-        <Pagination current={current} onChange={onChange} total={50} />;
+        <Pagination current={current} onChange={onChange} total={50} />
           </div>
     </>
   )
