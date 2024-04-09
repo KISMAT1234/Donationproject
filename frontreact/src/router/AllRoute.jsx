@@ -18,6 +18,7 @@ import Favourites from "../components/afterlogin/Favourites"
 import Uploadcontent from "../components/afterlogin/Upload"
 import Donate from "../components/afterlogin/Donate"
 import Profile from "../components/afterlogin/Profile"
+import Search from "../components/afterlogin/Search"
 // import Layout from "../components/afterlogin/bar/Outlet"
 
 
@@ -45,8 +46,9 @@ function RouterList(){
              <Route path="profile" element={<Profile/>}/>
              <Route path="members-list" element={<MemberList/>}/>
              <Route path="favourites" element={<Favourites/>}/>
-            <Route path="upload" element={<Uploadcontent/>}/>
-            <Route path="donate/:id" element={<Donate/>}/>
+             <Route path="upload" element={<Uploadcontent/>}/>
+             <Route path="donate/:id" element={<Donate/>}/>
+             <Route path="search" element={<Search/>}/>
             
            {/* <Route path="/Mainpage" element={<Layout/>}>
             </Route> */}
