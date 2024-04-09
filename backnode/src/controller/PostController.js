@@ -37,7 +37,7 @@ class PostController{
             if(name){
                 queryObject.name = {$regex: name, $options:"i"};
             }
-            // console.log(queryObject);
+            console.log(queryObject);
             const uploads =  await Post.find(queryObject).skip(skip).limit(size);   // Fetching upload post   
             const uploadsWithUser = await Promise.all(uploads.map(async (upload) => {  // mapping over uploads inside Promise.all  to ensure all user queries are completed before continuing
                 const user = await User.findById(upload.userId); // Fetching  user information  which user is going to post
