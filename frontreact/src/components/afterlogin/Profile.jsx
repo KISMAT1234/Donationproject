@@ -20,8 +20,10 @@ const Profile = () => {
 
 
   return (
-    <div className="mx-5 my-10  rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-        <h1>Profile</h1>
+    <div className="mx-5 my-10 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+        <button className="bg-red-600 rounded-xl px-2 py-1 mx-5 my-5 justify-end">
+            Edit
+        </button>
         {
         profile.map((data, index)=>(
             <div key={index} className="">
