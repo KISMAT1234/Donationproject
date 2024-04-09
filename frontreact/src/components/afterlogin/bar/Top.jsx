@@ -1,10 +1,32 @@
+import { useState } from "react";
 import logo from "../../image/logo.jpg"
 import { FaSearch } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+
+
+
 
 
 function Topbar() {
 
 
+   const [search,setSearch] = useState('');
+
+
+   const changeValue = (e) => {
+      setSearch(e.target.value);
+   }
+
+   const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log(search,'search value');
+      // setSearch('');
+     
+    
+   }
+
+  
+  
 
    return(
     <>
@@ -18,17 +40,18 @@ function Topbar() {
                <h1 className="">DONATE ANYTHING YOU WANT</h1>
             
            </div>
-
-           <div className=" md:w-[30%]">
-              <div className="relative top-9 left-48 ">
-              <FaSearch />
-              </div>
+            <form onSubmit={handleSubmit}>
+           <div className=" md:w-[30%] flex">  
               <div className="">
-                <input type="text" className="text-xl mt-2 h-[6vh]  mr-3 md:mr-10 rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]" placeholder="Search Items Here"/>
+                <input type="text" value={search} onChange={changeValue} className="text-xl mt-2 h-[6vh] rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]" placeholder="Search Items Here"/>    
               </div>
-
-              {/* <h1 className="font-mono text-xl">Welcome:</h1> */}
+              <Link to={`/Mainpage/search?name=${search}`}>
+                <button type = "submit" className=" bg-blue-400  h-[6vh] mt-2 rounded-2xl mx-1 px-4 py-4 ">
+                  <FaSearch />
+                 </button>
+               </Link>
            </div> 
+           </form>
 
        </div>
        
