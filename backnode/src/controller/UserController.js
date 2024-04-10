@@ -1,7 +1,9 @@
 import User from "../model/Userprofile.js";
 import ResponseHandler from "../helper/ResponseHandler.js"
-
+import sendEmail from "../helper/sendEmail.js"
 const responseInstance = new ResponseHandler();
+import emailToken from "../helper/emailToken.js"
+
 
 
 class UserController{
@@ -46,15 +48,32 @@ class UserController{
             }
             // console.log(imageName,'image filename store')
                 const user = new User({...req.body, image:imageName}); 
+                
                 // console.log(req.body);
-                await user.save();
-                // console.log(user);
+                // await user.save();
+                // console.log(user)
+                const email = user.email
+                // console.log(email);
+                if(user){
+                    // this.sendTokenVerifyMail({subject:'Signup Verification'})
+                    let value = emailToken.token({email,subject:'Signup Verification',info:user})
+                }else{
+                    console.log("error");
+                }
                 return res.status(201).json({message:'Signup Successfull'});
             }
             catch(err){
                  return res.status(500).json(err);
             }
     }
+
+    async sendTokenVerifyMail({subject}){
+        console.log({subject},'all data')
+        // const token = await info.generateToken();
+        // console.log(token,'verify token')
+        // await sendMail({to:email,subject:subject,token})
+       
+      }
 }
 
 export default UserController;
