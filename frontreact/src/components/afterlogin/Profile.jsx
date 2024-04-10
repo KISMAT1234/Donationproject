@@ -15,6 +15,13 @@ const Profile = () => {
      }).catch((err)=>{
        console.log(err);
      })
+
+    //  axiosUrl.get("/upload").then((response)=>{
+    //   console.log(response.data.data);
+    //   setProfile([response.data.data])
+    // }).catch((err)=>{
+    //   console.log(err);
+    // })
 },[])
 
 
