@@ -4,7 +4,6 @@ import axiosUrl from "../url/Axiosurl";
 import { FaThumbsUp } from "react-icons/fa";
 import { FaThumbsDown } from "react-icons/fa";
 import { FaCut } from "react-icons/fa";
-import Topbar from "./bar/Top.jsx";
 
 const Donate = () => {
     const [info, setInfo] = useState([]);
@@ -105,7 +104,6 @@ useEffect(() => {
     return (
         <>
    
-        <Topbar onSearch={handleSearch} />
         <div className=" px-5 py-10">
              <div className="md:flex">
                  <div className="md:w-[50%] hover:opacity-100">
