@@ -53,10 +53,11 @@ class UserController{
                 // await user.save();
                 // console.log(user)
                 const email = user.email
-                // console.log(email);
+                const userId = user._id;
+                // console.log(email,userId,'user info');
                 if(user){
                     // this.sendTokenVerifyMail({subject:'Signup Verification'})
-                    let value = emailToken.token({email,subject:'Signup Verification',info:user})
+                    let value = emailToken.token({email,userId,subject:'Signup Verification',info:user})
                 }else{
                     console.log("error");
                 }
@@ -67,13 +68,7 @@ class UserController{
             }
     }
 
-    async sendTokenVerifyMail({subject}){
-        console.log({subject},'all data')
-        // const token = await info.generateToken();
-        // console.log(token,'verify token')
-        // await sendMail({to:email,subject:subject,token})
-       
-      }
+
 }
 
 export default UserController;
