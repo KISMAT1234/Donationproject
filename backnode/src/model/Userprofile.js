@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
         enum: ["user", "admin"],
         default: "user",
     },
+    isVerfied:{type:Boolean, default:false},
 },{
 versionKey: false,
 });
