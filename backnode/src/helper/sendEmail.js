@@ -1,7 +1,12 @@
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
+import hbs from "nodemailer-express-handlebars"
+import path from "path"
+
 
 dotenv.config();
+const __filename = new URL(import.meta.url).pathname;
+const __dirname = path.dirname(__filename);
 
 
 const transporter = nodemailer.createTransport({
@@ -15,19 +20,34 @@ const transporter = nodemailer.createTransport({
     },
   });
 
-async function sendEmail({to, subject, token}){
+  const hbsOptions = {
+      viewEngine:{
+        defaultLayout:false,
+        partialsDir: path.resolve(__dirname,'../views'),
+      },
+      viewPath: path.resolve(__dirname,'../views'),
+
+  }
+
+  transporter.use('compile',hbs(hbsOptions))
+
+async function sendEmail({to, subject, token, userId}){
     // console.log(to, subject, token,'sendemail token')
     let mailDetails = {
         from : "lifecoding23@gmail.com",
         to: to,
         subject: subject,
-        title: 'Activat your account',
-        text:`please click the link below ${process.env.BASE_URL}/activateemail/${token}`,
+        template:'signupMessage',
+        context:{
+          title:'signup message',
+          text:'Congratulation for register account',
+          link:`${process.env.BASE_URL}/users/${userId}/verify/${token}`,
+        }
     
     }
 
     const info = await transporter.sendMail(mailDetails)
-    console.log(info);
+    // console.log(info);
 }
 
 export default sendEmail;
