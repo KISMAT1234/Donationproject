@@ -5,9 +5,9 @@ import AboutPage from "../components/beforelogin/About"
 import Achievement from "../components/beforelogin/Achievement"
 import Event from "../components/beforelogin/Event"
 import Contact from "../components/beforelogin/Contact"
-import Signup from "../components/beforelogin/Signup"
+import Signup from "../components/beforelogin/Signup
 import Login from "../components/beforelogin/Login"
-
+import emailVerify from "../middleware/emailVerify"
 
 import LoginMiddleware from "../middleware/LoginMiddleware"
 
@@ -40,6 +40,10 @@ function RouterList(){
          <Route path="/login-form" element={<Login/>}/>
 
 
+         <Route path="/users/:id/verify/:token" element={<emailVerify/>}/>
+
+
+
 
          <Route path="Mainpage" element={<LoginMiddleware/>}>
              <Route path="/Mainpage" element={<Mainpage/>}/>
@@ -50,8 +54,7 @@ function RouterList(){
              <Route path="donate/:id" element={<Donate/>}/>
              <Route path="search" element={<Search/>}/>
             
-           {/* <Route path="/Mainpage" element={<Layout/>}>
-            </Route> */}
+         
          </Route>
 
        </Routes>
