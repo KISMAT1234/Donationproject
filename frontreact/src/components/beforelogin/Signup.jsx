@@ -93,7 +93,7 @@ const beforeUpload = (file) => {
 
   return (
     <>
-    <Nav/>
+    <Nav to="true"/>
     <div className="px-10 py-10 md:flex md:justify-around">
 
     <Form
@@ -186,6 +186,7 @@ const beforeUpload = (file) => {
                 listType="picture"
                 accept=".jpg,.jpeg,.png"
                 showUploadList={false}
+                fileList={imageFile}
               >
                 <Button icon={<UploadOutlined />} className="bg-gray-400" >Click to upload</Button>
               </Upload>
