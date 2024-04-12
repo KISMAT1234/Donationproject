@@ -41,7 +41,7 @@ async function sendEmail({to, subject, token, userId}){
         context:{
           title:'signup message',
           text:'Congratulation for register account',
-          link:`${process.env.BASE_URL}/users/${userId}/verify/${token}`,
+          link:`${process.env.FRONTEND_URL}/users/${userId}/verify/${token}`,
         }
     
     }
