@@ -49,6 +49,7 @@ const App = () => {
 
   const [form] = Form.useForm();
   const [imageFile, setImageFile] = useState(null);
+  const [emailMessage, setEmailMessage] = useState('');
 
   const onFinish = (values) => {
     console.log(values,'console value')
@@ -66,6 +67,7 @@ const App = () => {
 
     console.log('data: ', formData);
     axiosUrl.post("/user",formData).then((response)=>{
+      setEmailMessage(response.data.message)
       if(response.data.message){
         Swal.fire({
           icon: "success",
@@ -197,6 +199,9 @@ const beforeUpload = (file) => {
           Register
         </Button>
       </Form.Item>
+      <div>
+        <h1 className="text-2xl">{emailMessage}</h1>
+      </div>
     </Form>
 
     <div>
