@@ -1,5 +1,8 @@
 import User from "../model/Userprofile.js";
 import TokenCheck from "../middleware/TokenVerify.js";
+import Token from "../model/Token.js";
+import emailToken from "../helper/emailToken.js"
+
 
  class LoginController {
 
@@ -15,6 +18,19 @@ import TokenCheck from "../middleware/TokenVerify.js";
              if(!isPass){
                return res.status(200).json({notfound:"Password not found"})
              }
+
+             if(!mail.isVerified){
+                let userId = mail._id
+                // console.log(userId,'mail id');
+
+                let token = await Token.findOne({userId: userId})
+                //  console.log(token, 'token value')
+                 if(!token){
+                    let value = emailToken.token({email,userId,subject:'Signup Verification',info:mail})
+                 }
+                 return res.status(200).json({notfound:"Please verify your email"})
+             }
+
              let userToken = mail.generateToken();
             //  console.log(userToken); 
              res.status(200).json({token: userToken});
