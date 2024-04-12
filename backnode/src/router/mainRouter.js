@@ -9,7 +9,7 @@ const mainRouter= express.Router();
 mainRouter.use('/user',userRouter);
 mainRouter.use('/upload',postRouter);
 mainRouter.use('/login',loginRouter);
-mainRouter.use('/comment',cmtRouter)
+mainRouter.use('/comment',cmtRouter);
 
 
 export default mainRouter;
