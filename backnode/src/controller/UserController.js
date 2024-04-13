@@ -1,9 +1,9 @@
 import User from "../model/Userprofile.js";
-import ResponseHandler from "../helper/ResponseHandler.js"
 import sendEmail from "../helper/sendEmail.js"
-const responseInstance = new ResponseHandler();
 import emailToken from "../helper/emailToken.js"
 import Token from "../model/Token.js";
+import Handler from "../helper/ResponseHandler.js"
+const responseInstance = new Handler();
 
 
 
@@ -90,10 +90,10 @@ class UserController{
          const update = await User.updateOne({ _id: user_id }, { $set: { isVerified: true } });
         //  console.log(update,'update successfull user data')
 
-        //  await Token.deleteOne({
-        //     userId: user_id,
-        //     token: req.params.token
-        //   });
+         await Token.deleteOne({
+            userId: user_id,
+            token: req.params.token
+          });
 
          res.status(200).json({message:"Email verified successfully"})
        }catch(err){
