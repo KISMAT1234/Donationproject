@@ -1,6 +1,9 @@
 import Post from "../model/Post.js";
 import User from "../model/Userprofile.js";
 import Pagination from "../helper/Pagination.js";
+import Handler from "../helper/ResponseHandler.js";
+const responseInstance = new Handler();
+
 
 class PostController{
 
@@ -44,9 +47,11 @@ class PostController{
                 upload.userId = user   //Assign user information in userId 
                 return upload;
             }));
-             return res.status(201).json(uploadsWithUser)
+            // console.log(uploadsWithUser,'user data')
+            //  return res.status(201).json(uploadsWithUser)
+             return responseInstance.responseHandler(res, 200,"data fetch of post successfully",uploadsWithUser);
         }catch(err){
-              return res.status(500).json(err)
+            console.log(err,'err');
         } 
     }
 
