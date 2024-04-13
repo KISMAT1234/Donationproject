@@ -38,10 +38,11 @@ function Content() {
 
   
     const getContent = async () => {
+      
       axiosUrl.get(`/upload?page=${current}`)
         .then((response) => {
-          console.log(response.data)
-          setContent(response.data);
+          // console.log(response.data.data,'response data')
+          setContent(response.data.data);
           setLoading(false);
         })
         .catch((err) => {
@@ -53,6 +54,7 @@ function Content() {
     dispatch(Star([data]));
     setClickedIndex(index); // Update the clicked index
   }
+  // console.log(content,'content data')
 
   return (
     <>
