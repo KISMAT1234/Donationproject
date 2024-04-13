@@ -6,6 +6,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 // import Swal from 'sweetalert2'
 import login from "../image/login.jpeg"
+import { Link } from "react-router-dom";
 const App = () => {
 
   const onFinish = (values) => {
@@ -88,8 +89,10 @@ const App = () => {
           <Button type="primary" htmlType="submit" className="bg-blue-600 login-form-button">
             Log in
           </Button>
-          Or <a href="">register now!</a>
+          Or <a href=""></a>
+        <Link to="/signup-form">Signup</Link>
         </Form.Item>
+      <Link to="send-email">Forgot Password</Link>
       </Form>
 
       <div className="w-[30%]" >
