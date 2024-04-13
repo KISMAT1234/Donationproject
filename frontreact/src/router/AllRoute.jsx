@@ -8,6 +8,8 @@ import Contact from "../components/beforelogin/Contact"
 import Signup from "../components/beforelogin/Signup"
 import Login from "../components/beforelogin/Login"
 import Verify from "../middleware/emailVerify"
+import Verificationpassword from "../components/beforelogin/Verificationpassword"
+import Forgotpassword from "../components/beforelogin/Forgotpassword"
 
 import LoginMiddleware from "../middleware/LoginMiddleware"
 
@@ -38,6 +40,7 @@ function RouterList(){
 
          <Route path="/signup-form" element={<Signup/>}/>
          <Route path="/login-form" element={<Login/>}/>
+         <Route path="/login-form/send-email" element={<Verificationpassword />}/>
 
 
 
