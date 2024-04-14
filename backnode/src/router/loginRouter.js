@@ -8,5 +8,6 @@ const loginInstance = new LoginController();
 
 loginRouter.post("/",loginInstance.login)
 loginRouter.get("/token",loginInstance.tokenCheck)
+loginRouter.post("/forgot",loginInstance.forgotPassword)
 
 export default loginRouter;
