@@ -31,7 +31,7 @@ const transporter = nodemailer.createTransport({
 
   transporter.use('compile',hbs(hbsOptions))
 
-async function sendEmail({to, subject, token, userId}){
+async function sendEmail({to, subject,reason, token, userId}){
     // console.log(to, subject, token,'sendemail token')
     let mailDetails = {
         from : "lifecoding23@gmail.com",
@@ -41,7 +41,7 @@ async function sendEmail({to, subject, token, userId}){
         context:{
           title:'signup message',
           text:'Congratulation for register account',
-          link:`${process.env.FRONTEND_URL}/users/${userId}/verify/${token}`,
+          link:`${process.env.FRONTEND_URL}/user/${userId}/${reason}/${token}`,
         }
     
     }

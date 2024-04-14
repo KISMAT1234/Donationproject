@@ -16,5 +16,6 @@ userRouter.post('/',upload.single('image'), routerInstance.store)
 userRouter.get('/',authenticate,authorize(["user","admin"]), routerInstance.getAllUser)
 // userRouter.get('/',authenticate,authorize(["admin"]), routerInstance.getAllUser)
 userRouter.get('/:id/verify/:token',routerInstance.verifyEmail)
+userRouter.post('/:id/forgot/:token',routerInstance.forgotPassword)
 
 export default userRouter;
