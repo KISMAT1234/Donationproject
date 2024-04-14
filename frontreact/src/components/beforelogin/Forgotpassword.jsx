@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import axiosUrl from '../url/Axiosurl';
+import { useParams } from 'react-router-dom';
 
 const PasswordForm = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
+  const { id, token } = useParams();
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -17,13 +20,16 @@ const PasswordForm = () => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setError('Passwords do not match');
-    } else {
-      // Passwords match, continue with your logic here
-      setError('');
+    } 
+    axiosUrl.post(`/user/${id}/forgot/${token}`,{password}).then((response)=>{
+      console.log(response);
+    }).catch((err)=>{
+      console.log(err);
+    })
     }
-  };
 
   return (
+    <>
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="password">Password:</label>
@@ -47,6 +53,7 @@ const PasswordForm = () => {
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <button type="submit">Submit</button>
     </form>
+    </>
   );
 };
 
