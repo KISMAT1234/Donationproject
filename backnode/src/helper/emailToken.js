@@ -3,7 +3,7 @@ import Token from "../model/Token.js";
 
 
 class emailToken{
-    static async token({email,userId, subject,info}){
+    static async token({email,userId,reason, subject,info}){
           // console.log(email,userId, subject,info)
         // const userId  = user._id;
         // console.log(userId,'userid value')
@@ -16,7 +16,7 @@ class emailToken{
         }).save()
 
         // console.log(emailToken,'email token')
-         await sendEmail({to:email,userId,subject:subject,token})
+         await sendEmail({to:email,userId,reason:reason,subject:subject,token})
     }
 }
 export default emailToken;
