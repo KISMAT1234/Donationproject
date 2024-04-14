@@ -46,7 +46,8 @@ function RouterList(){
 
 
 
-         <Route path="/users/:id/verify/:token" element={<Verify/>}/>
+         <Route path="/user/:id/verify/:token" element={<Verify/>}/>
+         <Route path="/user/:id/forgot/:token" element={<Forgotpassword/>}/>
 
          <Route path="Mainpage" element={<LoginMiddleware/>}>
              <Route path="/Mainpage" element={<Mainpage/>}/>
