@@ -66,6 +66,29 @@ import emailToken from "../helper/emailToken.js"
          
       }
     }
+
+    async forgotPassword(req,res){
+        try{
+         let data = req.body
+         data = data.email
+
+        //  console.log(data,'email value');
+         let user = await User.findOne({ email:data})
+        //  console.log(user,'email')
+
+         const email = user.email
+         const userId = user._id;
+
+         if(email){
+            // console.log('email found');
+            emailToken.token({email,userId,reason:'forgot',subject:"Change Password",info:user})
+         }else{
+            console.log('Email not found');
+         }
+        }catch(err){
+            console.log(err)
+        }
+    }
  }
 
    
