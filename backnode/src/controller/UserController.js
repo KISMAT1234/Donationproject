@@ -4,6 +4,8 @@ import emailToken from "../helper/emailToken.js"
 import Token from "../model/Token.js";
 import Handler from "../helper/ResponseHandler.js"
 const responseInstance = new Handler();
+import bcrypt from "bcrypt"
+
 
 
 
@@ -58,7 +60,7 @@ class UserController{
                 // console.log(email,userId,'user info');
                 if(user){
                     // this.sendTokenVerifyMail({subject:'Signup Verification'})
-                    let value = emailToken.token({email,userId,subject:'Signup Verification',info:user})
+                    let value = emailToken.token({email,userId,reason:'verify',subject:'Signup Verification',info:user})
                 }else{
                     console.log("error");
                 }
@@ -101,6 +103,28 @@ class UserController{
         res.status(500).json({message:"Error in verifying email"})
 
        }
+    }
+
+    async forgotPassword(req,res){
+        try{
+        let data = req.body.password;
+        // console.log(data);
+        const user_id = req.params.id
+        const token = req.params.token
+        // console.log(user_id,'user id')
+        // console.log(token,'auth email')
+        const hashedPassword = await bcrypt.hash(data, 10);
+        // console.log(hashedPassword,'hash pass');
+        const user = await User.updateOne({_id:user_id},{ $set: { password: hashedPassword } })
+        // console.log(user,'after hash')
+        if(user){
+            // console.log('change successfull');
+            return responseInstance.successResponse(res,200,'password change successfully')
+        }
+        
+        }catch(err){
+         console.log(err)
+        }
     }
 
 
