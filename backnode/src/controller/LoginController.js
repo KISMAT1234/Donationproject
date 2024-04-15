@@ -26,7 +26,15 @@ import emailToken from "../helper/emailToken.js"
                 let token = await Token.findOne({userId: userId})
                 //  console.log(token, 'token value')
                  if(!token){
-                    let value = emailToken.token({email,userId,subject:'Signup Verification',info:mail})
+                    let value =  emailToken.token({
+                        email,
+                        userId,
+                        reason:'verify',
+                        title:'Verify Account',
+                        subject:'Link to verify your account',
+                        info:mail,
+                        template:'signupMessage'
+                    })
                  }
                  return res.status(200).json({notfound:"Please verify your email"})
              }
@@ -81,7 +89,15 @@ import emailToken from "../helper/emailToken.js"
 
          if(email){
             // console.log('email found');
-            emailToken.token({email,userId,reason:'forgot',subject:"Change Password",info:user})
+            emailToken.token({
+                email,
+                userId,
+                reason:'forgot',
+                title:'Change Password',
+                subject:'Link provided to change password',
+                info:user,
+                template:'forgotPassword'
+            })
          }else{
             console.log('Email not found');
          }
