@@ -22,7 +22,8 @@ const transporter = nodemailer.createTransport({
 
   const hbsOptions = {
       viewEngine:{
-        defaultLayout:false,
+        defaultLayout:'baseMessage',
+        layoutsDir:path.resolve(__dirname,'../views'),
         partialsDir: path.resolve(__dirname,'../views'),
       },
       viewPath: path.resolve(__dirname,'../views'),
@@ -31,16 +32,23 @@ const transporter = nodemailer.createTransport({
 
   transporter.use('compile',hbs(hbsOptions))
 
-async function sendEmail({to, subject,reason, token, userId}){
+async function sendEmail({
+   to, 
+   subject,
+   reason, 
+   token,
+   userId,
+   title,
+   template
+  }){
     // console.log(to, subject, token,'sendemail token')
     let mailDetails = {
         from : "lifecoding23@gmail.com",
         to: to,
         subject: subject,
-        template:'signupMessage',
+        template:template,
         context:{
-          title:'signup message',
-          text:'Congratulation for register account',
+          title:title,
           link:`${process.env.FRONTEND_URL}/user/${userId}/${reason}/${token}`,
         }
     

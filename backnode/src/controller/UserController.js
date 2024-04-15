@@ -60,7 +60,15 @@ class UserController{
                 // console.log(email,userId,'user info');
                 if(user){
                     // this.sendTokenVerifyMail({subject:'Signup Verification'})
-                    let value = emailToken.token({email,userId,reason:'verify',subject:'Signup Verification',info:user})
+                    let value = emailToken.token({
+                        email,
+                        userId,
+                        reason:'verify',
+                        title:'Verify Account',
+                        subject:'Link to verify your account',
+                        info:user,
+                        template:'signupMessage'
+                    })
                 }else{
                     console.log("error");
                 }
@@ -121,6 +129,11 @@ class UserController{
             // console.log('change successfull');
             return responseInstance.successResponse(res,200,'password change successfully')
         }
+
+        await Token.deleteOne({
+            userId: user_id,
+            token: token
+          });
         
         }catch(err){
          console.log(err)
