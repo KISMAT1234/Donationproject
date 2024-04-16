@@ -9,9 +9,9 @@ const Profile = () => {
 
   
   useEffect(()=>{
-     axiosUrl.get("/user").then((response)=>{
-       console.log(response.data.data);
-       setProfile([response.data.data])
+     axiosUrl.get("/login/token").then((response)=>{
+       console.log(response.data.userData);
+       setProfile([response.data.userData])
      }).catch((err)=>{
        console.log(err);
      })
