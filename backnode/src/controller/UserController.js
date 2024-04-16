@@ -5,38 +5,35 @@ import Token from "../model/Token.js";
 import Handler from "../helper/ResponseHandler.js"
 const responseInstance = new Handler();
 import bcrypt from "bcrypt"
+import slugify from'slugify';
+
 
 
 
 
 class UserController{
-    // async getUser(req,res){
-    //     try{
-    //         const userId = req.user.userId
-    //          const user =  await User.find({_id : userId});
-    //          return res.status(201).json(user)
-    //     }catch(err){
-    //           return res.status(500).json(err)
-    //     } 
-    // }
+    async getOneUser(req,res){
+        try{
+            const slug = req.params.slug;
+            // console.log(slug);
+             const user =  await User.find({slug}).select('-password')
+            //  console.log(user,'user single')
+             return responseInstance.successResponse(res,200,'data fetch success',user)
+
+        }catch(err){
+              return res.status(500).json(err)
+        } 
+    }
 
     async getAllUser(req,res){
         try{
-            let {userRole} = req.user
-            let userId = req.user.userId
-    
-            if(userRole == "user"){
-             const user =  await User.findById({_id :userId});
-           
+            // let {userRole} = req.user    
+             const user =  await User.find().select('-password');
+            if(user){
             //  console.log(user)
             //  return res.status(201).json(users)
              return responseInstance.successResponse(res,200,'data fetch success',user)
-            }
-            else{
-                const user =  await User.find({});
-                // console.log(user);
-                return responseInstance.successResponse(res,200,'data fetch success',user)
-            }
+            }        
         }catch(err){
               return res.status(500).json(err)
         } 
@@ -51,27 +48,29 @@ class UserController{
             }
             // console.log(imageName,'image filename store')
                 const user = new User({...req.body, image:imageName}); 
+                user.slug = slugify(user.username, { lower: true });
+                console.log(user);
                 
                 // console.log(req.body);
                 await user.save();
                 // console.log(user)
-                const email = user.email
-                const userId = user._id;
-                // console.log(email,userId,'user info');
-                if(user){
-                    // this.sendTokenVerifyMail({subject:'Signup Verification'})
-                    let value = emailToken.token({
-                        email,
-                        userId,
-                        reason:'verify',
-                        title:'Verify Account',
-                        subject:'Link to verify your account',
-                        info:user,
-                        template:'signupMessage'
-                    })
-                }else{
-                    console.log("error");
-                }
+                // const email = user.email
+                // const userId = user._id;
+                // // console.log(email,userId,'user info');
+                // if(user){
+                //     // this.sendTokenVerifyMail({subject:'Signup Verification'})
+                //     let value = emailToken.token({
+                //         email,
+                //         userId,
+                //         reason:'verify',
+                //         title:'Verify Account',
+                //         subject:'Link to verify your account',
+                //         info:user,
+                //         template:'signupMessage'
+                //     })
+                // }else{
+                //     console.log("error");
+                // }
                 return res.status(201).json({message:'Email sent to your account for verification'});
             }
             catch(err){
