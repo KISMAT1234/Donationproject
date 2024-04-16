@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema({
         enum: ["user", "admin"],
         default: "user",
     },
+    slug:{
+        type:String,
+        required:true,
+        unique: true 
+    },
     isVerified:{type:Boolean, default:false},
 },{
 versionKey: false,
@@ -24,6 +29,8 @@ versionKey: false,
 
 userSchema.pre("save", async function(next){
     try{
+        // this.slug = slugify(this.username, { lower: true });
+
         if(this.isModified("password")){
             const hashedPassword = await bcrypt.hash(this.password, 10);
             // console.log(hashedPassword)
