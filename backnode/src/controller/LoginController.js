@@ -50,13 +50,16 @@ import emailToken from "../helper/emailToken.js"
     
     async tokenCheck(req,res){
       try{
+           let userId = req.user.userId
            let token = req.headers.authorization
         //    console.log(token)
            token = token.split(' ')[1];
+           const user = await User.findById({_id: userId});
            if(token){
             let response = TokenCheck.verifyToken(token);
             if(response){
                 return res.status(200).json({
+                    userData: user,
                     success: true
                 });
             }else{
