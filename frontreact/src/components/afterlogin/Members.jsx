@@ -1,6 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 import axiosUrl from "../url/Axiosurl";
+import {Link}from "react-router-dom"
 
 function MemberList() {
   const [loading, setLoading] = useState(true);
@@ -25,7 +26,7 @@ function MemberList() {
 
   return (
     <>
-      <div className="md:flex px-5 py-1 mx-5 my-10 shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)]">
+      <div className="md:flex px-5 py-1 mx-5  shadow-[-10px_-10px_30px_4px_rgba(0,0,0,0.1),_10px_10px_30px_4px_rgba(45,78,255,0.15)]">
         {loading ? (
           <div>Loading...</div>
         ) : (
@@ -39,9 +40,12 @@ function MemberList() {
                 <div>{data.username}</div>
                 <div>{data.email}</div>
                 <div>
-                  <button className="md:text-2xl bg-green-400 rounded-2xl px-3 py-2 hover:bg-green-600 hover:text-slate-100">
-                    Add Member
-                  </button>
+                  <Link to ={data.slug}>
+                     <button className="md:text-2xl bg-green-400 rounded-2xl px-3 py-2 hover:bg-green-600 hover:text-slate-100">
+                      Profile
+                     </button>
+                  </Link>
+               
                 </div>
               </div>
             ))}
