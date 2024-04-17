@@ -2,7 +2,7 @@ import User from "../model/Userprofile.js";
 import sendEmail from "../helper/sendEmail.js"
 import emailToken from "../helper/emailToken.js"
 import Token from "../model/Token.js";
-import Handler from "../helper/ResponseHandler.js"
+import Handler from "../logger/ResponseHandler.js"
 const responseInstance = new Handler();
 import bcrypt from "bcrypt"
 import slugify from'slugify';

@@ -1,7 +1,7 @@
 import Post from "../model/Post.js";
 import User from "../model/Userprofile.js";
 import Pagination from "../helper/Pagination.js";
-import Handler from "../helper/ResponseHandler.js";
+import Handler from "../logger/ResponseHandler.js";
 const responseInstance = new Handler();
 
 
