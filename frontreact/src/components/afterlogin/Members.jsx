@@ -39,12 +39,15 @@ function MemberList() {
                 </div>
                 <div>{data.username}</div>
                 <div>{data.email}</div>
-                <div>
+                <div className="">
                   <Link to ={data.slug}>
                      <button className="md:text-2xl bg-green-400 rounded-2xl px-3 py-2 hover:bg-green-600 hover:text-slate-100">
                       Profile
                      </button>
                   </Link>
+                     <button className="md:text-2xl bg-green-400 rounded-2xl px-3 py-2 hover:bg-green-600 hover:text-slate-100">
+                      Follow
+                     </button>
                
                 </div>
               </div>
