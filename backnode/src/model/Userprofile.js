@@ -20,6 +20,8 @@ const userSchema = new mongoose.Schema({
         required:true,
         unique: true 
     },
+    followers:[{type: mongoose.Schema.Types.ObjectId, ref:"User"}],
+    following:[{type: mongoose.Schema.Types.ObjectId, ref:"User"}],
     isVerified:{type:Boolean, default:false},
 },{
 versionKey: false,
