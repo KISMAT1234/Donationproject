@@ -78,6 +78,28 @@ class UserController{
             }
     }
 
+    async UpdateUserProfile(req, res){
+        try{
+        // const user_id = req.user.userId;
+        const slug = req.params.slug;
+        const user = await User.findOne({ slug: slug});
+
+        let {username, email} = req.body;
+        
+        if(slug == user.slug){
+           const update = await User.findOneAndUpdate({slug: slug}, {username, email})
+           update.slug = slugify(update.username, { lower: true })
+        //    console.log(update,'update successfull');
+           return responseInstance.successResponse(res,200,'data fetch success',user)
+        }else{
+          
+        }
+
+        } catch(err){
+            console.log("error");
+        }
+    }
+
     async verifyEmail(req,res){
        try{
          const user_id = req.params.id;
