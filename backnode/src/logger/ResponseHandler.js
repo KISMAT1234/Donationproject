@@ -1,4 +1,5 @@
-class Handler{
+
+class Handler {
 
   responseHandler(res, httpStatusCode,message,data){
 
