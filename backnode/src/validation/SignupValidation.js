@@ -25,7 +25,6 @@ const signupSchema  = z.object({
     username: usernameValidation,
     email: z.string().email({message: "Invalid email address"}),
     password: z.string().min(2, "password must be at least 2 characters"),
-    confirmPassword: z.string().max(8, "password must be at least 8 characters"),
 })
 
 // const validateSignup = validate(signupSchema);
