@@ -1,7 +1,7 @@
 import express from 'express'
 import UserController from "../controller/UserController.js"
 import FileUpload from '../multerfile/Upload.js';
-import authorize from "../middleware/Authorize.js"
+// import authorize from "../middleware/Authorize.js"
 import authenticate from "../middleware/Authenticate.js"
 
 const userRouter = express.Router();
@@ -15,6 +15,7 @@ userRouter.post('/',upload.single('image'), routerInstance.store)
 // userRouter.get('/admin',restrictTo(["admin"]), routerInstance.getUser)
 userRouter.get('/',routerInstance.getAllUser)
 userRouter.get('/:slug', routerInstance.getOneUser)
+userRouter.patch('/:slug', routerInstance.UpdateUserProfile)
 // userRouter.get('/',authenticate,authorize(["admin"]), routerInstance.getAllUser)
 userRouter.get('/:id/verify/:token',routerInstance.verifyEmail)
 userRouter.post('/:id/forgot/:token',routerInstance.forgotPassword)
