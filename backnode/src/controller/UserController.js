@@ -11,6 +11,7 @@ import slugify from'slugify';
 
 
 
+
 class UserController{
     async getOneUser(req,res){
         try{
@@ -32,7 +33,7 @@ class UserController{
             if(user){
             //  console.log(user)
             //  return res.status(201).json(users)
-             return responseInstance.successResponse(res,200,'data fetch success',user)
+             return responseInstance.successHandler(res,200,'data fetch success',user)
             }        
         }catch(err){
               return res.status(500).json(err)
@@ -41,6 +42,8 @@ class UserController{
     
     async store(req,res){
         try{
+            // const value = await signupValidate(req.body)
+            console.log(value,'validate')
             // console.log(req.file,'image file');
             let imageName="";
             if(req.file){
@@ -90,7 +93,7 @@ class UserController{
            const update = await User.findOneAndUpdate({slug: slug}, {username, email})
            update.slug = slugify(update.username, { lower: true })
         //    console.log(update,'update successfull');
-           return responseInstance.successResponse(res,200,'data fetch success',user)
+           return responseInstance.responseHandler(res,200,'data fetch success',user)
         }else{
           
         }
