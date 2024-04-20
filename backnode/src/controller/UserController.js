@@ -19,10 +19,10 @@ class UserController{
             // console.log(slug);
              const user =  await User.find({slug}).select('-password')
             //  console.log(user,'user single')
-             return responseInstance.successResponse(res,200,'data fetch success',user)
+             return responseInstance.responseHandler(res,200,'data fetch success',user)
 
         }catch(err){
-              return res.status(500).json(err)
+            return responseInstance.responseHandler(res,200,'failed to fetch user')
         } 
     }
 
@@ -33,17 +33,18 @@ class UserController{
             if(user){
             //  console.log(user)
             //  return res.status(201).json(users)
-             return responseInstance.successHandler(res,200,'data fetch success',user)
+             return responseInstance.responseHandler(res,200,'data fetch success',user)
             }        
         }catch(err){
-              return res.status(500).json(err)
+            return responseInstance.responseHandler(res,500,'failed to fetch user data')
+
         } 
     }
     
     async store(req,res){
         try{
             // const value = await signupValidate(req.body)
-            console.log(value,'validate')
+            // console.log('validate')
             // console.log(req.file,'image file');
             let imageName="";
             if(req.file){
@@ -52,29 +53,26 @@ class UserController{
             // console.log(imageName,'image filename store')
                 const user = new User({...req.body, image:imageName}); 
                 user.slug = slugify(user.username, { lower: true });
-                console.log(user);
-                
-                // console.log(req.body);
+                // console.log(user);
                 await user.save();
                 // console.log(user)
-                // const email = user.email
-                // const userId = user._id;
-                // // console.log(email,userId,'user info');
-                // if(user){
-                //     // this.sendTokenVerifyMail({subject:'Signup Verification'})
-                //     let value = emailToken.token({
-                //         email,
-                //         userId,
-                //         reason:'verify',
-                //         title:'Verify Account',
-                //         subject:'Link to verify your account',
-                //         info:user,
-                //         template:'signupMessage'
-                //     })
-                // }else{
-                //     console.log("error");
-                // }
-                return res.status(201).json({message:'Email sent to your account for verification'});
+                const email = user.email
+                const userId = user._id;
+                // console.log(email,userId,'user info');
+                if(user){
+                    let value = emailToken.token({
+                        email,
+                        userId,
+                        reason:'verify',
+                        title:'Verify Account',
+                        subject:'Link to verify your account',
+                        info:user,
+                        template:'signupMessage'
+                    })
+                }else{
+                    return responseInstance.responseHandler(res,501,'User not found')
+                }
+                return responseInstance.responseHandler(res,200,'Email sent to your account for verification')
             }
             catch(err){
                  return res.status(500).json(err);
@@ -103,6 +101,7 @@ class UserController{
         }
     }
 
+
     async verifyEmail(req,res){
        try{
          const user_id = req.params.id;
@@ -110,7 +109,8 @@ class UserController{
          const user = await User.findById({_id: user_id});
         //  console.log(user,'user id')
          if(!user){
-            return res.status(400).json({message:"Invalid user"});
+           return responseInstance.responseHandler(res,500,'Invalid user')
+            
          }
          const token = await Token.findOne({
             userId: user_id,
@@ -118,7 +118,8 @@ class UserController{
          })
         //  console.log(token,'token users data')
          if(!token){
-            return res.status(400).json({message:"Invalid token"});
+            return responseInstance.responseHandler(res,500,'Invalid token')
+
          }
 
          const update = await User.updateOne({ _id: user_id }, { $set: { isVerified: true } });
@@ -129,7 +130,8 @@ class UserController{
             token: req.params.token
           });
 
-         res.status(200).json({message:"Email verified successfully"})
+         return responseInstance.responseHandler(res,200,'Email verified successfully')
+
        }catch(err){
 
         res.status(500).json({message:"Error in verifying email"})
