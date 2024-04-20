@@ -7,10 +7,10 @@ const validate = (schema) => async(req, res, next) => {
         req.body = parseBody;
         next()
     }catch(err){
-        const errMessage = err.errors[0].message
-        console.log(errMessage,'err message');
+        // const errMessage = err.errors[0].message
+        console.log(err,'err message');
         // console.log(err);
-        return responseInstance.responseHandler(res,500,errMessage)
+        return responseInstance.responseHandler(res,500,'error')
     }
 }
 
