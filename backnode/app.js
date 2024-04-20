@@ -5,7 +5,7 @@ import path from "path"
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import morgan from 'morgan';
-import errorHandler from './src/logger/errorHandler.js'
+import errorHandler from './src/middleware/errorHandler.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
