@@ -18,8 +18,7 @@ const Loglevels = {
 
 
 let Logger;
-console.log(process.env.NODE_ENV,'env')
-if (process.env.NODE_ENV == 'production') {
+if (process.env.NODE_ENV == 'development') {
 
    Logger = winston.createLogger({
     level:Loglevels,     
@@ -46,6 +45,6 @@ if (process.env.NODE_ENV == 'production') {
 }
 
 // logger.error("error from logger")
-Logger.warn("warning message");
+// Logger.warn("warning message");
 
 export default Logger
