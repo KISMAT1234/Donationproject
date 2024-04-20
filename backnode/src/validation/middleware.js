@@ -15,3 +15,4 @@ const validate = (schema) => async(req, res, next) => {
 }
 
 export default validate
+
