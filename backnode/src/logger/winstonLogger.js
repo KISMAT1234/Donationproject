@@ -31,6 +31,7 @@ if (process.env.NODE_ENV == 'development') {
     ),   // Text format for logging       
     transports:[
         new winston.transports.File({
+            level:'error',
             filename:"log/error_log.txt",
             level:"error",
         })
