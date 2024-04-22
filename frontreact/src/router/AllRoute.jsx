@@ -23,6 +23,7 @@ import Profile from "../components/afterlogin/Profile"
 import Search from "../components/afterlogin/Search"
 import Layout from "../components/afterlogin/bar/Outlet"
 import Userprofile from "../components/afterlogin/Userprofile"
+import Update from "../components/afterlogin/Update"
 
 
 
@@ -53,6 +54,7 @@ function RouterList(){
          <Route path="Mainpage" element={<LoginMiddleware/>}>
              <Route path="/Mainpage" element={<Mainpage/>}/>
              <Route path="profile" element={<Profile/>}/>
+             <Route path="profile/update-profile" element={<Update/>}/>
              <Route path="members-list" element={<MemberList/>}/>
              <Route path="members-list/:slug" element={<Userprofile/>}/>
              <Route path="favourites" element={<Favourites/>}/>
