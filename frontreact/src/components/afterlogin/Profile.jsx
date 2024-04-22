@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axiosUrl from "../url/Axiosurl";
+import { Link } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
+
 
 
 const Profile = () => {
@@ -28,9 +31,21 @@ const Profile = () => {
 
   return (
     <div className="mx-5 my-10 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-        <button className="bg-red-600 rounded-xl px-2 py-1 mx-5 my-5 justify-end">
-            Edit
+      <div className="flex justify-between">
+       <Link to = "/Mainpage/profile/update-profile">
+        <button className="bg-red-600  hover:bg-green-600 rounded-xl px-2 py-1 mx-5 my-5 justify-end">
+            {/* <h1>Edit</h1> */}
+            <FaEdit className="ml-1 text-4xl" />
         </button>
+       </Link>
+
+       <Link to ="">
+       <button className="bg-red-600  hover:bg-green-600 rounded-xl px-2 py-1 mx-5 my-5 justify-end">
+           <h1>Change password</h1>
+         </button>
+       </Link>
+      </div>
+
         {
         profile.map((data, index)=>(
             <div key={index} className="">
