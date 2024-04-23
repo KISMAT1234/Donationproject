@@ -54,7 +54,7 @@ function RouterList(){
          <Route path="Mainpage" element={<LoginMiddleware/>}>
              <Route path="/Mainpage" element={<Mainpage/>}/>
              <Route path="profile" element={<Profile/>}/>
-             <Route path="profile/update-profile" element={<Update/>}/>
+             <Route path="profile/:slug" element={<Update/>}/>
              <Route path="members-list" element={<MemberList/>}/>
              <Route path="members-list/:slug" element={<Userprofile/>}/>
              <Route path="favourites" element={<Favourites/>}/>
