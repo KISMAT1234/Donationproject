@@ -83,21 +83,22 @@ class UserController{
         try{
         // const user_id = req.user.userId;
         const slug = req.params.slug;
+        // console.log(slug,'user slug')
+       
         const user = await User.findOne({ slug: slug});
 
-        let {username, email} = req.body;
+        let updateUser = req.body;
+        // console.log(updateUser,'user update')
         
         if(slug == user.slug){
-           const update = await User.findOneAndUpdate({slug: slug}, {username, email})
+           const update = await User.findOneAndUpdate({slug: slug}, updateUser)
            update.slug = slugify(update.username, { lower: true })
         //    console.log(update,'update successfull');
-           return responseInstance.responseHandler(res,200,'data fetch success',user)
-        }else{
-          
+           return responseInstance.responseHandler(res,200,'update successfull')
         }
 
         } catch(err){
-            console.log("error");
+            return responseInstance.responseHandler(res,501,'Failed to update')
         }
     }
 
