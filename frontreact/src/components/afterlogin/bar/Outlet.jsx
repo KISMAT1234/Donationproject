@@ -12,10 +12,10 @@ const Layout = () => {
     </div>
 
     <div className="md:flex">
-        <div className=" fixed top-14 md:top-0 w-full z-1000  md:w-[20%]   md:mt-14">
+        <div className=" fixed top-14 md:top-0  z-1000  md:w-[20%]  w-full md:mt-14">
            <Leftbar/>
         </div>
-        <div className=" md:ml-[20%] mt-40 md:mt-20">
+        <div className=" md:ml-[20%] mt-40 md:w-[100%] md:mt-20">
           <Outlet/>
         </div>
     </div>
