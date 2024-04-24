@@ -8,6 +8,7 @@ import { FaEdit } from "react-icons/fa";
 const Profile = () => {
 
     const [profile, setProfile] = useState([]);
+    const [loading, setLodaing] = useState(true);
       const [selectedFile, setSelectedFile] = useState(null);
 
   
@@ -15,6 +16,7 @@ const Profile = () => {
      axiosUrl.get("/login/token").then((response)=>{
       //  console.log(response.data.userData);
        setProfile([response.data.userData])
+       setLodaing(false)
        
       }).catch((err)=>{
         console.log(err);
@@ -33,6 +35,13 @@ const Profile = () => {
 
 
   return (
+    <>
+    {
+      loading ? (
+        <div className="mt-[250px] text-center text-4xl">
+           <h1>Loading Profile...</h1>
+        </div>
+      ) : (
     <div className="mx-5 my-10 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
       <div className="flex justify-between">
        <Link to = {"/Mainpage/profile/" + profile[0]?.slug}>
@@ -60,13 +69,11 @@ const Profile = () => {
             </div>
         ))
         }
-
-
-       
-
-
     </div>
-  )
+      )
+}
+      </>
+)
 }
 
 export default Profile
