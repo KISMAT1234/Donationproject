@@ -24,19 +24,19 @@ const Search = () => {
 
 
     const queryParams = new URLSearchParams(location.search);
-    const query = queryParams.get('name');
+    const searchQuery = queryParams.get('name');
     const handleSearch = () => {
 
-          axiosUrl.get(`/upload?name=${query}`).then((response)=>{
-              console.log(response.data),'fetch data';
-              setSearch(response.data)
+          axiosUrl.get(`/upload?name=${searchQuery}`).then((response)=>{
+              console.log(response.data.data,'fetch data');
+              setSearch(response.data.data)
            }).catch((err)=>{
             console.log(err);
           })
     }
           useEffect(() => {
             handleSearch();
-         },[query])
+         },[searchQuery])
 
 
          const onSubmit = (data, index) => {

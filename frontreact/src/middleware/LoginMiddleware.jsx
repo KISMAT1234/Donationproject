@@ -27,15 +27,24 @@ function LoginMiddleware(){
         
             
         },[]);
-    useEffect(()=>{},[loading])
-        if(loading){
-                    Swal.fire({
-                      icon: "success",
-                      title: "Login Successfull",
-                      showConfirmButton: false,
-                      timer: 1500
-                    });
-                 }
+
+    useEffect(()=>{
+
+    },[loading])
+
+    
+        if(loading)
+            {
+                <h1>Loading content</h1>
+            }
+        // {
+        //             Swal.fire({
+        //               icon: "success",
+        //               title: "Login Successfull",
+        //               showConfirmButton: false,
+        //               timer: 1500
+        //             });
+        //          }
             else{
             if(isLogin){
                 return(

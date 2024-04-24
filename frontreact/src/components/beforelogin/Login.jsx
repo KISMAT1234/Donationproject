@@ -4,7 +4,7 @@ import axiosUrl from "../url/Axiosurl";
 import React,{useState} from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
-// import Swal from 'sweetalert2'
+import Swal from 'sweetalert2'
 import login from "../image/login.jpeg"
 import { Link } from "react-router-dom";
 const App = () => {
