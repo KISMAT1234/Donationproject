@@ -59,7 +59,7 @@ function Content() {
   return (
     <>
       {loading ? (
-        <div className="flex justify-center mt-[50%]">Loading content...</div>
+        <div className="flex text-4xl justify-center mt-[250px]">Loading content...</div>
       ) : (
         <div className="">
           {content.map((data, index) => (
