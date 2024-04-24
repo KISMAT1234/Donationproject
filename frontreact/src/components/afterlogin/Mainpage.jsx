@@ -59,9 +59,9 @@ function Content() {
   return (
     <>
       {loading ? (
-        <div>Loading content...</div>
+        <div className="flex justify-center mt-[50%]">Loading content...</div>
       ) : (
-        <div className="sm:grid sm:grid-cols-2 md:grid-cols-3">
+        <div className="">
           {content.map((data, index) => (
             <div key={index} className="md:w-[90%] h-[70vh] px-5 h-max ml-5 mr-5 py-5 mt-4 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
               <div className="flex">
@@ -94,12 +94,13 @@ function Content() {
               </div>
             </div>
           ))}
+            <div className="my-20 flex justify-center">
+        <Pagination current={current} onChange={onChange} total={50} />
+          </div>
         </div>
         
       )}
-        <div className="my-20 flex justify-center">
-        <Pagination current={current} onChange={onChange} total={50} />
-          </div>
+      
     </>
   )
 }
