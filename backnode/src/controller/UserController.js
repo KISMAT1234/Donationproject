@@ -41,7 +41,7 @@ class UserController{
         } 
     }
     
-    async store(req,res){
+    async store(req,res,next){
         try{
             // const value = await signupValidate(req.body)
             // console.log('validate')
@@ -76,6 +76,7 @@ class UserController{
             }
             catch(err){
                  return res.status(500).json(err);
+                 next(err);
             }
     }
 

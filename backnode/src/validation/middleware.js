@@ -8,9 +8,11 @@ const validate = (schema) => async(req, res, next) => {
         next()
     }catch(err){
         // const errMessage = err.errors[0].message
-        console.log(err,'err message');
+        // console.log(err,'err message');
         // console.log(err);
+        next(err)
         return responseInstance.responseHandler(res,500,'error')
+        
     }
 }
 
