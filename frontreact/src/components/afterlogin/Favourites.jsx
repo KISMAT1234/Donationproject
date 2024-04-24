@@ -12,8 +12,7 @@ return (
     
         <div className=" w-[100%] mt-10">
           {
-            // data?
-            // <h1>I have data</h1>
+            data.length > 0 ? (
              data.map((star,index)=>(
               <div key={index}  className=" md:flex md:justify-around bg-slate-300 mx-5 my-5 px-5 py-1 rounded-2xl  shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
                  <div className="mt-4">{index++}</div>
@@ -29,12 +28,20 @@ return (
                   </div>
               </div>
             ))
-          }
+            ) : (
+              <div>
+                <h1 className="text-4xl text-center mt-[250px]">Currently you dont have any Favourites</h1>
+              </div>
+            )}
+          
+           { data.length > 0 && ( 
           <div className = "flex justify-center">
              <div className="text-4xl font-medium text-center px-3 py-3 w-[180px] bg-red-600 rounded-xl cursor-pointer hover:bg-red-500 hover:text-stone-300">
                 <h1>Clear all</h1>
               </div>
           </div>
+           )}
+          
 
         </div>
     </>
