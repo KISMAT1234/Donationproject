@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import {useParams} from "react-router-dom"
 import axiosUrl from "../url/Axiosurl";
+import {loadStripe} from '@stripe/stripe-js';
 import { FaThumbsUp } from "react-icons/fa";
 import { FaThumbsDown } from "react-icons/fa";
 import { FaCut } from "react-icons/fa";
@@ -44,31 +45,11 @@ const Donate = () => {
     },[id]);
 
 
- 
-  
-    // const submitComment = (e) => {
-    //     e.preventDefault();
-    //     if (newComments.trim() !== '') {
-    //         setComments([...comments, newComments]);
-    //         setNewComments(''); // Clear input after adding comment
-    //       }
-    //       
-    // }
-    // console.log(comments,'outside cmt')
-    // axiosUrl.post("/comment",{comments}).then((response) => {
-    //     console.log(response.data);
-    //     setUser(response.data)
-
-    // }).catch((err)=>{
-    //    console.log(err);
-    // })
-
-
-
 
 
     const fetchComments = async () => {
         try {
+
             const response = await axiosUrl.get(`/comment/${id}`);
             // console.log(response.data,"response from backend")
             setCommentsList(response.data); 
@@ -108,6 +89,23 @@ useEffect(() => {
         }
     };
 
+    const makePayment = async () => {
+        try{
+        let stripe = await loadStripe('pk_test_51P5lamRoqDgXi4MO8PsUe41RycAxZ28LQOz9hqq90lEyajIk8g0XnmmPyFHrx9khOhydesEDsWCcYcOMIqthCNz300OOPT7OmJ');
+
+        const response = await axiosUrl.post('/donate',info);
+        console.log(response,'response');
+        const sessionId = response.data.data;
+        await stripe.redirectToCheckout({sessionId});
+        }catch(err){
+            console.log(err);
+        }
+
+        stripe.redirectToCheckout({
+            sessionId: response.id
+        })
+    }
+
 //   console.log(info.userId?.email,'info')
 
 
@@ -131,7 +129,7 @@ useEffect(() => {
                     </div>
                     <div className="flex justify-between mt-10">
                        <h1 className="mt-3 text-2xl bg-purple-600"> Raised: $4500000</h1>
-                       <button className="bg-green-500 rounded-xl text-4xl w-[200px] hover:bg-green-300">Donate</button>
+                       <button onClick={makePayment} className="bg-green-500 rounded-xl text-4xl w-[200px] hover:bg-green-300">Donate</button>
                     </div>
 
                     <div className="flex my-5">
@@ -142,18 +140,7 @@ useEffect(() => {
                         <FaInstagram className=" mx-2 text-4xl"/>
                         <FaTiktok className=" mx-2 text-4xl"/>
                         <FaWhatsapp className=" mx-2 text-4xl"/>
-                        
-
-
-                      
-
-
-
-
-
-                        
-                  
-
+     
                     </div>
 
                     <hr></hr>

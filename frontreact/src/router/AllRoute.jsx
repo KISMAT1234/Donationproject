@@ -24,6 +24,8 @@ import Search from "../components/afterlogin/Search"
 import Layout from "../components/afterlogin/bar/Outlet"
 import Userprofile from "../components/afterlogin/Userprofile"
 import Update from "../components/afterlogin/Update"
+import PaymentSuccess from "../components/afterlogin/PaymentSuccess"
+import PaymentCancel from "../components/afterlogin/PaymentCancel"
 
 
 
@@ -61,6 +63,8 @@ function RouterList(){
              <Route path="upload" element={<Uploadcontent/>}/>
              <Route path="donate/:id" element={<Donate/>}/>
              <Route path="search" element={<Search/>}/>
+             <Route path="payment-success" element={<PaymentSuccess/>}/>
+             <Route path="payment-cancel" element={<PaymentCancel/>}/>
             
          
          </Route>
