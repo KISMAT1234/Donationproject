@@ -5,6 +5,8 @@ import {fetchUpload} from "../../slices/uploadSlice"
 import { Star } from "../../slices/addSlice";
 import { Link } from "react-router-dom";
 import { CiStar } from "react-icons/ci";
+import { formatDistanceToNow, format  } from 'date-fns';
+import { enUS } from 'date-fns/locale'
 
 import { Pagination } from 'antd';
 
@@ -56,6 +58,24 @@ function Content() {
   }
   // console.log(content,'content data')
 
+  const renderTime = (createdAt) => {
+    const now = new Date();
+    const postDate = new Date(createdAt);
+    const daysDifference = Math.floor((now - postDate) / (1000 * 60 * 60 * 24)); // Calculate days difference
+  
+    let timeAgo;
+    if (daysDifference < 10) {
+      // Less than 10 days old, show "X days ago"
+      timeAgo = formatDistanceToNow(postDate, { addSuffix: true, locale: enUS });
+    } else {
+      // More than or equal to 10 days old, show date (month and day)
+      timeAgo = format(postDate, 'MMMM dd', { locale: enUS });
+    }
+  
+    return timeAgo.replace('about ', ''); // Remove "about" text if present
+  };
+
+
   return (
     <>
       {loading ? (
@@ -67,9 +87,11 @@ function Content() {
               <div className="flex">
                  <div className="w-[10%] md:w-[20%]">
                    <img src={data.userId.image} width="100" className=" rounded-[50%]" />
-                 </div >
+                 </div>
                  <div className="ml-5 font-bold  text-2xl">{data.userId.username}</div>
-                 <div> </div>
+                 <div className="ml-10"> 
+                  <h1>{renderTime(data.createdAt)}</h1>
+                 </div>
               </div>
               <div className="my-2">Name: {data.name}</div>
               <div className="my-2">Address: {data.address}</div>
