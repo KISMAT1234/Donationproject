@@ -1,4 +1,5 @@
 import User from "../model/Userprofile.js";
+import Post from "../model/Post.js";
 import TokenCheck from "../middleware/TokenVerify.js";
 import Token from "../model/Token.js";
 import emailToken from "../helper/emailToken.js"
@@ -54,7 +55,8 @@ import emailToken from "../helper/emailToken.js"
            let token = req.headers.authorization
         //    console.log(token)
            token = token.split(' ')[1];
-           const user = await User.findById({_id: userId});
+           const user = await Post.find({userId: userId}).populate("userId");
+        
            if(token){
             let response = TokenCheck.verifyToken(token);
             if(response){

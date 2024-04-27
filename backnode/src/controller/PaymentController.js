@@ -18,7 +18,7 @@ class PaymentController{
         try{
 
             const info = req.body
-            console.log(info,'info result');
+            // console.log(info,'info result');
 
             const session = await stripeInstance.checkout.sessions.create({
               payment_method_types:["card"],
