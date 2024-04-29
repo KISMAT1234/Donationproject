@@ -75,6 +75,8 @@ function Content() {
     return timeAgo.replace('about ', ''); // Remove "about" text if present
   };
 
+  console.log(timeAgo,'time check')
+
 
   return (
     <>
