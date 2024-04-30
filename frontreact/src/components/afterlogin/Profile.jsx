@@ -42,7 +42,7 @@ const Profile = () => {
     {
       loading ? (
         <div className="mt-[250px] text-center text-4xl">
-           <h1>Loading Profile...</h1>
+           <h1>Loading Profile....</h1>
         </div>
       ) : (
         <>
