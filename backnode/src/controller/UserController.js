@@ -87,6 +87,7 @@ class UserController{
         // console.log(slug,'user slug')
        
         const user = await User.findOne({ slug: slug});
+        console.log(user,'user value')
 
         let updateUser = req.body;
         // console.log(updateUser,'user update')
