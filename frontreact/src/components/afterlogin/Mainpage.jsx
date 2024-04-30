@@ -5,6 +5,9 @@ import {fetchUpload} from "../../slices/uploadSlice"
 import { Star } from "../../slices/addSlice";
 import { Link } from "react-router-dom";
 import { CiStar } from "react-icons/ci";
+import { CiTimer } from "react-icons/ci";
+import { TbDots } from "react-icons/tb";
+import { CiSquareRemove } from "react-icons/ci";
 import { formatDistanceToNow, format  } from 'date-fns';
 import { enUS } from 'date-fns/locale'
 
@@ -75,7 +78,7 @@ function Content() {
     return timeAgo.replace('about ', ''); // Remove "about" text if present
   };
 
-  console.log(timeAgo,'time check')
+  // console.log(timeAgo,'time check')
 
 
   return (
@@ -86,15 +89,22 @@ function Content() {
         <div className="">
           {content.map((data, index) => (
             <div key={index} className="md:w-[90%] h-[70vh] px-5 h-max ml-5 mr-5 py-5 mt-4 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
-              <div className="flex">
-                 <div className="w-[10%] md:w-[20%]">
-                   <img src={data.userId.image} width="100" className=" rounded-[50%]" />
+              <div className="flex justify-between">
+                <div className="flex">
+                   <div className="w-[10%] md:w-[20%]">
+                     <img src={data.userId.image} width="100" className=" rounded-[50%]" />
+                   </div>
+                   <div className="ml-5 font-bold  text-2xl">{data.userId.username}</div>
+                   <div className="text-xl ml-10 flex"> 
+                    <CiTimer />
+                    <h1 className="ml-1">{renderTime(data.createdAt)}</h1>
+                   </div>
+                  </div> 
+                 <div className="flex text-2xl">
+                   <TbDots className="mr-2"/>
+                   <CiSquareRemove />
                  </div>
-                 <div className="ml-5 font-bold  text-2xl">{data.userId.username}</div>
-                 <div className="ml-10"> 
-                  <h1>{renderTime(data.createdAt)}</h1>
-                 </div>
-              </div>
+            </div>
               <div className="my-2">Name: {data.name}</div>
               <div className="my-2">Address: {data.address}</div>
               <div className="my-2">Age: {data.age}</div>
