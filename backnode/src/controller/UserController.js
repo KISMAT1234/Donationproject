@@ -1,4 +1,5 @@
 import User from "../model/Userprofile.js";
+import Post from "../model/Post.js";
 import sendEmail from "../helper/sendEmail.js"
 import emailToken from "../helper/emailToken.js"
 import Token from "../model/Token.js";
@@ -17,9 +18,15 @@ class UserController{
         try{
             const slug = req.params.slug;
             // console.log(slug);
-             const user =  await User.find({slug}).select('-password')
-            //  console.log(user,'user single')
-             return responseInstance.responseHandler(res,200,'data fetch success',user)
+            const user =  await User.find({slug}).select('-password')
+             console.log(user,'user single')
+
+            const userId = user[0]._id
+            // console.log(userId)
+             const post =  await Post.find({ userId}).select('-password')
+             console.log(post,'user post')
+             const  userInformation = { post, user}
+             return responseInstance.responseHandler(res,200,'data fetch success',userInformation)
 
         }catch(err){
             return responseInstance.responseHandler(res,200,'failed to fetch user')
