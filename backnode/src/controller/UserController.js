@@ -19,12 +19,12 @@ class UserController{
             const slug = req.params.slug;
             // console.log(slug);
             const user =  await User.find({slug}).select('-password')
-             console.log(user,'user single')
+            //  console.log(user,'user single')
 
             const userId = user[0]._id
             // console.log(userId)
              const post =  await Post.find({ userId}).select('-password')
-             console.log(post,'user post')
+            //  console.log(post,'user post')
              const  userInformation = { post, user}
              return responseInstance.responseHandler(res,200,'data fetch success',userInformation)
 
