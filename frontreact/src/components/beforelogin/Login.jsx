@@ -1,5 +1,4 @@
 
-import Nav from "./Navbar"
 import axiosUrl from "../url/Axiosurl";
 import React,{useState} from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -38,7 +37,6 @@ const App = () => {
   };
   return (
     <>
-    <Nav/>
     <div className="mx-10 md:mx-40  my-5 flex shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]">
       <Form
         name="normal_login"
@@ -90,7 +88,7 @@ const App = () => {
             Log in
           </Button>
           Or <a href=""></a>
-        <Link to="/signup-form">Signup</Link>
+        <Link to="/">Signup</Link>
         </Form.Item>
       <Link to="send-email">Forgot Password</Link>
       </Form>
