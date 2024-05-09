@@ -1,4 +1,4 @@
-import Nav from "./Navbar"
+// import Nav from "./Navbar"
 import axiosUrl from "../url/Axiosurl";
 import React, { useState } from 'react';
 import signup from "../image/signup.jpg"
@@ -11,6 +11,7 @@ import {
   Upload,
   message
 } from 'antd';
+import { Link } from "react-router-dom";
 
 
 const App = () => {
@@ -95,11 +96,11 @@ const beforeUpload = (file) => {
 
   return (
     <>
-    <Nav to="true"/>
+    {/* <Nav to="true"/> */}
     <div className="px-10 py-10 md:flex md:justify-around">
 
     <Form
-    className="w-[90%] px-2 py-5  shadow-[rgba(6,_24,_44,_0.4)_0px_0px_0px_2px,_rgba(6,_24,_44,_0.65)_0px_4px_6px_-1px,_rgba(255,_255,_255,_0.08)_0px_1px_0px_inset]"
+    className="w-[90%] bg-stone-400 px-2 py-5 rounded-2xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]"
       {...formItemLayout}
       form={form}
       name="register"
@@ -195,10 +196,17 @@ const beforeUpload = (file) => {
         </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
-        <Button className="bg-violet-600 h"  type="primary" htmlType="submit">
+        <Button className="bg-violet-600"  type="primary" htmlType="submit">
           Register
         </Button>
       </Form.Item>
+       <Link to="/login-form">
+         <div className="text-center">
+          <h1>
+             Login
+          </h1>
+         </div>
+       </Link>
       <div>
         <h1 className="text-2xl">{emailMessage}</h1>
       </div>
