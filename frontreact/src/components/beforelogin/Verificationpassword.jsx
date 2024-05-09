@@ -1,5 +1,4 @@
 
-import Nav from "./Navbar"
 import axiosUrl from "../url/Axiosurl";
 import React,{useState} from "react";
 
