@@ -17,8 +17,8 @@ const errorHandler = (err, req, res, next) => {
  }
 
  const productionErrorHandler = (err, req) => {
-    console.log("start from here of error")
-    console.log(err.message,'error in production')
+    // console.log("start from here of error")
+    // console.log(err.message,'error in production')
     Logger.error({ message: err.message })
 
 //   err.statusCode = err.statusCode || 500

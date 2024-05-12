@@ -19,7 +19,7 @@ const Loglevels = {
 
 let Logger;
 if (process.env.NODE_ENV == 'development') {
-    console.log('Starting error')
+    // console.log('Starting error')
    Logger = winston.createLogger({
     
     level:Loglevels,     
