@@ -112,19 +112,20 @@ useEffect(() => {
     return (
         <>
         
-        <div className=" px-5 py-10">
-            <h1 className="mb-10 text-4xl font-extralight">Brighter Tomorrows for Every Child 🌟👦👧</h1>
+        <div className=" px-2 ">
+            <h1 className="mb-3 text-3xl md:text-4xl font-black">{info.topic}</h1>
              <div className="md:flex">
-                 <div className="md:w-[50%] hover:opacity-100">
+                 <div className="md:w-[50%]  hover:opacity-100">
                     <img src={info.image} className="rounded-2xl w-[100%]"/>
                  </div>
                  <div className="md:w-[50%] md:px-10">
                     <div>
-                       <h1 className="text-6xl font-bold">{info.name}</h1>
-                       <h1 className="text-2xl mt-5">{info.address}</h1>
-                       <h1 className="text-2xl mt-5">{info.age}</h1>
-                       <h1 className="text-2xl mt-5">{info.description}</h1>
-                       <h1 className="text-2xl mt-5">157 Donors</h1>
+                       <h1 className="text-3xl ">{info.name}</h1>
+                       <h1 className="text-2xl mt-2">{info.address}</h1>
+                       <h1 className="text-2xl mt-2">{info.age}</h1>
+                       <h1 className="text-2xl mt-2">{info.gender}</h1>
+                       <h1 className="text-2xl mt-2">+{info.phone}</h1>
+                       <h1 className="text-2xl mt-2">157 Donors</h1>
                        
                     </div>
                     <div className="flex justify-between mt-10">
@@ -148,8 +149,8 @@ useEffect(() => {
                  </div>
              </div>
             <div>
-                <h1 className="text-2xl font-thin mb-10">
-                    The Healthy People initiative is designed to guide national health promotion and disease prevention efforts to improve the health of the nation. Released by the U.S. Department of Health and Human Services (HHS) every decade since 1980, Healthy People identifies science-based objectives with targets to monitor progress and motivate and focus action. Healthy People has established benchmarks in order to:
+                <h1 className="text-2xl mt-5 font-serif mb-10">
+                     {info.description}
                 </h1>
             </div>
 
