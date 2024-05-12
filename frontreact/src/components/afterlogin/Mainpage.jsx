@@ -88,13 +88,13 @@ function Content() {
       ) : (
         <div className="">
           {content.map((data, index) => (
-            <div key={index} className="md:w-[90%] h-[70vh] px-5 h-max ml-5 mr-5 py-5 mt-4 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
+            <div key={index} className="md:w-[90%] h-[70vh] px-5  ml-5 mr-5 py-5 mt-4 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
               <div className="flex justify-between">
                 <div className="flex">
                    <div className="w-[10%] md:w-[20%]">
                      <img src={data.userId.image} width="100" className=" rounded-[50%]" />
                    </div>
-                   <div className="ml-5 font-bold  text-2xl">{data.userId.username}</div>
+                   <div className="ml-5 font-extrabold  text-3xl">{data.userId.username}</div>
                    <div className="text-xl ml-10 flex"> 
                     <CiTimer />
                     <h1 className="ml-1">{renderTime(data.createdAt)}</h1>
@@ -105,12 +105,11 @@ function Content() {
                    <CiSquareRemove />
                  </div>
             </div>
-              <div className="my-2">Name: {data.name}</div>
-              <div className="my-2">Address: {data.address}</div>
-              <div className="my-2">Age: {data.age}</div>
-              <div className="my-2">Problem: {data.description}</div>
+              <div className="my-2 text-xl font-light">Name: {data.name}</div>
+              <div className="my-2 text-xl font-light">Address: {data.address}</div>
+              <div className="my-2 text-xl font-normal">End Date: {data.endDate}</div>
               <div className="">
-                <img src={data.image} width="100" className="w-[90%]" alt="Content" />
+                <img src={data.image} width="100" className="w-[90%]" alt="image" />
               </div>
               <div className="mt-5 flex justify-between">
                 <div>
