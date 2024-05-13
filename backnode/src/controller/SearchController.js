@@ -21,4 +21,13 @@ class SearchController {
         }
     }
 
+    async deleteSearch(req,res){
+        try{
+
+        }
+        catch(err){
+           console.log(err,'error in deleting data')
+        }
+    }
+
 }
