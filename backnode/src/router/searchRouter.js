@@ -7,6 +7,7 @@ const searchInstance = new SearchController();
 
 searchRouter.post("/",searchInstance.postSearch);
 searchRouter.get("/",searchInstance.getSearch);
+searchRouter.delete("/",searchInstance.deleteSearch);
 
 
 export default searchRouter
