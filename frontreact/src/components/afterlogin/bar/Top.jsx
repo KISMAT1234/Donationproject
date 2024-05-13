@@ -14,7 +14,7 @@ function Topbar() {
    const [search,setSearch] = useState('');
    const [showSearchContainer,setShowSearchContainer] = useState(false)
    const [api, setApi] = useState([]);
-   const containerRef = useRef(null);
+   const containerRef = useRef(null);   // useRef lets you reference a value that’s not needed for rendering.
 
    const changeValue = (e) => {
       setSearch(e.target.value);
@@ -82,9 +82,9 @@ function Topbar() {
             
            </div>
             <form onSubmit={handleSubmit}>
-           <div className=" md:w-[30%] flex">  
+             <div className=" md:w-[30%] flex">  
               <div className="">
-                <input type="text" value={search} onChange={changeValue} onClick={handleInputClick} className="text-xl mt-2 h-[6vh] rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]" placeholder="Search Items Here"/> 
+                <input type="text" value={search} onChange={changeValue} onClick={handleInputClick} className="text-xl mt-2 h-[6vh] rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]" placeholder="Search fund raiser Here"/> 
                 {showSearchContainer && (
                   <div ref={containerRef} className="container bg-white border border-gray-800 h-[60vh] shadow-md p-4 rounded-md animate-fadeIn">
                   { 
