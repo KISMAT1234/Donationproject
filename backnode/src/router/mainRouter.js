@@ -5,6 +5,7 @@ import loginRouter from "./loginRouter.js"
 import cmtRouter from "./commentRouter.js";
 import followRouter from './followRouter.js';
 import paymentRouter from './paymentRouter.js';
+import searchRouter from './searchRouter.js';
 
 const mainRouter= express.Router();
 
@@ -14,6 +15,7 @@ mainRouter.use('/login',loginRouter);
 mainRouter.use('/comment',cmtRouter);
 mainRouter.use('/comment',followRouter);
 mainRouter.use('/donate',paymentRouter);
+mainRouter.use('/search',searchRouter);
 
 
 export default mainRouter;
