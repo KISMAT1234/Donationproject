@@ -18,7 +18,7 @@ class PostController{
                 let userId = req.user.userId
                 // console.log(userId,'get id');
                 const user =new Post({...req.body,image:imageName, userId:userId})
-                console.log(user);
+                // console.log(user);
                 await user.save();
                 //  res.send(user)
                 return res.status(201).json(user);

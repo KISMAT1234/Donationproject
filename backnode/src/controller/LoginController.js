@@ -56,7 +56,7 @@ import emailToken from "../helper/emailToken.js"
         //    console.log(token)
            token = token.split(' ')[1];
            const user = await Post.find({userId: userId}).populate("userId");
-           console.log('user data',user);
+        //    console.log('user data',user);
         
            if(token){
             let response = TokenCheck.verifyToken(token);
