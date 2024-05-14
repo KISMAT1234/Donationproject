@@ -4,47 +4,29 @@ import { FaSearch } from "react-icons/fa";
 import axiosUrl from "../../url/Axiosurl";
 // import { Link } from 'react-router-dom';
 
-
-
-
-
 function Topbar() {
 
-
-   const [search,setSearch] = useState('');
+   const [search,setSearch] = useState();
    const [showSearchContainer,setShowSearchContainer] = useState(false)
    const [api, setApi] = useState([]);
    const containerRef = useRef(null);   // useRef lets you reference a value that’s not needed for rendering.
 
    const changeValue = (e) => {
       setSearch(e.target.value);
-   
   }
 
    const handleInputClick = () => {
       setShowSearchContainer(true);
     };
 
+  
     const handleClickOutside = (event) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
         setShowSearchContainer(false);
       }
     };
 
-//     useEffect(()=>{
-//    const fetchData = async () => {
-//       if(search !== ""){
-//     axiosUrl.get(`/upload?name=${search}`).then((response)=>{
-//        console.log(response.data.data,"search div");
 
-//        setApi(response.data.data)
-
-//     }).catch((err)=>{
-//        console.log(err);
-//     })
-//    }
-// }
-//  },[search])
 
 useEffect(() => {
    const fetchData = async () => {
@@ -61,22 +43,7 @@ useEffect(() => {
    }
  }, [search]);
 
-// useEffect(() => {
-//    const fetchData = async () => {
-//      try {
-//        const response = await axiosUrl.get(`/upload?name=${search}`);
-//        setApi(response.data.data);
-//      } catch (err) {
-//        console.log(err);
-//      }
-//    };
 
-//    if (search !== "") {
-//      fetchData();
-//    } else {
-//      setApi([]);
-//    }
-//  }, [search]);
 
     useEffect(() => {
       document.addEventListener('mousedown', handleClickOutside);
@@ -87,17 +54,33 @@ useEffect(() => {
 
    
 
-   const handleSubmit = (e) => {
+   const handleSubmit = async (e) => {
       e.preventDefault();
-      if (search.trim() === '') {
-         // Reload the page or handle the empty search case
-         window.location.reload();
-         // Perform search action here
-     } else {
-      // e.preventDefault();
-       window.location.href = `/Mainpage/search?name=${search}`;
-     }
-      // console.log(search,'search value')
+    //   if (search.trim() === '') {
+    //      // Reload the page or handle the empty search case
+    //      window.location.reload();
+    //  } else {
+       const searchData = new FormData()
+       searchData.append('data', search);
+    //   //  const searchData = new FormData(e.target);
+       console.log(searchData,'search form')
+       try {
+         const response = await axiosUrl.post("/search",searchData);
+         // setApi(response.data.data);
+         console.log(response);
+        } catch (err) {
+          console.log(err);
+        }
+      //  window.location.href = `/Mainpage/search?name=${search}`;
+    //  }
+    //  console.log(search,'search value')
+
+    //  const formData = new FormData();
+    //  formData.append('search', search);
+ 
+
+
+
       // setSearch('');
      
     
@@ -121,9 +104,7 @@ useEffect(() => {
             <form onSubmit={handleSubmit}>
              <div className=" md:w-[30%] flex">  
               <div className="">
-
-                <input type="text" value={search} onChange={changeValue} onClick={handleInputClick} className="text-xl mt-2 h-[6vh] rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]" placeholder="Search fund raiser Here"/> 
-                
+                  <input type="text" value={search} onChange={changeValue} onClick={handleInputClick} className="text-xl mt-2 h-[6vh] rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]" placeholder="Search fund raiser Here"/> 
                 {showSearchContainer && (
                   <div ref={containerRef} className="container bg-white border border-gray-800 h-[60vh] shadow-md p-4 rounded-md animate-fadeIn">
                      <h1>kismat</h1>
