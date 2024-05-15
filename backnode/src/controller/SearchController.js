@@ -40,7 +40,9 @@ class SearchController {
 
     async deleteSearch(req,res){
         try{
-
+            let searchId = req.params.id;
+            let userId = req.user.userId
+             
         }
         catch(err){
            console.log(err,'error in deleting data')
