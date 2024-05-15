@@ -7,7 +7,7 @@ const categoryRouter = express.Router();
 const categoryInstance = new CategoryController();
 
 
-categoryRouter.get("/",authenticate,categoryInstance.category)
+categoryRouter.get("/:categoryName",authenticate,categoryInstance.category)
 
 
 export default categoryRouter;
