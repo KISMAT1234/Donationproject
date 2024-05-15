@@ -5,7 +5,7 @@ const responseInstance = new Handler();
 class CategoryController{
   async category(req,res){
     try{
-      const categoryName= req.query.category
+      const categoryName= req.query.categoryName;
       console.log(categoryName,'category name')
       const categoryData = await Post.find({category: categoryName})
       if(data){
