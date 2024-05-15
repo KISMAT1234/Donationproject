@@ -37,7 +37,7 @@ class PaymentController{
               cancel_url: `${process.env.FRONTEND_URL}/Mainpage/payment-cancel`,
             //   cancel_url:"http://localhost:3000/cancel",
             })
-             console.log(session,'session stripe');
+            //  console.log(session,'session stripe');
             return responseInstance.responseHandler(res,200,'payment', session.id)
             
         }
