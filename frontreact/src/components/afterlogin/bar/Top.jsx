@@ -71,7 +71,7 @@ useEffect(() => {
         } catch (err) {
           console.log(err);
         }
-      //  window.location.href = `/Mainpage/search?name=${search}`;
+       window.location.href = `/Mainpage/search?name=${search}`;
     //  }
     //  console.log(search,'search value')
 
