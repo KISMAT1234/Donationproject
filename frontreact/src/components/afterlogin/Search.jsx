@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams} from 'react-router-dom';
 import axiosUrl from "../url/Axiosurl";
 import { useDispatch,useSelector } from 'react-redux';
 import {fetchUpload} from "../../slices/uploadSlice"
 import { Star } from "../../slices/addSlice";
 import { Link } from "react-router-dom";
 import { CiStar } from "react-icons/ci";
+
 // import { Pagination } from 'antd';
 
 
@@ -13,10 +14,12 @@ import { CiStar } from "react-icons/ci";
 
 const Search = () => {
     const [search, setSearch] = useState([]);
+    // const [category, setCategory] = useState([]);
     // const [current, setCurrent] = useState(1);
     const [clickedIndex, setClickedIndex] = useState(-1); 
     const location = useLocation();
     const dispatch = useDispatch();
+    const param = useParams()
     // const onChange = (page) => {
     //     setCurrent(page);
     //   };
@@ -25,24 +28,41 @@ const Search = () => {
 
     const queryParams = new URLSearchParams(location.search);
     const searchQuery = queryParams.get('name');
-    const handleSearch = () => {
+    const categoryQuery = queryParams.get('category');
+    console.log(categoryQuery,'category')
 
-          axiosUrl.get(`/upload?name=${searchQuery}`).then((response)=>{
-              console.log(response.data.data,'fetch data');
-              setSearch(response.data.data)
-           }).catch((err)=>{
-            console.log(err);
-          })
+    if(searchQuery){
+      const handleSearch = () => {
+        axiosUrl.get(`/upload?name=${searchQuery}`).then((response)=>{
+            console.log(response.data.data,'fetch data');
+            setSearch(response.data.data)
+         }).catch((err)=>{
+          console.log(err);
+        })
+      }
+      useEffect(() => {
+        handleSearch();
+      },[searchQuery])
+    }else{
+      const categorySearch = () => {
+        console.log('categories search')
+        axiosUrl.get(`/upload?name=${categoryQuery}`).then((response)=>{
+          console.log(response.data.data,'fetch data');
+          setSearch(response.data.data)
+       }).catch((err)=>{
+        console.log(err);
+      })
+      }
+      useEffect(()=>{
+        categorySearch()
+      },[categoryQuery])
     }
-          useEffect(() => {
-            handleSearch();
-         },[searchQuery])
 
-
-         const onSubmit = (data, index) => {
-            dispatch(Star([data]));
-            setClickedIndex(index); // Update the clicked index
-          }
+    const onSubmit = (data, index) => {
+       dispatch(Star([data]));
+       setClickedIndex(index); // Update the clicked index
+     }
+     
  return(
     <>
       {/* <div className="mt-10  shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
@@ -59,6 +79,7 @@ const Search = () => {
 
      {
         <div className="sm:grid sm:grid-cols-2 md:grid-cols-3">
+          
           {search.map((data, index) => (
             <div key={index} className="md:w-[90%] h-[70vh] px-5 h-max ml-5 mr-5 py-5 mt-10 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
               <div className="flex">
