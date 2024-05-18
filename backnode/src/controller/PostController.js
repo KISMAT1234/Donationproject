@@ -58,6 +58,7 @@ class PostController{
 
     async donate(req,res){
         try{
+         console.log(req.params.id,'inout value')
          const info = await Post.findById(req.params.id).populate("userId")
         //  console.log(info);
         res.status(200).json(info)
