@@ -65,9 +65,9 @@ useEffect(() => {
     //   //  const searchData = new FormData(e.target);
        console.log(searchData,'search form')
        try {
-         const response = await axiosUrl.post("/search",searchData);
+        //  const response = await axiosUrl.post("/search",searchData);
          // setApi(response.data.data);
-         console.log(response);
+        //  console.log(response);
         } catch (err) {
           console.log(err);
         }
