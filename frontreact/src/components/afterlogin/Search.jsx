@@ -45,10 +45,10 @@ const Search = () => {
       },[searchQuery])
     }else{
       const categorySearch = () => {
-        console.log('categories search')
-        axiosUrl.get(`/upload?name=${categoryQuery}`).then((response)=>{
-          console.log(response.data.data,'fetch data');
-          setSearch(response.data.data)
+        // console.log('categories search')
+        axiosUrl.get(`/category?categoryName=${categoryQuery}`).then((response)=>{
+          // console.log(response.data.data,'fetch data');
+          // setSearch(response.data.data)
        }).catch((err)=>{
         console.log(err);
       })
@@ -81,7 +81,7 @@ const Search = () => {
         <div className="sm:grid sm:grid-cols-2 md:grid-cols-3">
           
           {search.map((data, index) => (
-            <div key={index} className="md:w-[90%] h-[70vh] px-5 h-max ml-5 mr-5 py-5 mt-10 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
+            <div key={index} className="md:w-[90%] h-[70vh] px-5  ml-5 mr-5 py-5 mt-10 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
               <div className="flex">
                  <div className="w-[10%] md:w-[20%]">
                    <img src={data.userId.image} width="100" className=" rounded-[50%]" />
