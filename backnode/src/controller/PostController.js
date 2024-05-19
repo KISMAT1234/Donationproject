@@ -51,6 +51,7 @@ class PostController{
             //  return res.status(201).json(uploadsWithUser)
              return responseInstance.responseHandler(res, 200,"data fetch of post successfully",uploadsWithUser);
         }catch(err){
+            
             console.log(err,'err');
         } 
     }
