@@ -53,6 +53,7 @@ const FormWithUpload = () => {
     formData.append('gender', values.gender);
     formData.append('startDate', values.start);
     formData.append('endDate', values.end);
+    formData.append('category', values.category);
     formData.append('topic', values.topic);
     formData.append('description', values.description);
     formData.append('image', imageFile);
@@ -123,7 +124,7 @@ const FormWithUpload = () => {
                 },
               ]}
            >
-             <Select placeholder="select your gender">
+             <Select placeholder="select  gender">
                  <Option value="male">Male</Option>
                  <Option value="female">Female</Option>
                  <Option value="other">Other</Option>
@@ -136,6 +137,19 @@ const FormWithUpload = () => {
 
            <Form.Item name="end" label="End Fund Raising">
              <DatePicker />
+          </Form.Item>
+
+          <Form.Item name="category" label="Category" rules={[{ required: true,   message: 'Please select Category!', }]}>
+            <Select
+              placeholder="Select category here"
+            >
+              <Option value="Accident">Accident</Option>
+              <Option value="Disease">Disease</Option>
+              <Option value="Animal">Animal</Option>
+              <Option value="Environment">Environment</Option>
+              <Option value="Orphange">Orphange</Option>
+              <Option value="Other">Other</Option>
+            </Select>
           </Form.Item>
 
            <Form.Item name="topic" label="Topic" rules={[{ required: true }]}>
