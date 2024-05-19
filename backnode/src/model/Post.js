@@ -11,6 +11,7 @@ const uploadSchema = new mongoose.Schema({
     gender:{type:String},
     startDate:{type:String},
     endDate:{type:String},
+    category:{type:String},
     topic:{type:String},
     description:{type:String},
     image:{type:String},
