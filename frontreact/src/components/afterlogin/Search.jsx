@@ -14,6 +14,7 @@ import { CiStar } from "react-icons/ci";
 
 const Search = () => {
     const [search, setSearch] = useState([]);
+    const [loading, setLoading] = useState(true)
     // const [category, setCategory] = useState([]);
     // const [current, setCurrent] = useState(1);
     const [clickedIndex, setClickedIndex] = useState(-1); 
@@ -29,13 +30,14 @@ const Search = () => {
     const queryParams = new URLSearchParams(location.search);
     const searchQuery = queryParams.get('name');
     const categoryQuery = queryParams.get('category');
-    console.log(categoryQuery,'category')
+    // console.log(categoryQuery,'category')
 
     if(searchQuery){
       const handleSearch = () => {
         axiosUrl.get(`/upload?name=${searchQuery}`).then((response)=>{
-            console.log(response.data.data,'fetch data');
+            // console.log(response.data.data,'fetch data');
             setSearch(response.data.data)
+            setLoading(false)
          }).catch((err)=>{
           console.log(err);
         })
@@ -47,8 +49,9 @@ const Search = () => {
       const categorySearch = () => {
         // console.log('categories search')
         axiosUrl.get(`/category?categoryName=${categoryQuery}`).then((response)=>{
-          console.log(response.data.data,'fetch data');
+          // console.log(response.data.data,'fetch data');
           setSearch(response.data.data)
+          setLoading(false)
        }).catch((err)=>{
         console.log(err);
       })
@@ -111,10 +114,13 @@ const Search = () => {
 
 
      {
-        <div className="sm:grid sm:grid-cols-2 md:grid-cols-3">
-          
-          {search.map((data, index) => (
-            <div key={index} className="md:w-[90%] h-[70vh] px-5  ml-5 mr-5 py-5 mt-28 md:mt-20 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
+       loading ? (
+         <h1 className="text-4xl flex justify-center mt-40">Loading...</h1>
+          ) : (
+            <div className="sm:grid sm:grid-cols-2 md:grid-cols-3">
+              {/* <h1>data</h1> */}
+          {search && search.map((data, index) => (
+            <div key={index} className="md:w-[90%] h-[70vh] px-5  ml-5 mr-5 py-5 mt-20 md:mt-20 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
               <div className="flex">
                  <div className="w-[10%] md:w-[20%]">
                    <img src={data.userId.image} width="100" className=" rounded-[50%]" />
@@ -145,15 +151,15 @@ const Search = () => {
               </div>
             </div>
           ))}
-            {/* <div className="my-20 flex justify-center">
-                 <Pagination current={current} onChange={onChange} total={50} />
-            </div> */}
-        </div>
-        
-      }
+          </div>
+           )
+        } 
       
     </>
  )
 }
 
 export default Search;
+// {/* <div className="my-20 flex justify-center">
+//      <Pagination current={current} onChange={onChange} total={50} />
+// </div> */}
