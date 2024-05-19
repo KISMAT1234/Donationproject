@@ -23,7 +23,6 @@ import Userprofile from "../components/afterlogin/Memberprofile"
 import Update from "../components/afterlogin/Update"
 import PaymentSuccess from "../components/afterlogin/PaymentSuccess"
 import PaymentCancel from "../components/afterlogin/PaymentCancel"
-import Category from "../components/afterlogin/bar/Category"
 
 
 
@@ -51,7 +50,6 @@ function RouterList(){
              <Route path="search" element={<Search/>}/>
              <Route path="payment-success" element={<PaymentSuccess/>}/>
              <Route path="payment-cancel" element={<PaymentCancel/>}/>
-             <Route path="category" element={<Category/>}/>
             
          
          </Route>
