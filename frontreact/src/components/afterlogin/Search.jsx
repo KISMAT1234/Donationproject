@@ -47,8 +47,8 @@ const Search = () => {
       const categorySearch = () => {
         // console.log('categories search')
         axiosUrl.get(`/category?categoryName=${categoryQuery}`).then((response)=>{
-          // console.log(response.data.data,'fetch data');
-          // setSearch(response.data.data)
+          console.log(response.data.data,'fetch data');
+          setSearch(response.data.data)
        }).catch((err)=>{
         console.log(err);
       })
@@ -65,23 +65,56 @@ const Search = () => {
      
  return(
     <>
-      {/* <div className="mt-10  shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
-        {
-        search.map((data,index)=>(
-          <div key={index}>
+              <div className="mx-5 flex fixed top-14 md:justify-between md:top-20 px-2 py-2 md:w-[72%] w-[94%] rounded-2xl bg-stone-100 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+              <Link to="/Mainpage">
+              <div className="ml-1 my-1 px-1 py-1 rounded-2xl bg-gray-400 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+                <h1 className="text-sm md:text-xl">All</h1>
+              </div>
+              </Link>
+      
+              <Link to = "/Mainpage/search?category=Accident">
+              <div className="ml-1 my-1 px-1 py-1 rounded-2xl bg-gray-400 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+                <h1 className="text-sm md:text-xl">Accident</h1>
+              </div>
+              </Link>
+      
+                <Link to ="">
+              <div className="ml-1 my-1 px-1 py-1 rounded-2xl bg-gray-400 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+                <h1 className="text-sm md:text-xl">Disease</h1>
+              </div>
+              </Link>
+        
+              <Link to ="">
+              <div className="ml-1 my-1 px-1 py-1 rounded-2xl bg-gray-400 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+                <h1 className="text-sm md:text-xl">Animal</h1>
+              </div>
+              </Link>
+        
+              <Link to ="">
+              <div className="ml-1 my-1 px-1 py-1 rounded-2xl bg-gray-400 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+                <h1 className="text-sm md:text-xl">Environment</h1>
+              </div>
+              </Link>
+        
+              <Link to ="/Mainpage/search?category=Orphange">
+              <div className="ml-1 my-1 px-1 py-1 rounded-2xl bg-gray-400 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+                <h1 className="text-sm md:text-xl">Orphange</h1>
+              </div>
+              </Link>
 
-            <div>{data.name}</div>
-          </div>
-        ))
-        }
-      </div> */}
+              <Link to ="">
+              <div className="ml-1 my-1 px-1 py-1 rounded-2xl bg-gray-400 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+                <h1 className="text-sm md:text-xl">Other</h1>
+              </div>
+              </Link>
+            </div>
 
 
      {
         <div className="sm:grid sm:grid-cols-2 md:grid-cols-3">
           
           {search.map((data, index) => (
-            <div key={index} className="md:w-[90%] h-[70vh] px-5  ml-5 mr-5 py-5 mt-10 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
+            <div key={index} className="md:w-[90%] h-[70vh] px-5  ml-5 mr-5 py-5 mt-28 md:mt-20 rounded-xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]">
               <div className="flex">
                  <div className="w-[10%] md:w-[20%]">
                    <img src={data.userId.image} width="100" className=" rounded-[50%]" />
