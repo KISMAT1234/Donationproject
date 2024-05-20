@@ -131,7 +131,7 @@ const Search = () => {
               <div className="my-2">Name: {data.name}</div>
               <div className="my-2">Address: {data.address}</div>
               <div className="my-2">Age: {data.age}</div>
-              <div className="my-2">Problem: {data.description}</div>
+              
               <div className="">
                 <img src={data.image} width="100" className="w-[90%]" alt="Content" />
               </div>
