@@ -10,6 +10,24 @@ const commentSchema = new mongoose.Schema({
         ref:'User'
     },
     comment: String,
+    like:Number,
+    dislike:Number,
+    createdAt: {
+        type: String,
+        default: () => {
+          const date = new Date();
+          const monthNames = [
+            'January', 'February', 'March',
+            'April', 'May', 'June', 'July',
+            'August', 'September', 'October',
+            'November', 'December'
+          ];
+          const day = date.getDate();
+          const monthIndex = date.getMonth();
+          const year = date.getFullYear();
+          return `${monthNames[monthIndex]} ${day}, ${year}`;
+        }
+      }
 });
 
 const Comment = mongoose.model('Comment', commentSchema);
