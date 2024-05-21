@@ -10,8 +10,15 @@ const commentSchema = new mongoose.Schema({
         ref:'User'
     },
     comment: String,
-    like:Number,
-    dislike:Number,
+    like:{
+        type:Number,
+        default:0
+    },
+    dislike:{
+        type:Number,
+        default:0
+    },
+    
     createdAt: {
         type: String,
         default: () => {
