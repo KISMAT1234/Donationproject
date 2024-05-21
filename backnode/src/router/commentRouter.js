@@ -8,5 +8,7 @@ const commentInstance = new CommentController();
 
 cmtRouter.post("/:id",authenticate, commentInstance.storeComment)
 cmtRouter.get("/:id", commentInstance.getComment)
+cmtRouter.post("/like/",authenticate,commentInstance.postLike)
+cmtRouter.get("/dislike/",authenticate,commentInstance.getLike)
 
 export default cmtRouter;
