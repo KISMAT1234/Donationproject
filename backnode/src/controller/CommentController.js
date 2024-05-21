@@ -35,6 +35,25 @@ class CommentController{
         }
      }
 
+     async postLike(req,res){
+        try{
+           const userId = req.user.userId;
+           console.log(userId, 'userid fetch')
+        }
+        catch(error){
+            console.log(error)
+        }
+     }
+
+     async getLike(req,res){
+        try{
+  
+        }
+        catch(error){
+              console.log(error)
+        }
+       }
+
 
 }
 
