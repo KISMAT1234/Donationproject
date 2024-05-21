@@ -9,9 +9,9 @@ class SearchController {
            console.log("search post route")
            //   const search = req.body;
            let userId = req.user.userId
-           console.log(userId);
+        //    console.log(userId);
            const user = new Search({...req.body,userID: userId});
-           console.log(user,'search value');
+        //    console.log(user,'search value');
            await user.save();
            return responseInstance.responseHandler(res, 200,"search data send  successfully");
         }
@@ -26,7 +26,7 @@ class SearchController {
             console.log("search post route")
             let userId = req.user.userId
             const searchData = await Search.find({userId: userId})
-            console.log(searchData,'fetched data');
+            // console.log(searchData,'fetched data');
             if(searchData){
                 return responseInstance.responseHandler(res, 200,"search data fetched  successfully");
             }else{

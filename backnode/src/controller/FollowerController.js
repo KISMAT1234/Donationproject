@@ -5,9 +5,10 @@ class FollowController{
     try{
         const followerId = req.user.userId;
         const followingId = req.params.id;
-        const user = await new User({follower:followerId, following:followingId});
-     let following = user.following;
-     following.push(user._id);
+        const user = new User({follower:followerId, following:followingId});
+        let following = user.following;
+        
+        following.push(user._id);
 
      const people = await User.find({_id: {$nin:following}})
 
