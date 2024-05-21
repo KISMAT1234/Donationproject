@@ -2,41 +2,74 @@ import React,{useState, useEffect} from 'react'
 import {useParams} from "react-router-dom"
 import axiosUrl from "../url/Axiosurl";
 import {loadStripe} from '@stripe/stripe-js';
-import { FaThumbsUp } from "react-icons/fa";
-import { FaThumbsDown } from "react-icons/fa";
-import { FaCut } from "react-icons/fa";
-import { FaShare } from "react-icons/fa";
-import { FaFacebook } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { FaTiktok } from "react-icons/fa";
-import { FaWhatsapp } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
+import { FaCut, FaShare,FaFacebook,FaInstagram,FaTiktok,FaWhatsapp,FaUser,FaThumbsUp,FaThumbsDown, FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
+import { AiOutlineLike } from "react-icons/ai";
+import { AiOutlineDislike } from "react-icons/ai";
 
 
 const Donate = () => {
     const [info, setInfo] = useState([]);
     const [comments, setComments] = useState([]);
-    // const [newComments, setNewComments] = useState('');
-
-
-    const [comment, setComment] = useState('');
-    const [commentsList, setCommentsList] = useState([]);
-
     const [user, setUser] = useState([]);
     const {id} = useParams();
+    const [comment, setComment] = useState('');
+    const [commentsList, setCommentsList] = useState([]);
+    const [liked, setLiked] = useState(false)
+    const [disliked, setDisliked] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
+    const [dislikeCount, setDislikeCount] = useState(0);
 
 
-       const getInfo = () =>{
-           axiosUrl.get(`/upload/${id}`).then((response)=>{
-            console.log(response.data);
-               setInfo(response.data)
-           }).catch((err)=>{
-               console.log(err)
-           })
-       }
+   
+
+    const handleLike = () => {
+        if (liked) {
+            setLiked(false);
+            setLikeCount(likeCount-1)
+          } else {
+            setLiked(true);
+            setLikeCount(likeCount+1)
+            setDislikeCount(()=>{
+                if(dislikeCount === 0){
+                    setDislikeCount(0);
+                }else{
+                    setDislikeCount(dislikeCount-1);
+                }
+            })
+            setDisliked(false);
+          }
+      };
+
+      const handleDislike = () => {
+        if (disliked) {
+            setDisliked(false);
+            setDislikeCount(dislikeCount-1)
+          } else {
+            setDisliked(true);
+            setDislikeCount(dislikeCount+1)
+            setLikeCount(()=>{
+                if(likeCount === 0){
+                    setLikeCount(0);
+                }else{
+                    setLikeCount(likeCount-1);
+                }
+            })
+            setLiked(false);
+          }
+      };
+
+
+    const getInfo = () =>{
+        axiosUrl.get(`/upload/${id}`).then((response)=>{
+         console.log(response.data);
+            setInfo(response.data)
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
     useEffect(()=>{
         getInfo()
     },[id]);
@@ -205,7 +238,7 @@ useEffect(() => {
                    <input  type="text" onChange={(e) => setComment(e.target.value)} value={comment} id="input-label" className="bg-slate-200  py-3 px-4 block w-full border-gray-200 rounded-lg text-xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" placeholder="write something..."/>
                 </form>
 
-                 <div className="mt-5">
+                 <div className="my-5 ">
                       {commentsList.map((cmt, count)=>(
                          <div key={count} className="mt-5">
                                 <div className="flex">
@@ -225,13 +258,31 @@ useEffect(() => {
                                         </div>
                                        <div className="mb-5 flex justify-between">
                                            <div className="flex">
-                                              <div className="text-2xl flex ">
-                                                <FaThumbsUp/>
-                                                <h1 className="ml-2">249</h1>
+                                              <div className="text-4xl flex ">
+                                                  <button 
+                                                    onClick={handleLike} 
+                                                    style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
+                                                  >
+                                                    {liked ? (
+                                                      <FaThumbsUp style={{ color: 'blue' }} />
+                                                    ) : (
+                                                      <FaRegThumbsUp style={{ color: 'black' }} />
+                                                    )}
+                                                  </button>
+                                                <h1 className="ml-2">{likeCount}</h1>
                                               </div>
-                                              <div className="text-2xl flex ml-10 mt-1">
-                                                <FaThumbsDown />
-                                                <h1 className="ml-2">249</h1>
+                                              <div className="text-4xl flex ml-10 mt-1">
+                                                <button 
+                                                    onClick={handleDislike} 
+                                                    style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
+                                                  >
+                                                    {disliked ? (
+                                                      <FaThumbsDown style={{ color: 'blue' }} />
+                                                    ) : (
+                                                      <FaRegThumbsDown style={{ color: 'black' }} />
+                                                    )}
+                                                  </button>
+                                                <h1 className="ml-2">{dislikeCount}</h1>
     
                                               </div>
                                            </div>
