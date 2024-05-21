@@ -27,10 +27,7 @@ const Donate = () => {
 
     const [user, setUser] = useState([]);
     const {id} = useParams();
-    const currentDate = new Date();
-// Get the current date and time as strings
-    const currentDateStr = currentDate.toDateString();
-    const currentTimeStr = currentDate.toLocaleTimeString();
+
 
        const getInfo = () =>{
            axiosUrl.get(`/upload/${id}`).then((response)=>{
@@ -219,9 +216,9 @@ useEffect(() => {
                                         <div className="flex justify-between">
                                             <div className="flex ">
                                               <div className="text-4xl font-medium">{cmt.userId.username}</div>
-                                              <div className="mt-3 ml-2">{currentDateStr}</div>
+                                              <div className="mt-3 ml-2">Date</div>
                                             </div>
-                                          <div className="mt-3">{currentTimeStr}</div>
+                                          <div className="mt-3">anything</div>
                                         </div>
                                        <div className="my-5">
                                              {cmt.comment}
