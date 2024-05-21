@@ -22,10 +22,54 @@ const Donate = () => {
     const [likeCount, setLikeCount] = useState(0);
     const [dislikeCount, setDislikeCount] = useState(0);
 
+    const getInfo = () =>{
+        axiosUrl.get(`/upload/${id}`).then((response)=>{
+         console.log(response.data);
+            setInfo(response.data)
+        }).catch((err)=>{
+            console.log(err)
+        })
+    }
+    useEffect(()=>{
+        getInfo()
+    },[id]);
 
-   
+    const fetchComments = async () => {
+        try {
+            const response = await axiosUrl.get(`/comment/${id}`);
+            // console.log(response.data,"response from backend")
+            setCommentsList(response.data); 
+        } catch (error) {
+            console.error('Error fetching comments:', error);
+        }
+    };
+    
+    useEffect(() => {
+        fetchComments();
+     }, [id]);
 
-    const handleLike = () => {
+    useEffect(() => {
+        // console.log(commentsList, "commentlists array extra useEffect");
+    }, [commentsList]);
+    
+    useEffect(() => {
+        // console.log(commentsList, "commentlists array another useEffect");
+    }, [id, commentsList]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        // console.log(comment,'state comment')
+        try {
+            await axiosUrl.post(`/comment/${id}`, { comment });
+            setComment(''); // Clear input after submitting
+             // Refresh comments after submitting
+             fetchComments()
+        } catch (error) {
+            console.error('Error adding comment:', error);
+        }
+    };
+
+    const handleLike = async() => {
         if (liked) {
             setLiked(false);
             setLikeCount(likeCount-1)
@@ -41,9 +85,15 @@ const Donate = () => {
             })
             setDisliked(false);
           }
+          try {
+            const response = await axiosUrl.post(`/comment/like/${likeCount}`);
+            // console.log(response.data,"response from backend")
+            setCommentsList(response.data); 
+        } catch (error) {
+            console.error('server error', error);
+        }
       };
 
-      
 
       const handleDislike = () => {
         if (disliked) {
@@ -64,63 +114,6 @@ const Donate = () => {
       };
 
 
-    const getInfo = () =>{
-        axiosUrl.get(`/upload/${id}`).then((response)=>{
-         console.log(response.data);
-            setInfo(response.data)
-        }).catch((err)=>{
-            console.log(err)
-        })
-    }
-    useEffect(()=>{
-        getInfo()
-    },[id]);
-
-
-
-
-    const fetchComments = async () => {
-        try {
-
-            const response = await axiosUrl.get(`/comment/${id}`);
-            // console.log(response.data,"response from backend")
-            setCommentsList(response.data); 
-        } catch (error) {
-            console.error('Error fetching comments:', error);
-        }
-    };
-    
-  useEffect(() => {
-   
-    fetchComments();
-}, [id]);
-
-
-
-useEffect(() => {
-    // console.log(commentsList, "commentlists array extra useEffect");
-}, [commentsList]);
-
-useEffect(() => {
-    // console.log(commentsList, "commentlists array another useEffect");
-}, [id, commentsList]);
-
-
-
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        // console.log(comment,'state comment')
-        try {
-            await axiosUrl.post(`/comment/${id}`, { comment });
-            setComment(''); // Clear input after submitting
-             // Refresh comments after submitting
-             fetchComments()
-        } catch (error) {
-            console.error('Error adding comment:', error);
-        }
-    };
-
     const makePayment = async () => {
         try{
         let stripe = await loadStripe('pk_test_51P5lamRoqDgXi4MO8PsUe41RycAxZ28LQOz9hqq90lEyajIk8g0XnmmPyFHrx9khOhydesEDsWCcYcOMIqthCNz300OOPT7OmJ');
@@ -137,8 +130,7 @@ useEffect(() => {
             sessionId: response.id
         })
     }
-
-//   console.log(info.userId?.email,'info')
+    //   console.log(info.userId?.email,'info')
 
 
     return (
