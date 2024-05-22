@@ -46,7 +46,11 @@ class CommentController{
 
          const cmtData = await Comment.findById(cmtId)
          console.log(cmtData,'cmt data');
-
+         if(cmtData.dislikeBy.includes(userId)){
+            
+         }
+         
+         
          if(cmtData.likedBy.includes(userId)){
             cmtData.likedBy = cmtData.likedBy.filter((likedUserId)=>{
                return likedUserId.toString() !== userId.toString();
@@ -57,22 +61,37 @@ class CommentController{
            await cmtData.save();
          }
          console.log(cmtData,'last cmt')
-
-         
-
         }
         catch(error){
             console.log(error)
         }
+
      }
 
-     async getLike(req,res){
-        try{
-  
-        }
-        catch(error){
-              console.log(error)
-        }
+     async postDisLike(req,res){
+      try{
+       const userId = req.user.userId;
+       //   console.log(userId, 'userid fetch')
+       const cmtId = req.params.id
+       // console.log(cmtId,'comment id');
+
+       const cmtData = await Comment.findById(cmtId)
+       console.log(cmtData,'cmt data');
+
+       if(cmtData.dislikeBy.includes(userId)){
+          cmtData.dislikeBy = cmtData.dislikeBy.filter((dislikedUserId)=>{
+             return dislikedUserId.toString() !== userId.toString();
+          })
+          await cmtData.save();
+       }else{
+         cmtData.dislikeBy.push(userId);
+         await cmtData.save();
+       }
+       console.log(cmtData,'last cmt')
+      }
+      catch(error){
+          console.log(error)
+      }
        }
 
 
