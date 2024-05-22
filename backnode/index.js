@@ -2,13 +2,9 @@ import Database from './src/connection/databaseconn.js'
 import dotenv from 'dotenv'
 import exp from "./app.js"
 
-
-
 dotenv.config();
 
-
 Database();
-
 
 const port= process.env.PORT 
 
