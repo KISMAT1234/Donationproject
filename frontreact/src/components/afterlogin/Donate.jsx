@@ -69,7 +69,8 @@ const Donate = () => {
         }
     };
 
-    const handleLike = async() => {
+    const handleLike = async(id) => {
+        console.log(id,'cmt id')
         if (liked) {
             setLiked(false);
             setLikeCount(likeCount-1)
@@ -86,16 +87,17 @@ const Donate = () => {
             setDisliked(false);
           }
           try {
-            const response = await axiosUrl.post(`/comment/like/${likeCount}`);
+            const response = await axiosUrl.post(`/comment/like/${id}`);
             // console.log(response.data,"response from backend")
-            setCommentsList(response.data); 
+            // setCommentsList(response.data); 
         } catch (error) {
             console.error('server error', error);
         }
       };
 
 
-      const handleDislike = () => {
+      const handleDislike = async(id) => {
+        console.log(id,'cmt id');
         if (disliked) {
             setDisliked(false);
             setDislikeCount(dislikeCount-1)
@@ -111,6 +113,14 @@ const Donate = () => {
             })
             setLiked(false);
           }
+
+          try {
+            const response = await axiosUrl.post(`/comment/dislike/${id}`);
+            // console.log(response.data,"response from backend")
+            // setCommentsList(response.data); 
+        } catch (error) {
+            console.error('server error', error);
+        }
       };
 
 
@@ -233,8 +243,8 @@ const Donate = () => {
                 </form>
 
                  <div className="my-5 ">
-                      {commentsList.map((cmt, count)=>(
-                         <div key={count} className="mt-5">
+                      {commentsList.map((cmt, countId)=>(
+                         <div key={countId} className="mt-5">
                                 <div className="flex">
                                     <div className="w-[7%]">
                                         <img src={cmt.userId.image} className=" rounded-[50%]"/>
@@ -254,7 +264,7 @@ const Donate = () => {
                                            <div className="flex">
                                               <div className="text-4xl flex ">
                                                   <button 
-                                                    onClick={handleLike} 
+                                                    onClick={()=>handleLike(cmt._id)} 
                                                     style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
                                                   >
                                                     {liked ? (
@@ -267,7 +277,7 @@ const Donate = () => {
                                               </div>
                                               <div className="text-4xl flex ml-10 mt-1">
                                                 <button 
-                                                    onClick={handleDislike} 
+                                                    onClick={()=>handleDislike(cmt._id)} 
                                                     style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
                                                   >
                                                     {disliked ? (
