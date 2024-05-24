@@ -107,7 +107,16 @@ class CommentController{
       catch(error){
           console.log(error)
       }
-       }
+      }
+
+      async getLike(req,res){
+         try{
+
+         }
+         catch(error){
+            console.log(error)
+         }
+      }
 
 
 }
