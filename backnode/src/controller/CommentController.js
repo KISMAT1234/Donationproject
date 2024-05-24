@@ -118,6 +118,15 @@ class CommentController{
          }
       }
 
+      async getDisLike(req,res){
+         try{
+
+         }
+         catch(error){
+            console.log(error)
+         }
+      }
+
 
 }
 
