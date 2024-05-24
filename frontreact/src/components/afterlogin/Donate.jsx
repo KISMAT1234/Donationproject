@@ -19,12 +19,12 @@ const Donate = () => {
     const [commentsList, setCommentsList] = useState([]);
     const [liked, setLiked] = useState(false)
     const [disliked, setDisliked] = useState(false);
-    const [likeCount, setLikeCount] = useState(0);
+    const [likeCount, setLikeCount] = useState();
     const [dislikeCount, setDislikeCount] = useState(0);
 
     const getInfo = () =>{
         axiosUrl.get(`/upload/${id}`).then((response)=>{
-         console.log(response.data);
+        //  console.log(response.data);
             setInfo(response.data)
         }).catch((err)=>{
             console.log(err)
@@ -37,8 +37,12 @@ const Donate = () => {
     const fetchComments = async () => {
         try {
             const response = await axiosUrl.get(`/comment/${id}`);
-            // console.log(response.data,"response from backend")
-            setCommentsList(response.data); 
+            console.log(response.data,"response of comments")
+            console.log(response.data[0].like)
+            setCommentsList(response.data);
+            setLikeCount(response.data[0].like) 
+            setDislikeCount(response.data[0].dislike) 
+
         } catch (error) {
             console.error('Error fetching comments:', error);
         }
@@ -46,7 +50,7 @@ const Donate = () => {
     
     useEffect(() => {
         fetchComments();
-     }, [id]);
+     }, [id,liked]);
 
     useEffect(() => {
         // console.log(commentsList, "commentlists array extra useEffect");
@@ -73,44 +77,50 @@ const Donate = () => {
         console.log(id,'cmt id')
         if (liked) {
             setLiked(false);
-            setLikeCount(likeCount-1)
           } else {
             setLiked(true);
-            setLikeCount(likeCount+1)
-            setDislikeCount(()=>{
-                if(dislikeCount === 0){
-                    setDislikeCount(0);
-                }else{
-                    setDislikeCount(dislikeCount-1);
-                }
-            })
             setDisliked(false);
-          }
-          try {
+        }
+        try {
             const response = await axiosUrl.post(`/comment/like/${id}`);
-            // console.log(response.data,"response from backend")
-            // setCommentsList(response.data); 
+            // console.log(response.data.data.like,"response from backend")
+            // setLikeCount(response.data.data.like); 
+            if (liked) {
+              setLiked(false);
+            } else {
+              setLiked(true);
+              setDisliked(false);
+            }
         } catch (error) {
             console.error('server error', error);
         }
-      };
+    };
+
+    // const getLike = async () => {
+    //     const response = await axiosUrl.get("/comment/getLike");
+    //     console.log(response.data.data.like,"response from backend")
+    //     // setLikeCount(response.data.data.like); 
+    // }
+    // useEffect(()=>{
+    //     getLike()
+    // },[liked]);
 
 
       const handleDislike = async(id) => {
         console.log(id,'cmt id');
         if (disliked) {
             setDisliked(false);
-            setDislikeCount(dislikeCount-1)
+            // setDislikeCount(dislikeCount-1)
           } else {
             setDisliked(true);
-            setDislikeCount(dislikeCount+1)
-            setLikeCount(()=>{
-                if(likeCount === 0){
-                    setLikeCount(0);
-                }else{
-                    setLikeCount(likeCount-1);
-                }
-            })
+            // setDislikeCount(dislikeCount+1)
+            // setLikeCount(()=>{
+            //     if(likeCount === 0){
+            //         setLikeCount(0);
+            //     }else{
+            //         setLikeCount(likeCount-1);
+            //     }
+            // })
             setLiked(false);
           }
 
@@ -122,6 +132,15 @@ const Donate = () => {
             console.error('server error', error);
         }
       };
+
+    //   useEffect(()=>{
+    //     const data = () => {
+    //         axiosUrl.get("/comment/like").then((response)=>{
+    //             console.log(response.data)
+    //             setLikeCount(response.data)
+    //         })
+    //     }
+    //   },[])
 
 
     const makePayment = async () => {
