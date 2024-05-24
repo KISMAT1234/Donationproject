@@ -24,7 +24,7 @@ const commentSchema = new mongoose.Schema({
       type:Boolean,
       default:false
     },
-    DisLikeIcon:{
+    disLikeIcon:{
       type:Boolean,
       default:false
     },

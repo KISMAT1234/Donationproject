@@ -29,7 +29,7 @@ class UserController{
              return responseInstance.responseHandler(res,200,'data fetch success',userInformation)
 
         }catch(err){
-            return responseInstance.responseHandler(res,200,'failed to fetch user')
+            return responseInstance.responseHandler(res,500,'failed to fetch user')
         } 
     }
 

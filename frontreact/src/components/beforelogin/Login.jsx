@@ -37,7 +37,7 @@ const App = () => {
   };
   return (
     <>
-    <div className="mx-10 md:mx-40  my-5 flex shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]">
+    <div className="mx-10 md:mx-40 rounded-2xl bg-violet-900  my-5 flex shadow-[rgba(0,_0,_0,_0.25)_0px_25px_50px_-12px]">
       <Form
         name="normal_login"
         className="w-[70%] login-form  px-10 mt-5"
