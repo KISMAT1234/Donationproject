@@ -20,6 +20,14 @@ const commentSchema = new mongoose.Schema({
     },
     likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     dislikeBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    likeIcon:{
+      type:Boolean,
+      default:false
+    },
+    DisLikeIcon:{
+      type:Boolean,
+      default:false
+    },
     createdAt: {
         type: String,
         default: () => {
