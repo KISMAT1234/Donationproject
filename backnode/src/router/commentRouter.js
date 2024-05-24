@@ -10,6 +10,8 @@ cmtRouter.post("/:id",authenticate, commentInstance.storeComment)
 cmtRouter.get("/:id", commentInstance.getComment)
 cmtRouter.post("/like/:id",authenticate,commentInstance.postLike)
 cmtRouter.post("/dislike/:id",authenticate,commentInstance.postDisLike)
+cmtRouter.get("/getLike",commentInstance.getLike)
+cmtRouter.get("/getDisLike/:id",commentInstance.postDisLike)
 // cmtRouter.get("/dislike/:id",authenticate,commentInstance.getLike)
 
 export default cmtRouter;
