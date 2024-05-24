@@ -1,4 +1,6 @@
 import Comment from "../model/Comment.js";
+import Handler from "../logger/ResponseHandler.js"
+const responseInstance = new Handler();
 
 class CommentController{
      async storeComment(req,res){
@@ -52,23 +54,29 @@ class CommentController{
                return likedUserId.toString() !== userId.toString();
             })
             cmtData.like -= 1
+            cmtData.likeIcon = false;
             await cmtData.save();
+            return responseInstance.responseHandler(res,200,'like send successfully',cmtData)
          }
          else{
            cmtData.likedBy.push(userId);
            cmtData.like += 1;
+           cmtData.likeIcon = true;
             if(cmtData.dislikeBy.includes(userId)){
               cmtData.dislikeBy = cmtData.dislikeBy.filter((dislikedUserId)=>{
                  return dislikedUserId.toString() !== userId.toString();
                })
                cmtData.dislike -= 1;
+               cmtData.disLikeIcon = false; 
             }
             await cmtData.save();
          }
          console.log(cmtData,'last cmt')
+         return responseInstance.responseHandler(res,200,'like save successfully',cmtData)
         }
         catch(error){
             console.log(error)
+            return responseInstance.responseHandler(res,500,'server error')
         }
 
      }
@@ -88,17 +96,22 @@ class CommentController{
              return dislikedUserId.toString() !== userId.toString();
           })
           cmtData.dislike -= 1;
+          cmtData.disLikeIcon = false;
           await cmtData.save();
+         return responseInstance.responseHandler(res,200,'like save successfully',cmtData)
        }else{
          cmtData.dislikeBy.push(userId);
          cmtData.dislike += 1;
+         cmtData.disLikeIcon = true;
          await cmtData.save();
          if(cmtData.likedBy.includes(userId)){
             cmtData.likedBy = cmtData.likedBy.filter((likedUserId)=>{
                return likedUserId.toString() !== userId.toString();
             })
             cmtData.like -= 1;
+            cmtData.likeIcon = false;
             await cmtData.save();
+         return responseInstance.responseHandler(res,200,'like save successfully',cmtData)
          }
          
        }
@@ -106,15 +119,20 @@ class CommentController{
       }
       catch(error){
           console.log(error)
+          return responseInstance.responseHandler(res,500,'server error')
+
       }
       }
 
       async getLike(req,res){
          try{
-
+            // const cmtId = req.params.id
+            const like = await Comment.findById()
+            return responseInstance.responseHandler(res,200,'like save successfully',like)
          }
          catch(error){
             console.log(error)
+            return responseInstance.responseHandler(res,500,'server error')
          }
       }
 
