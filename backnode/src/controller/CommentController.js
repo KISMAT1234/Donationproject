@@ -51,17 +51,17 @@ class CommentController{
             cmtData.likedBy = cmtData.likedBy.filter((likedUserId)=>{
                return likedUserId.toString() !== userId.toString();
             })
-            // cmtData.like -= 1
+            cmtData.like -= 1
             await cmtData.save();
          }
          else{
            cmtData.likedBy.push(userId);
-         //   cmtData.like += 1;
+           cmtData.like += 1;
             if(cmtData.dislikeBy.includes(userId)){
               cmtData.dislikeBy = cmtData.dislikeBy.filter((dislikedUserId)=>{
                  return dislikedUserId.toString() !== userId.toString();
                })
-               // cmtData.dislike -= 1;
+               cmtData.dislike -= 1;
             }
             await cmtData.save();
          }
