@@ -45,20 +45,25 @@ class CommentController{
          // console.log(cmtId,'comment id');
 
          const cmtData = await Comment.findById(cmtId)
-         console.log(cmtData,'cmt data');
-         if(cmtData.dislikeBy.includes(userId)){
-            
-         }
-         
+         console.log(cmtData,'cmt data'); 
          
          if(cmtData.likedBy.includes(userId)){
             cmtData.likedBy = cmtData.likedBy.filter((likedUserId)=>{
                return likedUserId.toString() !== userId.toString();
             })
+            // cmtData.like -= 1
             await cmtData.save();
-         }else{
+         }
+         else{
            cmtData.likedBy.push(userId);
-           await cmtData.save();
+         //   cmtData.like += 1;
+            if(cmtData.dislikeBy.includes(userId)){
+              cmtData.dislikeBy = cmtData.dislikeBy.filter((dislikedUserId)=>{
+                 return dislikedUserId.toString() !== userId.toString();
+               })
+               // cmtData.dislike -= 1;
+            }
+            await cmtData.save();
          }
          console.log(cmtData,'last cmt')
         }
@@ -76,18 +81,28 @@ class CommentController{
        // console.log(cmtId,'comment id');
 
        const cmtData = await Comment.findById(cmtId)
-       console.log(cmtData,'cmt data');
+       console.log(cmtData,'cmt data dislike');
 
        if(cmtData.dislikeBy.includes(userId)){
           cmtData.dislikeBy = cmtData.dislikeBy.filter((dislikedUserId)=>{
              return dislikedUserId.toString() !== userId.toString();
           })
+          cmtData.dislike -= 1;
           await cmtData.save();
        }else{
          cmtData.dislikeBy.push(userId);
+         cmtData.dislike += 1;
          await cmtData.save();
+         if(cmtData.likedBy.includes(userId)){
+            cmtData.likedBy = cmtData.likedBy.filter((likedUserId)=>{
+               return likedUserId.toString() !== userId.toString();
+            })
+            cmtData.like -= 1;
+            await cmtData.save();
+         }
+         
        }
-       console.log(cmtData,'last cmt')
+       console.log(cmtData,'last cmt dislike')
       }
       catch(error){
           console.log(error)
