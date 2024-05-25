@@ -3,13 +3,15 @@ import {useParams} from "react-router-dom"
 import axiosUrl from "../url/Axiosurl";
 import {loadStripe} from '@stripe/stripe-js';
 import { FaCut, FaShare,FaFacebook,FaInstagram,FaTiktok,FaWhatsapp,FaUser,FaThumbsUp,FaThumbsDown, FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
-import { MdOutlineMailOutline } from "react-icons/md";
+import { MdOutlineMailOutline,MdDelete } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaPhoneAlt } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
+import {  Popconfirm,message } from 'antd';
 
 
+  
 const Donate = () => {
     const [info, setInfo] = useState([]);
     const [comments, setComments] = useState([]);
@@ -17,8 +19,8 @@ const Donate = () => {
     const {id} = useParams();
     const [comment, setComment] = useState('');
     const [commentsList, setCommentsList] = useState([]);
-    const [liked, setLiked] = useState(false)
-    const [disliked, setDisliked] = useState(false);
+    const [liked, setLiked] = useState()
+    const [disliked, setDisliked] = useState();
     const [likeCount, setLikeCount] = useState();
     const [dislikeCount, setDislikeCount] = useState(0);
 
@@ -37,11 +39,13 @@ const Donate = () => {
     const fetchComments = async () => {
         try {
             const response = await axiosUrl.get(`/comment/${id}`);
-            console.log(response.data,"response of comments")
-            console.log(response.data[0].like)
-            setCommentsList(response.data);
+            console.log(response.data,"response of fetchedcomments")
+            console.log(response.data[0].like)  
+            setCommentsList(response.data);  
             setLikeCount(response.data[0].like) 
             setDislikeCount(response.data[0].dislike) 
+            setLiked(response.data[0].likeIcon)  
+            setdisLiked(response.data[0].disLikeIcon) 
 
         } catch (error) {
             console.error('Error fetching comments:', error);
@@ -50,7 +54,7 @@ const Donate = () => {
     
     useEffect(() => {
         fetchComments();
-     }, [id,liked]);
+     }, [id,liked,disliked]);
 
     useEffect(() => {
         // console.log(commentsList, "commentlists array extra useEffect");
@@ -75,22 +79,22 @@ const Donate = () => {
 
     const handleLike = async(id) => {
         console.log(id,'cmt id')
-        if (liked) {
-            setLiked(false);
-          } else {
-            setLiked(true);
-            setDisliked(false);
-        }
+        // if (liked) {
+        //     setLiked(false);
+        //   } else {
+        //     setLiked(true);
+        //     setDisliked(false);
+        // }
         try {
             const response = await axiosUrl.post(`/comment/like/${id}`);
-            // console.log(response.data.data.like,"response from backend")
+            console.log(response.data.data.like,"response from backend")
             // setLikeCount(response.data.data.like); 
-            if (liked) {
-              setLiked(false);
-            } else {
-              setLiked(true);
-              setDisliked(false);
-            }
+            // if (response.data.data.likeIcon === false) {
+            //   setLiked(false);
+            // } else {
+            //   setLiked(true);
+            //   setDisliked(false);
+            // }
         } catch (error) {
             console.error('server error', error);
         }
@@ -142,6 +146,18 @@ const Donate = () => {
     //     }
     //   },[])
 
+    const deleteComment = async (commentId) => {
+      console.log(commentId,"delete comment Id");
+      console.log("commetn clicked");
+      try{
+          // axiosUrl.delete("/comment/")
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+
+  
 
     const makePayment = async () => {
         try{
@@ -163,8 +179,7 @@ const Donate = () => {
 
 
     return (
-        <>
-        
+        <>w
         <div className=" px-2 ">
             <h1 className="mb-3 text-3xl md:text-4xl font-black">{info.topic}</h1>
              <div className="md:flex">
@@ -235,7 +250,6 @@ const Donate = () => {
 
                    
                 </div>
-
                 <div className=" rounded-xl  shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
                    <h1 className="px-5 py-5 text-4xl bg-violet-500">Donors</h1>
                    <div className="flex justify-between">
@@ -310,8 +324,10 @@ const Donate = () => {
                                               </div>
                                            </div>
                                            <div className="text-2xl flex">
-                                               <FaCut className="mt-1"/>
-                                               <span className="ml-1">Delete</span>
+                                           
+                                              <button  className="px-1 py-1 h-10" onClick={deleteComment(cmt._id)}>  
+                                                <MdDelete className="text-4xl"/>
+                                              </button>
                                             </div>
                                        </div>
                                     </div>
@@ -326,5 +342,7 @@ const Donate = () => {
 };
 
 export default Donate
+
+
 
 
