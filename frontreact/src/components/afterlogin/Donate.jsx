@@ -149,6 +149,7 @@ const Donate = () => {
     const deleteComment = async (commentId) => {
       console.log(commentId,"delete comment Id");
       console.log("commetn clicked");
+      confirm("Are sure you want to delete button");
       try{
           // axiosUrl.delete("/comment/")
       }
@@ -286,7 +287,7 @@ const Donate = () => {
                                         <div className="flex justify-between">
                                             <div className="flex ">
                                               <div className="text-4xl font-medium">{cmt.userId.username}</div>
-                                              <div className="mt-3 ml-2">Date</div>
+                                              <div className="mt-3 ml-2">{cmt.createdAt}</div>
                                             </div>
                                           <div className="mt-3">anything</div>
                                         </div>
