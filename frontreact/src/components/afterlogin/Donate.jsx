@@ -23,9 +23,10 @@ const Donate = () => {
     const [disliked, setDisliked] = useState();
     const [likeCount, setLikeCount] = useState();
     const [dislikeCount, setDislikeCount] = useState(0);
+    const [delComment, setDelComment] = useState(false)
 
-    const getInfo = () =>{
-        axiosUrl.get(`/upload/${id}`).then((response)=>{
+    const getInfo = async() =>{
+        await axiosUrl.get(`/upload/${id}`).then((response)=>{
         //  console.log(response.data);
             setInfo(response.data)
         }).catch((err)=>{
@@ -35,9 +36,9 @@ const Donate = () => {
     useEffect(()=>{
         getInfo()
     },[id]);
-
+    
     const fetchComments = async () => {
-        try {
+      try {
             const response = await axiosUrl.get(`/comment/${id}`);
             console.log(response.data,"response of fetchedcomments")
             console.log(response.data[0].like)  
@@ -46,13 +47,13 @@ const Donate = () => {
             setDislikeCount(response.data[0].dislike) 
             setLiked(response.data[0].likeIcon)  
             setdisLiked(response.data[0].disLikeIcon) 
-
-        } catch (error) {
+            
+          } catch (error) {
             console.error('Error fetching comments:', error);
-        }
-    };
-    
-    useEffect(() => {
+          }
+        };
+        
+      useEffect(() => {
         fetchComments();
      }, [id,liked,disliked]);
 
@@ -147,9 +148,16 @@ const Donate = () => {
     //   },[])
 
     const deleteComment = async (commentId) => {
-      console.log(commentId,"delete comment Id");
-      console.log("commetn clicked");
-      confirm("Are sure you want to delete button");
+      // console.log(commentId,"delete comment Id");
+      if (window.confirm('Are you sure you want to delete?')) {
+        await axiosUrl.delete(`/comment/${commentId}`).then((response)=>{
+           console.log(response.data);
+           alert("comment deleted successfully");
+           setCommentsList(commentsList.filter(comment => comment._id !== commentId));
+          }).catch((err)=>{
+              console.log(err)
+          })
+      }
       try{
           // axiosUrl.delete("/comment/")
       }
@@ -326,7 +334,7 @@ const Donate = () => {
                                            </div>
                                            <div className="text-2xl flex">
                                            
-                                              <button  className="px-1 py-1 h-10" onClick={deleteComment(cmt._id)}>  
+                                              <button  className="px-1 py-1 h-10" onClick={()=> deleteComment(cmt._id)}>  
                                                 <MdDelete className="text-4xl"/>
                                               </button>
                                             </div>
