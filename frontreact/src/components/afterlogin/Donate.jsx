@@ -153,7 +153,7 @@ const Donate = () => {
         await axiosUrl.delete(`/comment/${commentId}`).then((response)=>{
            console.log(response.data);
            alert("comment deleted successfully");
-           setCommentsList(commentsList.filter(comment => comment._id !== commentId));
+           setCommentsList(commentsList.filter(comment => comment._id !== commentId)); // used to update the state of the comments list by removing a specific comment without needing to refresh the page. Here's a detailed explanation of each part:
           }).catch((err)=>{
               console.log(err)
           })
