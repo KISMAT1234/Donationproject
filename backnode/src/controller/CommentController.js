@@ -145,6 +145,25 @@ class CommentController{
          }
       }
 
+      async deleteComment(req,res){
+         try{
+            const commentId = req.params.id
+            console.log(commentId,"commentId")
+            const comment = await Comment.findOneAndDelete({_id:commentId})
+            console.log(comment,'comment')
+
+            if(!comment){
+               return responseInstance.responseHandler(res,500,'No comment found')
+            }
+            return responseInstance.responseHandler(res,200,'CommentDelete successfully');
+
+         }
+         catch(error){
+            console.log(error)
+            return responseInstance.responseHandler(res,500,'server error')
+         }
+      }
+
 
 }
 
