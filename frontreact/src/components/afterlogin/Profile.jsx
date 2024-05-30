@@ -35,6 +35,20 @@ const Profile = () => {
   // console.log(post, 'post data')
 
 
+  const  deletePost = (cmtId) => {
+    try{
+       axiosUrl.delete("/user").then((response)=>{
+         console.log(response.data.data);
+         setProfile([response.data.data])
+       }).catch((err)=>{
+         console.log(err);
+       })
+    }
+    catch(error){
+      console.log(error); 
+    }
+  }
+
 
 
   return (
@@ -56,7 +70,7 @@ const Profile = () => {
        </Link>
 
        <Link to ="">
-       <button className="bg-red-600  hover:bg-green-600 rounded-xl px-2 py-1 mx-5 my-5 justify-end">
+       <button className="bg-red-500  hover:bg-red-600 text-xl hover:text-slate-200 rounded-xl px-2 py-1 mx-5 my-5 justify-end">
            <h1>Change password</h1>
          </button>
        </Link>
@@ -76,15 +90,24 @@ const Profile = () => {
         }
     </div>
     <div className="mx-5 my-10 ">
-       <h1>Post</h1>
+       <h1 className="text-4xl font-mono">Post</h1>
        {
         post.map((postData, index)=>{
-           return <div key={index} className="mx-5 my-5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-                <h1 className="mx-5 my-5">{postData.name}</h1>
-                <h1 className="mx-5 my-5">{postData.address}</h1>
-                <h1 className="mx-5 my-5">{postData.age}</h1>
-                <h1 className="mx-5 my-5">{postData.description}</h1>
-                <h1 className="mx-5 my-5">{postData.image}</h1>
+           return <div key={index} className="pt-1 px-5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+            <div className="flex justify-between">
+                <h1 className=" my-5">Name: {postData.name}</h1>
+                <h1 className=" my-5">Address: {postData.address}</h1>
+                <h1 className=" my-5">Age {postData.age}</h1>
+                <button onClick={()=> deletePost(postData._id)} className=" px-5 h-10 rounded-xl bg-red-500  hover:bg-red-600 text-xl hover:text-slate-200 ">Delete</button>
+            </div>
+            <div className="">
+                <h1 className=" my-5">Phone: {postData.phone}</h1>
+                <h1 className=" my-5">StartDate: {postData.startDate}</h1>
+                <h1 className=" my-5">EndDate: {postData.endDate}</h1>
+                <h1 className=" my-5">Category: {postData.category}</h1>
+                <h1 className=" my-5">Description: <br/>{postData.description}</h1>
+                <h1 className=" my-5">Image </h1>
+            </div>
            </div>
         })
        }
