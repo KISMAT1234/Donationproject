@@ -13,12 +13,13 @@ import { enUS } from 'date-fns/locale'
 
 import { Pagination } from 'antd';
 
+import { StarOutlined,StarFilled } from '@ant-design/icons'
 
 
 function Content() {
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState([]);
-  const [clickedIndex, setClickedIndex] = useState(-1); 
+  const [star, setStar] = useState(false); 
   const [current, setCurrent] = useState(1);
   const onChange = (page) => {
     setCurrent(page);
@@ -164,9 +165,20 @@ function Content() {
                     </Link>
                   </div>
                   <div>
-                    <button onClick={() => onSubmit(data, index)}>
-                      <CiStar className="text-4xl" style={{ fill: clickedIndex === index ? 'black' : 'blue', backgroundColor: clickedIndex === index ? 'yellow' : 'transparent' }} />
-                    </button>
+                    {/* <button onClick={() => onSubmit(data, index)}>
+                      <StarOutlined  className="text-4xl" style={{ fill: clickedIndex === index ? 'black' : 'blue', backgroundColor: clickedIndex === index ? 'yellow' : 'transparent' }} />
+                    </button> */}
+                    { star ? (
+                      <button onClick={() => onSubmit(data, index)}>
+                        < StarFilled  className="text-4xl"  />
+                      </button>
+                      
+                    ) : (
+                      <button onClick={() => onSubmit(data, index)}>
+                        <StarOutlined   className="text-4xl"  />
+                      </button>
+                    )
+                    }
                   </div>
                 </div>
               </div>
