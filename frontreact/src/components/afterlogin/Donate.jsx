@@ -151,7 +151,7 @@ const Donate = () => {
       // console.log(commentId,"delete comment Id");
       if (window.confirm('Are you sure you want to delete?')) {
         await axiosUrl.delete(`/comment/${commentId}`).then((response)=>{
-           console.log(response.data);
+          //  console.log(response.data);
            alert("comment deleted successfully");
            setCommentsList(commentsList.filter(comment => comment._id !== commentId)); // used to update the state of the comments list by removing a specific comment without needing to refresh the page. Here's a detailed explanation of each part:
           }).catch((err)=>{
@@ -173,7 +173,7 @@ const Donate = () => {
         let stripe = await loadStripe('pk_test_51P5lamRoqDgXi4MO8PsUe41RycAxZ28LQOz9hqq90lEyajIk8g0XnmmPyFHrx9khOhydesEDsWCcYcOMIqthCNz300OOPT7OmJ');
 
         const response = await axiosUrl.post('/donate',info);
-        console.log(response,'response');
+        // console.log(response,'response');
         const sessionId = response.data.data;
         await stripe.redirectToCheckout({sessionId});
         }catch(err){
