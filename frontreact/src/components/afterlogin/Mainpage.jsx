@@ -13,13 +13,13 @@ import { enUS } from 'date-fns/locale'
 
 import { Pagination } from 'antd';
 
-import { StarOutlined,StarFilled } from '@ant-design/icons'
+import { HeartOutlined,HeartFilled } from '@ant-design/icons'
 
 
 function Content() {
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState([]);
-  const [star, setStar] = useState(false); 
+  const [favourite, setFavourite] = useState(false); 
   const [current, setCurrent] = useState(1);
   const onChange = (page) => {
     setCurrent(page);
@@ -57,8 +57,13 @@ function Content() {
     }
 
   const onSubmit = (data, index) => {
+    if(favourite === false){
+      setFavourite(true)
+    }else{
+      setFavourite(false)
+    }
     dispatch(Star([data]));
-    setClickedIndex(index); // Update the clicked index
+    setClickedIndex(index); 
   }
   // console.log(content,'content data')
 
@@ -168,14 +173,14 @@ function Content() {
                     {/* <button onClick={() => onSubmit(data, index)}>
                       <StarOutlined  className="text-4xl" style={{ fill: clickedIndex === index ? 'black' : 'blue', backgroundColor: clickedIndex === index ? 'yellow' : 'transparent' }} />
                     </button> */}
-                    { star ? (
+                    { favourite ? (
                       <button onClick={() => onSubmit(data, index)}>
-                        < StarFilled  className="text-4xl"  />
+                        <HeartFilled style={{ color: 'red' }}  className="text-4xl"  />
                       </button>
                       
                     ) : (
                       <button onClick={() => onSubmit(data, index)}>
-                        <StarOutlined   className="text-4xl"  />
+                        <HeartOutlined    className="text-4xl"  />
                       </button>
                     )
                     }
