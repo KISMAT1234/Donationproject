@@ -19,7 +19,7 @@ import { HeartOutlined,HeartFilled } from '@ant-design/icons'
 function Content() {
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState([]);
-  const [favourite, setFavourite] = useState(false); 
+  const [favourite, setFavourite] = useState({}); 
   const [current, setCurrent] = useState(1);
   const onChange = (page) => {
     setCurrent(page);
@@ -56,14 +56,29 @@ function Content() {
         });
     }
 
+  // const onSubmit = (data, index) => {
+  //   if(favourite === false){
+  //     setFavourite(true)
+  //   }else{
+  //     setFavourite(false)
+  //   }
+  //   // dispatch(Star([data]));
+  //   // setClickedIndex(index); 
+  // }
   const onSubmit = (data, index) => {
-    if(favourite === false){
-      setFavourite(true)
-    }else{
-      setFavourite(false)
+    console.log(favourite,'fav')
+    const updatedFavorites = { ...favourite };
+    console.log(updatedFavorites,'update') // Copy current favorites
+    updatedFavorites[index] = !updatedFavorites[index] //This line toggles the favorite status for the item at the specified index. It first accesses the favorite status for that index (updatedFavorites[index]) and then uses the logical NOT operator (!) to toggle its value. If the current value is true, it becomes false, and vice versa.
+    console.log(updatedFavorites,'index update');
+    if(updatedFavorites === true){
+      alert('added to favourites')
+    } else{
+      alert('removed from favourites')
     }
+    setFavourite(updatedFavorites);
+    console.log(favourite,'favour')
     dispatch(Star([data]));
-    setClickedIndex(index); 
   }
   // console.log(content,'content data')
 
@@ -170,10 +185,7 @@ function Content() {
                     </Link>
                   </div>
                   <div>
-                    {/* <button onClick={() => onSubmit(data, index)}>
-                      <StarOutlined  className="text-4xl" style={{ fill: clickedIndex === index ? 'black' : 'blue', backgroundColor: clickedIndex === index ? 'yellow' : 'transparent' }} />
-                    </button> */}
-                    { favourite ? (
+                    { favourite[index] ? (
                       <button onClick={() => onSubmit(data, index)}>
                         <HeartFilled style={{ color: 'red' }}  className="text-4xl"  />
                       </button>
@@ -190,7 +202,7 @@ function Content() {
             ))}
           </div>
             <div className="my-20 flex justify-center">
-        <Pagination current={current} onChange={onChange} total={50} />
+              <Pagination current={current} onChange={onChange} total={50} />
           </div>
         </div>
         
