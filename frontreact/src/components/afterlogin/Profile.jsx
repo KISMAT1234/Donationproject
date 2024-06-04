@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosUrl from "../url/Axiosurl";
 import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
+import { Button, message, Popconfirm } from 'antd';
 
 
 
@@ -36,19 +37,24 @@ const Profile = () => {
 
 
   const  deletePost = (cmtId) => {
-    try{
-       axiosUrl.delete("/user").then((response)=>{
-         console.log(response.data.data);
-         setProfile([response.data.data])
-       }).catch((err)=>{
-         console.log(err);
-       })
-    }
-    catch(error){
-      console.log(error); 
-    }
+    // try{
+    //    axiosUrl.delete("/user").then((response)=>{
+    //      console.log(response.data.data);
+    //      setProfile([response.data.data])
+    //      message.error('Delete Successfully');
+    //    }).catch((err)=>{
+    //      console.log(err);
+    //    })
+    // }
+    // catch(error){
+    //   console.log(error); 
+    // }
   }
 
+ 
+  const cancel = () => {
+    message.error('Cancelled');
+  };
 
 
   return (
@@ -111,13 +117,20 @@ const Profile = () => {
               </div>
               <div className="ml-50">
                 <div>
-                  <button onClick={()=> deletePost(postData._id)} className=" px-5 h-10 rounded-xl bg-green-500  hover:bg-green-600 text-xl hover:text-stone-100 ">Update</button>
+                  <button onClick={()=> updatePost(postData._id)} className=" px-5 h-10 my-2 rounded-xl bg-green-500  hover:bg-green-600 text-xl hover:text-stone-100 ">Update</button>
                 </div>
+                <Popconfirm
+                  title="Delete the task"
+                  description="Are you sure to delete this task?"
+                  onConfirm={ () =>deletePost(postData._id)}
+                  onCancel={cancel}
+                  okText="Yes"
+                  cancelText="Cancel"
+                >
+                  <button className=" px-5 h-10 my-2  rounded-xl bg-red-500  hover:bg-red-600 text-xl hover:text-stone-100 ">Delete</button>
+                </Popconfirm>
                 <div>
-                  <button onClick={()=> deletePost(postData._id)} className=" px-5 h-10 my-2 rounded-xl bg-red-500  hover:bg-red-600 text-xl hover:text-slate-100 ">Delete</button>
-                </div>
-                <div>
-                  <button onClick={()=> deletePost(postData._id)} className=" px-5 h-10 my-2 rounded-xl bg-yellow-500  hover:bg-yellow-600 text-xl hover:text-slate-100 ">Private</button>
+                  <button  className=" px-5 h-10 my-2 rounded-xl bg-yellow-500  hover:bg-yellow-600 text-xl hover:text-slate-100 ">Private</button>
                 </div>
               </div>
             </div>
