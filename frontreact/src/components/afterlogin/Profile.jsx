@@ -36,19 +36,18 @@ const Profile = () => {
   // console.log(post, 'post data')
 
 
-  const  deletePost = (cmtId) => {
-    // try{
-    //    axiosUrl.delete("/user").then((response)=>{
-    //      console.log(response.data.data);
-    //      setProfile([response.data.data])
-    //      message.error('Delete Successfully');
-    //    }).catch((err)=>{
-    //      console.log(err);
-    //    })
-    // }
-    // catch(error){
-    //   console.log(error); 
-    // }
+  const  deletePost = (postId) => {
+    try{
+       axiosUrl.delete(`/upload/${postId}`).then((response)=>{
+         console.log(response.data.data);
+         message.error(response.data.data.message);
+       }).catch((err)=>{
+         console.log(err);
+       })
+    }
+    catch(error){
+      console.log(error); 
+    }
   }
 
  
