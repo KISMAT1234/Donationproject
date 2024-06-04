@@ -67,6 +67,22 @@ class PostController{
         res.status(500).json(err);
         }
     }
+
+    async deletePost(req,res){
+      try{
+       const userId = req.user.userId
+       console.log(userId,'user id')
+       const postId = req.params.id
+       console.log(postId,'post id')
+
+   
+
+    }
+      catch(error){
+        console.log(error,'error in server');
+        return responseInstance.responseHandler(res, 400,"Internal server error");
+      }
+    }
 }
 
 export default  PostController;
