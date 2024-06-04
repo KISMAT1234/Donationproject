@@ -71,15 +71,16 @@ class PostController{
     async deletePost(req,res){
       try{
        const userId = req.user.userId
-       console.log(userId,'user id')
+    //    console.log(userId,'user id')
        const postId = req.params.id
-       console.log(postId,'post id')
+    //    console.log(postId,'post id')
 
        if(!userId){
         return responseInstance.responseHandler(res, 400,"Ops! you are unauthorized to delete this post");
        }
 
        const post = await Post.findByIdAndDelete(postId)
+    //    console.log(post,'post')
        if(!post){
         return responseInstance.responseHandler(res, 400,"Post not found");
        }
