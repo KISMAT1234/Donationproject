@@ -39,8 +39,12 @@ const Profile = () => {
   const  deletePost = (postId) => {
     try{
        axiosUrl.delete(`/upload/${postId}`).then((response)=>{
-         console.log(response.data.data);
-         message.error(response.data.data.message);
+         console.log(response.data,'response of delete');
+          message.error(response.data.message);
+          if(response.data.success === true){
+            setPost(post.filter(post => post._id !== postId))
+          }
+  
        }).catch((err)=>{
          console.log(err);
        })
