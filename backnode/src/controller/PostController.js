@@ -75,7 +75,16 @@ class PostController{
        const postId = req.params.id
        console.log(postId,'post id')
 
-   
+       if(!userId){
+        return responseInstance.responseHandler(res, 400,"Ops! you are unauthorized to delete this post");
+       }
+
+       const post = await Post.findByIdAndDelete(postId)
+       if(!post){
+        return responseInstance.responseHandler(res, 400,"Post not found");
+       }
+       
+       return responseInstance.responseHandler(res, 200,"Your post has been Deleted Successfully");
 
     }
       catch(error){
