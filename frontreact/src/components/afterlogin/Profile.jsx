@@ -120,7 +120,9 @@ const Profile = () => {
               </div>
               <div className="ml-50">
                 <div>
-                  <button onClick={()=> updatePost(postData._id)} className=" px-5 h-10 my-2 rounded-xl bg-green-500  hover:bg-green-600 text-xl hover:text-stone-100 ">Update</button>
+                  <Link to ={`/mainpage/profile/update-profile/${postData._id}`}>
+                    <button onClick={()=> updatePost(postData._id)} className=" px-5 h-10 my-2 rounded-xl bg-green-500  hover:bg-green-600 text-xl hover:text-stone-100 ">Update</button>
+                  </Link>
                 </div>
                 <Popconfirm
                   title="Delete the task"
