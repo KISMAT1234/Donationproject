@@ -56,6 +56,10 @@ function Content() {
         });
     }
 
+    const removePost = () => {
+      
+    }
+ 
   // const onSubmit = (data, index) => {
   //   if(favourite === false){
   //     setFavourite(true)
@@ -71,11 +75,11 @@ function Content() {
     console.log(updatedFavorites,'update') // Copy current favorites
     updatedFavorites[index] = !updatedFavorites[index] //This line toggles the favorite status for the item at the specified index. It first accesses the favorite status for that index (updatedFavorites[index]) and then uses the logical NOT operator (!) to toggle its value. If the current value is true, it becomes false, and vice versa.
     console.log(updatedFavorites,'index update');
-    if(updatedFavorites === true){
-      alert('added to favourites')
-    } else{
-      alert('removed from favourites')
-    }
+    // if(updatedFavorites === true){
+    //   alert('added to favourites')
+    // } else{
+    //   alert('removed from favourites')
+    // }
     setFavourite(updatedFavorites);
     console.log(favourite,'favour')
     dispatch(Star([data]));
@@ -166,8 +170,12 @@ function Content() {
                      </div>
                     </div> 
                    <div className="flex text-2xl">
-                     <TbDots className="mr-2"/>
-                     <CiSquareRemove />
+                    <button>
+                      <TbDots className="mr-2"/>
+                    </button>
+                     <button onClick={removePost(data._id)}>
+                       <CiSquareRemove />
+                     </button>
                    </div>
               </div>
                 <div className="my-2 text-xl font-light">Name: {data.name}</div>
