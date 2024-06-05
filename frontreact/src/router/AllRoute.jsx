@@ -23,6 +23,7 @@ import Userprofile from "../components/afterlogin/Memberprofile"
 import Update from "../components/afterlogin/Update"
 import PaymentSuccess from "../components/afterlogin/PaymentSuccess"
 import PaymentCancel from "../components/afterlogin/PaymentCancel"
+import UpdatePost from "../components/afterlogin/UpdatePost"
 
 
 
@@ -41,6 +42,7 @@ function RouterList(){
          <Route path="Mainpage" element={<LoginMiddleware/>}>
              <Route path="/Mainpage" element={<Mainpage/>}/>
              <Route path="profile" element={<Profile/>}/>
+             <Route path="profile/update-profile/:id" element={<UpdatePost/>}/>
              <Route path="profile/:slug" element={<Update/>}/>
              <Route path="members-list" element={<MemberList/>}/>
              <Route path="members-list/:slug" element={<Userprofile/>}/>
