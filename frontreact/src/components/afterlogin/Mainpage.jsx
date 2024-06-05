@@ -15,7 +15,7 @@ import { Pagination } from 'antd';
 
 import { HeartOutlined,HeartFilled } from '@ant-design/icons'
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Button, Popconfirm } from 'antd';
+import { Button,message,Popconfirm } from 'antd';
 
 
 function Content() {
@@ -58,9 +58,14 @@ function Content() {
         });
     }
 
-    const removePost = () => {
-
+    const removePost = (postId) => {
+      console.log(postId,'id to remove')
+      message.success('removed success');
     }
+    const cancel = (e) => {
+      console.log(e);
+      message.error('Cancelled');
+    };
  
   // const onSubmit = (data, index) => {
   //   if(favourite === false){
@@ -175,11 +180,12 @@ function Content() {
                     <button>
                       <TbDots className="mr-2"/>
                     </button>
-                     <button onClick={removePost(data._id)}>
                 
                        <Popconfirm
                           title="Remove the task"
                           description="Are you sure to remove this task?"
+                          onConfirm={() => removePost(data._id)}
+                          onCancel={cancel}
                           icon={
                             <QuestionCircleOutlined
                               style={{
@@ -191,7 +197,6 @@ function Content() {
                             {/* <CiSquareRemove /> */}
                             <button className=""><CiSquareRemove className="text-4xl  hover:text-red-600 mx-5 my-5"/></button>
                         </Popconfirm>
-                     </button>
                    </div>
               </div>
                 <div className="my-2 text-xl font-light">Name: {data.name}</div>
