@@ -78,7 +78,7 @@ const Userprofile = () => {
 
               {
               post.map((data, index)=>(
-                <div key={index} className="px-5 py-5 bg-green-500  mt-5 md:mx-20 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+                <div key={index} className="px-5 text-stone-50 py-5 bg-gray-500 rounded-xl  mt-5 md:mx-20 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
                    <div>{data.name}</div>
                    <div>{data.address}</div>
                    <div>{data.age}</div>
