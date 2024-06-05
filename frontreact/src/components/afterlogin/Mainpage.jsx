@@ -14,6 +14,8 @@ import { enUS } from 'date-fns/locale'
 import { Pagination } from 'antd';
 
 import { HeartOutlined,HeartFilled } from '@ant-design/icons'
+import { QuestionCircleOutlined } from '@ant-design/icons';
+import { Button, Popconfirm } from 'antd';
 
 
 function Content() {
@@ -57,7 +59,7 @@ function Content() {
     }
 
     const removePost = () => {
-      
+
     }
  
   // const onSubmit = (data, index) => {
@@ -174,7 +176,21 @@ function Content() {
                       <TbDots className="mr-2"/>
                     </button>
                      <button onClick={removePost(data._id)}>
-                       <CiSquareRemove />
+                
+                       <Popconfirm
+                          title="Remove the task"
+                          description="Are you sure to remove this task?"
+                          icon={
+                            <QuestionCircleOutlined
+                              style={{
+                                color: 'red',
+                              }}
+                            />
+                          }
+                        >
+                            {/* <CiSquareRemove /> */}
+                            <button className=""><CiSquareRemove className="text-4xl  hover:text-red-600 mx-5 my-5"/></button>
+                        </Popconfirm>
                      </button>
                    </div>
               </div>
@@ -221,4 +237,6 @@ function Content() {
 }
 
 export default Content
+
+
 
