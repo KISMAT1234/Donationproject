@@ -103,7 +103,7 @@ const Profile = () => {
        <h1 className="text-4xl font-mono">Post</h1>
        {
         post.map((postData, index)=>{
-          return <div key={index} className="pt-1 px-5 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
+          return <div key={index} className=" my-2 pt-1 px-5 border-2 hover:border-green-500 rounded-2xl shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
             <div className="flex justify-between">
               <div className="w-[70%]">
                 <div className="flex flex-wrap justify-between">
