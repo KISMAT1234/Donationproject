@@ -98,15 +98,13 @@ useEffect(() => {
            </div>
 
            <div className="  mt-5 text-[10px] sm:text-[120%] md:text-[150%]">
-               <h1 className="">DONATE ANYTHING YOU WANT</h1>
-            
-           </div>
-            <form onSubmit={handleSubmit}>
+               {/* <h1 className="">DONATE ANYTHING YOU WANT</h1> */}
+               <form onSubmit={handleSubmit}>
              <div className=" md:w-[30%] flex">  
               <div className="">
-                  <input type="text" value={search} onChange={changeValue} onClick={handleInputClick} className="text-xl mt-2 h-[6vh] rounded-md shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]" placeholder="Search fund raiser Here"/> 
+                  <input type="text" value={search} onChange={changeValue} onClick={handleInputClick} className="w-[500px] placeholder-yellow-600::placeholder bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-black focus:ring-2 focus:ring-purple-600 focus:outline-none focus:border-transparent  py-1 px-2 rounded-lg shadow-lg border-none transform transition-transform duration-300 focus:scale-105" placeholder="Search fund raiser Here"/> 
                 {showSearchContainer && (
-                  <div ref={containerRef} className="container bg-white border border-gray-800 h-[60vh] shadow-md p-4 rounded-md animate-fadeIn">
+                  <div ref={containerRef} className="container w-[100%] z-20  bg-white border border-gray-800 h-[60vh] shadow-md p-4 rounded-md animate-fadeIn">
                      <h1>kismat</h1>
                   { 
                      api.slice(0, 10).map((search, index)=>{
@@ -130,12 +128,18 @@ useEffect(() => {
                </Link> */}
 
                     {/* <Link to={`/Mainpage/search?name=${search}`}> */}
-                        <button type="submit" className="bg-blue-400 h-[6vh] mt-2 rounded-2xl mx-1 px-4 py-4">
-                            <FaSearch />
+                        <button type="submit" className="bg-blue-400 h-[7vh] hover:bg-blue-600 rounded-md mx-4 ">
+                            <FaSearch className="hover:scale-150 w-12"/>
                         </button>
                     {/* </Link> */}
            </div> 
            </form>
+            
+           </div>
+           <div>
+             <h1>Icon</h1>
+           </div>
+    
 
        </div>
        
