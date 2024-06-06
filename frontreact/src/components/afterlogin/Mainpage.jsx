@@ -119,7 +119,7 @@ function Content() {
         <div className="flex  text-4xl justify-center mt-[250px]">Loading content...</div>
       ) : (
         <div className="">
-          <div className="mx-5 flex fixed z-50 top-14 md:justify-between md:top-20 px-2 py-2 md:w-[72%] w-[94%] rounded-2xl  bg-stone-100 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
+          <div className="mx-5 flex fixed z-10 top-14 md:justify-between md:top-20 px-2 py-2 md:w-[72%] w-[94%] rounded-2xl  bg-stone-100 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
               <Link to="/Mainpage">
               <div className="ml-1 my-1 px-1 py-1 rounded-2xl bg-gray-400 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
                 <h1 className="text-sm md:text-xl">All</h1>
