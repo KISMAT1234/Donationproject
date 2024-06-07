@@ -12,6 +12,7 @@ const Profile = () => {
     const [post, setPost] = useState([]);
     const [loading, setLodaing] = useState(true);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [isExpanded, setIsExpanded] = useState(false);
 
   
   useEffect(()=>{
@@ -58,6 +59,10 @@ const Profile = () => {
   const cancel = () => {
     message.error('Cancelled');
   };
+
+  const read = () => {
+    
+  }
 
 
   return (
@@ -139,7 +144,16 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-                <h1 className=" my-5">Description: <br/>{postData.description}</h1>
+                <div>
+                  <h1 className=" mt-5">Description: <br/>{postData.description}</h1>
+                  {
+                  <span onClick={read} style={{ color: 'blue', cursor: 'pointer' }}>
+                     {isExpanded ? ' Read less' : ' Read more'}
+                  </span>
+                    }
+
+
+                </div>
                 <h1 className=" my-5">Image </h1>
             
           </div>
