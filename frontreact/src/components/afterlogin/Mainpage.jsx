@@ -18,11 +18,15 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Button,message,Popconfirm } from 'antd';
 
 
+
+
 function Content() {
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState([]);
   const [favourite, setFavourite] = useState({}); 
   const [current, setCurrent] = useState(1);
+
+
   const onChange = (page) => {
     setCurrent(page);
   };
@@ -116,9 +120,9 @@ function Content() {
   return (
     <>
       {loading ? (
-        <div className="flex  text-4xl justify-center mt-[250px]">Loading content...</div>
+        <div className="flex  text-4xl justify-center mt-[250px]" >Loading content...</div>
       ) : (
-        <div className="">
+        <div className="" >
           <div className="mx-5 flex fixed z-10 top-14 md:justify-between md:top-20 px-2 py-2 md:w-[72%] w-[94%] rounded-2xl  bg-stone-100 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
               <Link to="/Mainpage">
               <div className="ml-1 my-1 px-1 py-1 rounded-2xl bg-green-400 hover:bg-green-500 hover:text-white border-2 border-indigo-400 hover:border-indigo-800 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
