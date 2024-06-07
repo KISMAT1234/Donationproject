@@ -15,7 +15,7 @@ import { Pagination } from 'antd';
 
 import { HeartOutlined,HeartFilled } from '@ant-design/icons'
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Button,message,Popconfirm } from 'antd';
+import { Button,message,Popconfirm,Popover } from 'antd';
 
 
 
@@ -96,6 +96,26 @@ function Content() {
     dispatch(Star([data]));
   }
   // console.log(content,'content data')
+
+  const more = (
+    <div className=" mx-10 block">
+      <Link to="">
+          <h1 className="text-xl hover:text-red-600 font-mono my-1">report</h1>
+      </Link>
+
+      <Link to="">
+          <h1 className="text-xl hover:text-red-600 font-mono my-1">report</h1>
+      </Link>
+
+      <Link to="">
+          <h1 className="text-xl hover:text-red-600 font-mono my-1">report</h1>
+      </Link>
+
+      <Link to="">
+          <h1 className="text-xl hover:text-red-600 font-mono my-1">report</h1>
+      </Link>
+    </div>
+  );
 
   const renderTime = (createdAt) => {
     const now = new Date();
@@ -180,10 +200,12 @@ function Content() {
                       <h1 className="ml-1">{renderTime(data.createdAt)}</h1>
                     </div>
                     </div> 
-                    <div className="flex text-2xl">
-                      <button>
-                        <TbDots className="mr-2"/>
-                      </button>
+                    <div className="flex text-2xl ">
+                      <Popover content={more} trigger="click">
+                        <button>
+                          <TbDots className="mr-2 hover:text-blue-500"/>
+                        </button>
+                      </Popover>
                       <Popconfirm
                         title="Remove the task"
                         description="Are you sure to remove this task?"
@@ -203,7 +225,7 @@ function Content() {
                 </div>
                 <div className="my-2 text-xl font-light">Name: {data.name}</div>
                 <div className="my-2 text-xl font-light">Address: {data.address}</div>
-                <div className="my-2 text-xl font-normal">End Date: {data.endDate}</div>
+                <div className="my-2 text-xl font-normal text-red-600">End Date: {data.endDate}</div>
                 <div className="">
                   <img src={data.image} width="100" className="w-[90%]" alt="image" />
                 </div>
