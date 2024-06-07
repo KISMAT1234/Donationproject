@@ -5,19 +5,18 @@ import { FaEdit } from "react-icons/fa";
 import { Button, message, Popconfirm } from 'antd';
 
 
-
 const Profile = () => {
 
     const [profile, setProfile] = useState([]);
     const [post, setPost] = useState([]);
     const [loading, setLodaing] = useState(true);
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [isExpanded, setIsExpanded] = useState(false);
+    const [expandedItem, setExpandedItem] = useState(null);
+
 
   
   useEffect(()=>{
      axiosUrl.get("/login/token").then((response)=>{
-       console.log(response.data.userData,'response ');
+      //  console.log(response.data.userData,'response ');
        setProfile([response.data.userData[0].userId])
        setPost(response.data.userData)
        setLodaing(false)
@@ -40,7 +39,7 @@ const Profile = () => {
   const  deletePost = (postId) => {
     try{
        axiosUrl.delete(`/upload/${postId}`).then((response)=>{
-         console.log(response.data,'response of delete');
+        //  console.log(response.data,'response of delete');
           message.error(response.data.message);
           if(response.data.success === true){
             setPost(post.filter(post => post._id !== postId))
@@ -60,9 +59,11 @@ const Profile = () => {
     message.error('Cancelled');
   };
 
-  const read = () => {
-    
-  }
+
+
+  const toggleExpanded = (index) => {
+    setExpandedItem(expandedItem === index ? null : index);
+  };
 
 
   return (
@@ -144,16 +145,23 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-                <div>
-                  <h1 className=" mt-5">Description: <br/>{postData.description}</h1>
-                  {
-                  <span onClick={read} style={{ color: 'blue', cursor: 'pointer' }}>
-                     {isExpanded ? ' Read less' : ' Read more'}
-                  </span>
-                    }
-
-
-                </div>
+            <div>
+            {expandedItem === index ? (
+              <span>{postData.description}</span>
+            ) : (
+              <span>{postData.description.split('\n').slice(0, 2).join('\n')}
+              
+              </span>
+            )}
+            {postData.description.split('\n').length > 2 && (
+              <span>
+              {/* ...{' '} */}
+              <button onClick={() => toggleExpanded(index)} className="text-blue-600 cursor-pointer">
+                {expandedItem === index ? 'Read less' : '...Read more'}
+                </button>
+              </span>
+            )}
+          </div>
                 <h1 className=" my-5">Image </h1>
             
           </div>
