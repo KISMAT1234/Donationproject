@@ -63,7 +63,7 @@ function Content() {
     }
 
     const removePost = (postId) => {
-      console.log(postId,'id to remove')
+      // console.log(postId,'id to remove')
       message.success('removed success');
     }
     const cancel = (e) => {
