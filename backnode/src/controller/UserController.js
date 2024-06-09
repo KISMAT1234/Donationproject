@@ -176,6 +176,18 @@ class UserController{
         }
     }
 
+    async changePassword(req,res){
+        try{
+            console.log('came here')
+          const data = req.body
+          console.log(data,'password value')
+          
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+
 
 }
 
