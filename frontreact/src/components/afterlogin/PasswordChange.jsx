@@ -6,6 +6,7 @@ import {
   Button
 
 } from 'antd';
+import axiosUrl from '../url/Axiosurl';
 
 const formItemLayout = {
   labelCol: {
@@ -31,8 +32,15 @@ const PasswordChange= () => {
 
 
   const onFinish = (values) => {
+    // const formValue = 
     console.log('Received values of form: ', values);
+    axiosUrl.patch('/user',values).then((response) => {
+     console.log(response);
+    }).catch((error) => {
+        console.log(error)
+    })
   };
+  
  
 
 
@@ -64,7 +72,7 @@ const PasswordChange= () => {
       </Form.Item>
 
       <Form.Item
-        name="password"
+        name="newpassword"
         label="New-Password"
         rules={[
           {
@@ -78,7 +86,7 @@ const PasswordChange= () => {
       </Form.Item>
 
       <Form.Item
-        name="confirm"
+        name="confirmpassword"
         label="Confirm-New-Password"
         dependencies={['password']}
         hasFeedback
