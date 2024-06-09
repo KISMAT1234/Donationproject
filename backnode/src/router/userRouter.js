@@ -22,5 +22,6 @@ userRouter.patch('/:slug', routerInstance.UpdateUserProfile)
 // userRouter.get('/',authenticate,authorize(["admin"]), routerInstance.getAllUser)
 userRouter.get('/:id/verify/:token',routerInstance.verifyEmail)
 userRouter.post('/:id/forgot/:token',routerInstance.forgotPassword)
+userRouter.patch('/',authenticate,routerInstance.changePassword)
 
 export default userRouter;
