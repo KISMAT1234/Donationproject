@@ -163,7 +163,7 @@ class UserController{
         // console.log(user,'after hash')
         if(user){
             // console.log('change successfull');
-            return responseInstance.successResponse(res,200,'password change successfully')
+            return responseInstance.responseHandler(res,200,'password change successfully')
         }
 
         await Token.deleteOne({
@@ -180,8 +180,24 @@ class UserController{
         try{
             console.log('came here')
           const data = req.body
-          console.log(data,'password value')
-          
+          console.log(data.previouspassword,'password value')
+          const user_id = req.user.userId
+          console.log(user_id,'password')
+
+          const user = await User.findById(user_id);
+          console.log(user,'user data')
+
+          if (!user) {
+            return responseInstance.responseHandler(res,400,'User not found')
+          }
+
+          const isMatch = await User.comparePassword(data.previouspassword);
+          console.log(isMatch,'matching old and new password')
+
+          if (!isMatch){
+            return responseInstance.responseHandler(res,400,'User not found')
+          }
+
         }
         catch(err){
             console.log(err)
