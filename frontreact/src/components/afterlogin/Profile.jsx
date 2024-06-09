@@ -85,7 +85,7 @@ const Profile = () => {
         </button>
        </Link>
 
-       <Link to ="">
+       <Link to ="/Mainpage/profile/change-password">
        <button className="bg-red-500  hover:bg-red-600 text-xl hover:text-slate-200 rounded-xl px-2 py-1 mx-5 my-5 justify-end">
            <h1>Change password</h1>
          </button>
