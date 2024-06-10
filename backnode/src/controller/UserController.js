@@ -25,7 +25,10 @@ class UserController{
                 return responseInstance.responseHandler(res,400,'User not found')
             }
             const userId = user[0]._id
-          
+            if(ownerId !== userId){
+                post.profileViews++
+                await post.save()
+            }
             // console.log(userId)
              const post =  await Post.find({ userId}).select('-password')
             //  console.log(post,'user post')
