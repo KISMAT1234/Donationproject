@@ -88,7 +88,7 @@ const PasswordChange= () => {
       <Form.Item
         name="confirmpassword"
         label="Confirm-New-Password"
-        dependencies={['password']}
+        dependencies={['newpassword']}
         hasFeedback
         rules={[
           {
@@ -97,7 +97,7 @@ const PasswordChange= () => {
           },
           ({ getFieldValue }) => ({
             validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
+              if (!value || getFieldValue('newpassword') === value) {
                 return Promise.resolve();
               }
               return Promise.reject(new Error('The new password that you entered do not match!'));
