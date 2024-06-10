@@ -181,6 +181,7 @@ class UserController{
             console.log('came here')
           const data = req.body
           const prevValue= data.previouspassword
+          const newValue= data.newpassword
           console.log(prevValue,'password value')
 
           const user_id = req.user.userId
@@ -201,12 +202,13 @@ class UserController{
             return responseInstance.responseHandler(res,400,'Your previous password does not match')
           }
 
-          
+          const hashedPassword = await bcrypt.hash(newValue, 10);
+          console.log(hashedPassword,'hash pass');
 
-        
+          user.password = hashedPassword;
+          await user.save();
 
-
-
+          return responseInstance.responseHandler(res,200,'Password change successfully')
         }
         catch(err){
             console.log(err)
