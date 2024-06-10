@@ -180,7 +180,9 @@ class UserController{
         try{
             console.log('came here')
           const data = req.body
-          console.log(data.previouspassword,'password value')
+          const prevValue= data.previouspassword
+          console.log(prevValue,'password value')
+
           const user_id = req.user.userId
           console.log(user_id,'password')
 
@@ -191,12 +193,19 @@ class UserController{
             return responseInstance.responseHandler(res,400,'User not found')
           }
 
-          const isMatch = await User.comparePassword(data.previouspassword);
+          const isMatch = await user.comparePassword(prevValue);
           console.log(isMatch,'matching old and new password')
 
+
           if (!isMatch){
-            return responseInstance.responseHandler(res,400,'User not found')
+            return responseInstance.responseHandler(res,400,'Your previous password does not match')
           }
+
+          
+
+        
+
+
 
         }
         catch(err){
