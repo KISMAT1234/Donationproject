@@ -17,14 +17,19 @@ class UserController{
     async getOneUser(req,res){
         try{
             const slug = req.params.slug;
+            const ownerId = req.user.userId
             // console.log(slug);
             const user =  await User.find({slug}).select('-password')
             //  console.log(user,'user single')
-
+            if (!user) {
+                return responseInstance.responseHandler(res,400,'User not found')
+            }
             const userId = user[0]._id
+          
             // console.log(userId)
              const post =  await Post.find({ userId}).select('-password')
             //  console.log(post,'user post')
+          
              const  userInformation = { post, user}
              return responseInstance.responseHandler(res,200,'data fetch success',userInformation)
 
