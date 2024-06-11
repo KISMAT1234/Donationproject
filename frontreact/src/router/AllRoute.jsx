@@ -25,6 +25,7 @@ import PaymentSuccess from "../components/afterlogin/PaymentSuccess"
 import PaymentCancel from "../components/afterlogin/PaymentCancel"
 import UpdatePost from "../components/afterlogin/UpdatePost"
 import PasswordChange from "../components/afterlogin/PasswordChange"
+import Notification from "../components/afterlogin/Notification"
 
 
 
@@ -53,6 +54,7 @@ function RouterList(){
              <Route path="search" element={<Search/>}/>
              <Route path="payment-success" element={<PaymentSuccess/>}/>
              <Route path="payment-cancel" element={<PaymentCancel/>}/>
+             <Route path="notification" element={<Notification/>}/>
              <Route path="profile/change-password" element={<PasswordChange/>}/>
             
          
