@@ -3,6 +3,9 @@ import logo from "../../image/logo.jpg"
 import { FaSearch } from "react-icons/fa";
 import axiosUrl from "../../url/Axiosurl";
 // import { Link } from 'react-router-dom';
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { Link } from "react-router-dom";
+
 
 function Topbar() {
 
@@ -136,8 +139,11 @@ useEffect(() => {
            </form>
             
            </div>
-           <div>
-             <h1>Icon</h1>
+           <div className="text-4xl">
+              <Link to="">
+
+              <IoIosNotificationsOutline />
+              </Link>
            </div>
     
 
