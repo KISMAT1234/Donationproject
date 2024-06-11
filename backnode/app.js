@@ -6,12 +6,15 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import morgan from 'morgan';
 import errorHandler from './src/middleware/errorHandler.js'
+import { createServer } from 'node:http';
+import { Server } from 'socket.io';
+
+const exp= express();
+const httpServer = createServer(exp);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-
-const exp= express();
 
 exp.use(express.json())
 
@@ -27,6 +30,14 @@ exp.use(express.static(path.join(__dirname, 'public')));
 
 exp.use(mainRouter);
 
+const io = new Server(httpServer, {
+  cors: {
+    origin: process.env.FRONTEND_URL,
+  },
+});
+
+exp.set('io', io);
+
 exp.get('/',(req,res)=>{
     res.send("hello world");
 })
@@ -36,6 +47,7 @@ exp.use((err, req, res, next) => {
   })
 
 export default exp;
+
 
 
 
