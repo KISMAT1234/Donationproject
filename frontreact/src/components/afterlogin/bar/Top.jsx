@@ -140,7 +140,7 @@ useEffect(() => {
             
            </div>
            <div className="text-4xl">
-              <Link to="">
+              <Link to="/Mainpage/notification">
 
               <IoIosNotificationsOutline />
               </Link>
