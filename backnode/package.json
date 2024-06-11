@@ -23,6 +23,7 @@
     "nodemailer-express-handlebars": "^6.1.2",
     "nodemon": "^3.1.0",
     "slugify": "^1.6.6",
+    "socket.io": "^4.7.5",
     "stripe": "^15.4.0",
     "winston": "^3.13.0",
     "zod": "^3.22.5"
