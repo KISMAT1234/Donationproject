@@ -7,6 +7,7 @@ import followRouter from './followRouter.js';
 import paymentRouter from './paymentRouter.js';
 import searchRouter from './searchRouter.js';
 import categoryRouter from './categoryRouter.js';
+import notificationRouter from './notificationRouter.js';
 
 const mainRouter= express.Router();
 
@@ -18,6 +19,7 @@ mainRouter.use('/comment',followRouter);
 mainRouter.use('/donate',paymentRouter);
 mainRouter.use('/search',searchRouter);
 mainRouter.use('/category',categoryRouter);
+mainRouter.use('/notification',notificationRouter);
 
 
 
