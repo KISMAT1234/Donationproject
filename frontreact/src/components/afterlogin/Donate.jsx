@@ -12,6 +12,8 @@ import {  Popconfirm,message } from 'antd';
 import { SmileOutlined } from '@ant-design/icons'
 import { Button, notification } from 'antd';
 
+import { socket } from '../../main';
+
 
   
 const Donate = () => {
@@ -69,11 +71,13 @@ const Donate = () => {
         // console.log(commentsList, "commentlists array another useEffect");
     }, [id, commentsList]);
 
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         // console.log(comment,'state comment')
         try {
-            await axiosUrl.post(`/comment/${id}`, { comment });
+            const response = await axiosUrl.post(`/comment/${id}`, { comment });
             setComment(''); // Clear input after submitting
              // Refresh comments after submitting
              fetchComments()
@@ -91,6 +95,14 @@ const Donate = () => {
                 console.log('Notification Clicked!');
               },
             });
+
+            // if(response.data.data.success === true){
+              socket.emit('commentAdded', {
+                // commenterId: localStorage.getItem('userId'),
+                postId:id
+            });
+            // }
+
         } catch (error) {
             console.error('Error adding comment:', error);
         }
@@ -221,7 +233,7 @@ const Donate = () => {
 
 
     return (
-        <>w
+        <>
         <div className=" px-2 ">
             <h1 className="mb-3 text-3xl md:text-4xl font-black">{info.topic}</h1>
              <div className="md:flex">
