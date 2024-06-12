@@ -3,8 +3,8 @@ import UserController from "../controller/UserController.js"
 import FileUpload from '../multerfile/Upload.js';
 // import authorize from "../middleware/Authorize.js"
 import authenticate from "../middleware/Authenticate.js"
-import signupSchema from "../validation/SignupValidation.js"
-import validate from '../validation/middleware.js';
+// import signupSchema from "../validation/SignupValidation.js"
+// import validate from '../validation/middleware.js';
 
 
 const userRouter = express.Router();
@@ -14,7 +14,8 @@ let upload = fPInstance.custom_upload("uploads/users")
 
 const routerInstance = new UserController();
 
-userRouter.post('/',validate(signupSchema),upload.single('image'), routerInstance.store)
+// userRouter.post('/',validate(signupSchema),upload.single('image'), routerInstance.store)
+userRouter.post('/',upload.single('image'), routerInstance.store)
 // userRouter.get('/admin',restrictTo(["admin"]), routerInstance.getUser)
 userRouter.get('/',routerInstance.getAllUser)
 userRouter.get('/:slug', routerInstance.getOneUser)
