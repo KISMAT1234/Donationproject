@@ -9,6 +9,8 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 import {  Popconfirm,message } from 'antd';
+import { SmileOutlined } from '@ant-design/icons'
+import { Button, notification } from 'antd';
 
 
   
@@ -40,13 +42,15 @@ const Donate = () => {
     const fetchComments = async () => {
       try {
             const response = await axiosUrl.get(`/comment/${id}`);
-            console.log(response.data,"response of fetchedcomments")
-            console.log(response.data[0].like)  
-            setCommentsList(response.data);  
+            console.log(response.data.data,"response of fetchedcomments")
+            // console.log(response.data[0].like)  
+            setCommentsList(response.data.data);  
             setLikeCount(response.data[0].like) 
             setDislikeCount(response.data[0].dislike) 
             setLiked(response.data[0].likeIcon)  
-            setdisLiked(response.data[0].disLikeIcon) 
+            // setdisLiked(response.data[0].disLikeIcon) 
+
+            // if(response.data..)
             
           } catch (error) {
             console.error('Error fetching comments:', error);
@@ -73,6 +77,20 @@ const Donate = () => {
             setComment(''); // Clear input after submitting
              // Refresh comments after submitting
              fetchComments()
+             notification.open({
+              message: 'Comment added Succesfully',
+              description:'Thank you for adding comment and giving review. Hope this comment motivates us to be more active in social welfare.',
+              icon: (
+                <SmileOutlined
+                  style={{
+                    color: '#108ee9',
+                  }}
+                />
+              ),
+              onClick: () => {
+                console.log('Notification Clicked!');
+              },
+            });
         } catch (error) {
             console.error('Error adding comment:', error);
         }
@@ -96,6 +114,8 @@ const Donate = () => {
             //   setLiked(true);
             //   setDisliked(false);
             // }
+           
+
         } catch (error) {
             console.error('server error', error);
         }
@@ -152,11 +172,24 @@ const Donate = () => {
       if (window.confirm('Are you sure you want to delete?')) {
         await axiosUrl.delete(`/comment/${commentId}`).then((response)=>{
           //  console.log(response.data);
-           alert("comment deleted successfully");
            setCommentsList(commentsList.filter(comment => comment._id !== commentId)); // used to update the state of the comments list by removing a specific comment without needing to refresh the page. Here's a detailed explanation of each part:
           }).catch((err)=>{
               console.log(err)
           })
+          notification.open({
+            message: 'Comment deleted Succesfully',
+            description:'Comment deleted from this post. Hope you provide a positive feedback so that we can help to others needy people for fund raising',
+            icon: (
+              <SmileOutlined
+                style={{
+                  color: '#108ee9',
+                }}
+              />
+            ),
+            onClick: () => {
+              console.log('Notification Clicked!');
+            },
+          });
       }
       try{
           // axiosUrl.delete("/comment/")
@@ -283,7 +316,8 @@ const Donate = () => {
                    <label  htmlFor="input-label" className="block text-4xl font-medium mb-2 dark:text-white">Comments</label>
                    <input  type="text" onChange={(e) => setComment(e.target.value)} value={comment} id="input-label" className="bg-slate-200  py-3 px-4 block w-full border-gray-200 rounded-lg text-xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" placeholder="write something..."/>
                 </form>
-
+                
+                
                  <div className="my-5 ">
                       {commentsList.map((cmt, countId)=>(
                          <div key={countId} className="mt-5">
@@ -297,7 +331,7 @@ const Donate = () => {
                                               <div className="text-4xl font-medium">{cmt.userId.username}</div>
                                               <div className="mt-3 ml-2">{cmt.createdAt}</div>
                                             </div>
-                                          <div className="mt-3">anything</div>
+                                          <div className="mt-3 text-2xl">Edit</div>
                                         </div>
                                        <div className="my-5">
                                              {cmt.comment}
@@ -335,7 +369,7 @@ const Donate = () => {
                                            <div className="text-2xl flex">
                                            
                                               <button  className="px-1 py-1 h-10" onClick={()=> deleteComment(cmt._id)}>  
-                                                <MdDelete className="text-4xl"/>
+                                                <MdDelete className="text-5xl text-red-500 hover:text-red-600"/>
                                               </button>
                                             </div>
                                        </div>
