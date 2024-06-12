@@ -1,58 +1,37 @@
-import express from "express"
-import cors from  'cors'
-import mainRouter from './src/router/mainRouter.js'
-import path from "path"
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import express from 'express';
+import cors from 'cors';
+import mainRouter from './src/router/mainRouter.js';
+import path from 'path';
 import morgan from 'morgan';
-import errorHandler from './src/middleware/errorHandler.js'
-import { createServer } from 'node:http';
-import { Server } from 'socket.io';
+import errorHandler from './src/middleware/errorHandler.js';
+import dotenv from 'dotenv';
+import initializeSocket from './socket.js';
 
-const exp= express();
-const httpServer = createServer(exp);
+dotenv.config();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const app = express();
 
+app.use(express.json());
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 
-exp.use(express.json())
+// Use import.meta.url to get the module's URL and extract the directory path
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
-exp.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// exp.use(morgan('tiny'));
+// Your other middleware and routes here
+app.use(mainRouter);
 
-exp.use(express.urlencoded({ extended: true }));
-
-
-exp.use(express.static(path.join(__dirname, 'public')));
-
-
-exp.use(mainRouter);
-
-const io = new Server(httpServer, {
-  cors: {
-    origin: process.env.FRONTEND_URL,
-  },
+app.get('/', (req, res) => {
+  res.send('Hello world');
 });
 
-exp.set('io', io);
+app.use((err, req, res, next) => {
+  errorHandler(err, req, res, next);
+});
 
-exp.get('/',(req,res)=>{
-    res.send("hello world");
-})
+const io = initializeSocket(app); // Initialize Socket.io after Express app
 
-exp.use((err, req, res, next) => {
-    errorHandler(err, req, res, next)
-  })
-
-export default exp;
-
-
-
-
-
-
-
-  
+export { app, io };
 
