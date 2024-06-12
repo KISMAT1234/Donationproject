@@ -59,7 +59,7 @@ class UserController{
     async store(req,res,next){
         try{
             // const value = await signupValidate(req.body)
-            // console.log('validate')
+            console.log('validate')
             // console.log(req.file,'image file');
             let imageName="";
             if(req.file){
@@ -68,7 +68,7 @@ class UserController{
             // console.log(imageName,'image filename store')
                 const user = new User({...req.body, image:imageName}); 
                 user.slug = slugify(user.username, { lower: true });
-                // console.log(user);
+                console.log(user);
                 await user.save();
                 // console.log(user)
                 const email = user.email

@@ -41,7 +41,7 @@ async function sendEmail({
    title,
    template
   }){
-    // console.log(to, subject, token,'sendemail token')
+    console.log(to, subject, token,'sendemail token')
     let mailDetails = {
         from : "lifecoding23@gmail.com",
         to: to,

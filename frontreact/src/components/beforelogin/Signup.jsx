@@ -68,6 +68,7 @@ const App = () => {
 
     console.log('data: ', formData);
     axiosUrl.post("/user",formData).then((response)=>{
+      console.log(response.data,'response signup')
       setEmailMessage(response.data.message)
       if(response.data.message){
         Swal.fire({
@@ -77,7 +78,7 @@ const App = () => {
         });
       }
     }).catch((err)=>{
-      console.log(err);
+      console.log(err,'errror ');
     })
 };
 
