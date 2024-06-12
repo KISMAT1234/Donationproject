@@ -1,15 +1,18 @@
+import dotenv from 'dotenv';
+import { app, io } from './app.js';
 import Database from './src/connection/databaseconn.js'
-import dotenv from 'dotenv'
-import exp from "./app.js"
 
 dotenv.config();
-
 Database();
 
-const port= process.env.PORT 
+const port = process.env.PORT || 8000;
 
-const httpServer = process.env.SERVER
+const server = app.listen(port, () => {
+  console.log(`Express server running on port ${port}`);
+});
 
-exp.listen(port,()=>{
-    console.log(`Server running at port ${httpServer}:${port}`);
-})
+io.listen(server); // Bind Socket.io to the same HTTP server as Express
+
+console.log(`Socket.io server running on port ${port}`);
+
+
