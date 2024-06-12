@@ -1,6 +1,9 @@
 import Comment from "../model/Comment.js";
 import Handler from "../logger/ResponseHandler.js"
+import Post from "../model/Post.js";
 const responseInstance = new Handler();
+import io  from "../../socket.js";
+import Notification from "../model/Notification.js";
 
 class CommentController{
      async storeComment(req,res){
@@ -14,8 +17,30 @@ class CommentController{
 
         const userCmt = new Comment({...req.body,userId:userId,postId:postId})
         await userCmt.save();
+
+        const post = await Post.findById(postId)
+        console.log(post,'user post')
+
+        const postUserId = post.userId._id.toString()
+        console.log(postUserId,'user id')
+
+        if (post && postUserId !== userId) {
+           const notification = new Notification({
+               sender: userId,
+               receiver: postUserId,
+               type: 'comment',
+               message: `${postUserId.username} commented on your post`,
+               postId:postId
+           });
+           console.log(notification,'notification to send user and save')
+           await notification.save();
+     
+           io.to(postUserId).emit('notification', notification);
+         }
+
         // console.log(userCmt, 'data send success')
-        return res.status(200).json({data:"Comment send successfull"})
+      return responseInstance.responseHandler(res,200,'Comment send successfull')
+
         }catch(err){
             res.status(500).json(err);
         }
@@ -32,7 +57,8 @@ class CommentController{
         
         const cmtData = await Comment.find({postId: Id}).populate('userId',['username','image'])
         // console.log(cmtData,"fetch comment");
-        return res.status(200).json(cmtData);
+        return responseInstance.responseHandler(res,200,'Comment fetch successfull',cmtData)
+
         }
         catch(err){
             res.status(500).json(err);
