@@ -9,25 +9,30 @@ import { io } from 'socket.io-client'
 import {jwtDecode} from 'jwt-decode';
 
 const token = localStorage.getItem('token');
-const decodedToken = jwtDecode(token);
-const userId = decodedToken.id
+let userId;
+
+if (token) {
+  const decodedToken = jwtDecode(token);
+  userId = decodedToken.id;
+}
 
 
 // export const socket = io(import.meta.env.BackendServer).emit('join', 'userId')
-export const socket = io('http://localhost:8000', {
-    userId: { userId },
-    withCredentials: true,
-});
+// export const socket = io("http://localhost:8000", {
+//     query: { userId },
+//     withCredentials: true,
+// });
+export const socket = io("http://localhost:8000")
+// socket.emit('join', userId);
 // console.log(socket,'socket url')
 
 
-socket.on('connect', () => {
-  console.log(socket.id) // x8WIv7-mJelg7on_ALbx
-  socket.emit('join', userId);
+socket.on('connection', () => {
+  console.log('frontend connection successfully') // x8WIv7-mJelg7on_ALbx
 })
 
 socket.on('disconnect', () => {
-  console.log(socket.id) // undefined
+  console.log('frontend connection disconnect') // undefined
 })
 
 
