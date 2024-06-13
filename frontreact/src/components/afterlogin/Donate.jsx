@@ -13,6 +13,8 @@ import { SmileOutlined } from '@ant-design/icons'
 import { Button, notification } from 'antd';
 
 import { socket } from '../../main';
+import {jwtDecode} from 'jwt-decode';
+
 
 
   
@@ -28,6 +30,14 @@ const Donate = () => {
     const [likeCount, setLikeCount] = useState();
     const [dislikeCount, setDislikeCount] = useState(0);
     const [delComment, setDelComment] = useState(false)
+
+    const token = localStorage.getItem('token');
+    let userId;
+
+    if (token) {
+      const decodedToken = jwtDecode(token);
+      userId = decodedToken.id;
+    }
 
     const getInfo = async() =>{
         await axiosUrl.get(`/upload/${id}`).then((response)=>{
@@ -97,9 +107,10 @@ const Donate = () => {
             });
 
             // if(response.data.data.success === true){
-              socket.emit('commentAdded', {
+              socket.emit('notification', {
                 // commenterId: localStorage.getItem('userId'),
-                postId:id
+                postId:id,
+                userId:userId,
             });
             // }
 
@@ -183,25 +194,36 @@ const Donate = () => {
       // console.log(commentId,"delete comment Id");
       if (window.confirm('Are you sure you want to delete?')) {
         await axiosUrl.delete(`/comment/${commentId}`).then((response)=>{
-          //  console.log(response.data);
-           setCommentsList(commentsList.filter(comment => comment._id !== commentId)); // used to update the state of the comments list by removing a specific comment without needing to refresh the page. Here's a detailed explanation of each part:
+          console.log(response.data,'response of deletion');
+          if(response.data.success === true){
+             setCommentsList(commentsList.filter(comment => comment._id !== commentId)); // used to update the state of the comments list by removing a specific comment without needing to refresh the page. Here's a detailed explanation of each part:
+              notification.open({
+                message: 'Comment deleted Succesfully',
+                description:'Comment deleted from this post. Hope you provide a positive feedback so that we can help to others needy people for fund raising',
+                icon: (
+                  <SmileOutlined
+                    style={{
+                      color: '#108ee9',
+                    }}
+                  />
+                ),
+                onClick: () => {
+                  console.log('Notification Clicked!');
+                },
+              });
+            }else{ 
+              notification.open({
+               message: 'Unsuccessfull deleting comment!',
+               description:'You cannot delete others user comment',
+                onClick: () => {
+                 console.log('Notification Clicked!');
+                },
+              });
+              alert('unsuccessfull deleting comment')
+            }
           }).catch((err)=>{
               console.log(err)
           })
-          notification.open({
-            message: 'Comment deleted Succesfully',
-            description:'Comment deleted from this post. Hope you provide a positive feedback so that we can help to others needy people for fund raising',
-            icon: (
-              <SmileOutlined
-                style={{
-                  color: '#108ee9',
-                }}
-              />
-            ),
-            onClick: () => {
-              console.log('Notification Clicked!');
-            },
-          });
       }
       try{
           // axiosUrl.delete("/comment/")
