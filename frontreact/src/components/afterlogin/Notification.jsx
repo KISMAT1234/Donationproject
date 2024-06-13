@@ -6,10 +6,10 @@ const Notification = () => {
 
   useEffect(() => {
   
-    console.log('came in notification component')
-    socket.on('notification', (notification) => {
-      console.log(notification,'socket connection successfull in frontend')
-      setNotifications((prevNotifications) => [notification, ...prevNotifications]);
+    // console.log('came in notification component')
+    socket.on("notification", (data) => {
+      console.log(data,'socket connection successfull in frontend')
+      setNotifications((prevNotifications) => [data, ...prevNotifications]);
     });
 
     return () => {
@@ -22,7 +22,13 @@ const Notification = () => {
       <h3>Notifications</h3>
       <ul>
         {notifications.map((notification) => (
+          <>
+          
           <li key={notification._id}>{notification.message}</li>
+          {/* <li key={notification._id}>{notification.}</li>
+          <li key={notification._id}>{notification.message}</li>
+          <li key={notification._id}>{notification.message}</li> */}
+          </>
         ))}
       </ul>
     </div>
@@ -30,3 +36,5 @@ const Notification = () => {
 };
 
 export default Notification;
+
+
