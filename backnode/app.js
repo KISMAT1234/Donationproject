@@ -12,7 +12,13 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', // replace with your frontend URL
+  // methods: ['GET', 'POST'],
+  // allowedHeaders: ['Content-Type'],
+  // credentials: true,
+}));
 app.use(express.urlencoded({ extended: true }));
 
 // Use import.meta.url to get the module's URL and extract the directory path
