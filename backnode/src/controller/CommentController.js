@@ -2,8 +2,9 @@ import Comment from "../model/Comment.js";
 import Handler from "../logger/ResponseHandler.js"
 import Post from "../model/Post.js";
 const responseInstance = new Handler();
-import io  from "../../socket.js";
+import {io}  from "../../app.js";
 import Notification from "../model/Notification.js";
+import User from "../model/Userprofile.js";
 
 class CommentController{
      async storeComment(req,res){
@@ -18,30 +19,27 @@ class CommentController{
         const userCmt = new Comment({...req.body,userId:userId,postId:postId})
         await userCmt.save();
 
-        const post = await Post.findById(postId)
-        console.log(post,'user post')
+      //   const post = await Post.findById(postId)
+      //   console.log(post,'user post')
 
-        const postUserId = post.userId._id.toString()
-        console.log(postUserId,'user id')
+      //   const user = await User.findById(userId)
 
-        if (post && postUserId !== userId) {
-           const notification = new Notification({
-               sender: userId,
-               receiver: postUserId,
-               type: 'comment',
-               message: `${postUserId.username} commented on your post`,
-               postId:postId
-           });
-           console.log(notification,'notification to send user and save')
-           await notification.save();
-     
-           io.to(postUserId).emit('notification', notification);
-         }
+      //   const postUserId = post.userId._id.toString()
+      //   console.log(postUserId,'user id')
 
-        // console.log(userCmt, 'data send success')
-      return responseInstance.responseHandler(res,200,'Comment send successfull')
-
-        }catch(err){
+      //   if (post && postUserId !== userId) {
+      //      const notification = new Notification({
+      //          sender: userId,
+      //          receiver: postUserId,
+      //          type: 'comment',
+      //          message: `${user.username} commented on your post`,
+      //          postId:postId
+      //      });
+      //      console.log(notification,'notification to send user and save')
+      //      await notification.save();
+            return responseInstance.responseHandler(res,200,'Comment send successfull')
+          }
+    catch(err){
             res.status(500).json(err);
         }
      }
@@ -175,14 +173,21 @@ class CommentController{
          try{
             const commentId = req.params.id
             // console.log(commentId,"commentId")
-            const comment = await Comment.findOneAndDelete({_id:commentId})
-            // console.log(comment,'comment')
-
+            const userId = req.user.userId
+            const comment = await Comment.findById(commentId)
+            console.log(comment.userId,'id')
+            console.log(userId,' user id')
+            console.log(comment,'comment')
             if(!comment){
                return responseInstance.responseHandler(res,500,'No comment found')
             }
-            return responseInstance.responseHandler(res,200,'CommentDelete successfully');
-
+            if(userId === comment.userId.toString()){
+              const deleteComment = await Comment.findOneAndDelete({_id:commentId})
+              console.log(deleteComment,'comment delete')
+              return responseInstance.responseHandler(res,200,'CommentDelete successfully');
+            }else{
+               return responseInstance.responseHandler(res,500,'You cannot delete others comment');
+            }
          }
          catch(error){
             console.log(error)
