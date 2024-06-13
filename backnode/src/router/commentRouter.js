@@ -13,7 +13,7 @@ cmtRouter.post("/dislike/:id",authenticate,commentInstance.postDisLike)
 cmtRouter.get("/getLike",commentInstance.getLike)
 cmtRouter.get("/getDisLike/:id",commentInstance.postDisLike)
 // cmtRouter.get("/dislike/:id",authenticate,commentInstance.getLike)
-cmtRouter.delete("/:id", commentInstance.deleteComment)
+cmtRouter.delete("/:id",authenticate, commentInstance.deleteComment)
 
 
 export default cmtRouter;
