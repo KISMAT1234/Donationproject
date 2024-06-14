@@ -232,7 +232,7 @@ function Content() {
                 <div className="mt-5 flex justify-between">
                   <div>
                     <Link to={"donate/" + data._id}>
-                      <button className="bg-green-500 border-2 border-gray-300 hover:border-green-500 hover:bg-indigo-700 hover:text-slate-100  transition duration-300 ease-in-out  h-[45px] text-2xl w-[120%] rounded">
+                      <button className="bg-green-500 border-2 border-gray-300 hover:border-green-500 hover:bg-indigo-700 hover:text-slate-100  transition duration-300 ease-in-out  h-[50px] text-xl w-[120%] hover:scale-90 rounded-xl">
                         Donate Now
                       </button>
                     </Link>
