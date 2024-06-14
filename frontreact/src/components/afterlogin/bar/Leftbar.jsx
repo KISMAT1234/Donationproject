@@ -64,16 +64,33 @@ const logOut = () => {
          
             </div>
             <div className="bg-violet-600 h-[30vh] px-2 py-2 mx-4 my-2 rounded-2xl text-white hidden md:block">
-                <h1 className="text-2xl text-center font-bold">Top Donors</h1>
-                <div>
-                  <div>
+                <h1 className="text-2xl text-center text-green-400 font-bold">Top Donors</h1>
+                <div className="">
+                  <div className="flex justify-between">
                      <h1>Image</h1>
-                     <h1>Name</h1>
-                     <h1>Dollar</h1>
+                     <h1>Sweta </h1>
+                     <h1>$45000</h1>
                   </div>
-                  <div></div>
-                  <div></div>
-                  <div></div>
+                  <div className="flex justify-between">
+                     <h1>Image</h1>
+                     <h1>Roshan</h1>
+                     <h1>$40000</h1>
+                  </div>
+                  <div className="flex justify-between">
+                     <h1>Image</h1>
+                     <h1>Nimesh</h1>
+                     <h1>$37500</h1>
+                  </div>
+                  <div className="flex justify-between">
+                     <h1>Image</h1>
+                     <h1>Rahul</h1>
+                     <h1>$30000</h1>
+                  </div>
+                  <div className="flex justify-between">
+                     <h1>Image</h1>
+                     <h1>Kritika</h1>
+                     <h1>$20000</h1>
+                  </div>
                 </div>
             </div>
          </div>   
