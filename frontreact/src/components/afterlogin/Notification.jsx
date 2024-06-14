@@ -23,7 +23,16 @@ const Notification = () => {
       <ul>
         {notifications.map((notification) => (
           <>
-          
+          <div>
+            <div className="flex">
+              <div>
+                <h1>Image</h1>
+              </div>
+              <div>
+                 <h1>time</h1>
+              </div>
+            </div>
+          </div>
           <li key={notification._id}>{notification.message}</li>
           {/* <li key={notification._id}>{notification.}</li>
           <li key={notification._id}>{notification.message}</li>
