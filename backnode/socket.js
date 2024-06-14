@@ -37,7 +37,7 @@ const initializeSocket = (app) => {
 
       // if (post && postUserId !== userId) {
          const notification = new Notification({
-             sender: userId,
+             sender: user,
              receiver: postUserId,
              type: 'comment',
              message: `${user.username} commented on your post`,
