@@ -28,12 +28,12 @@ const initializeSocket = (app) => {
     // io.emit("notification",'testing connection')
     socket.on('notification', async ({postId,userId})=>{
       const post = await Post.findById(postId)
-      console.log(post,'user post')
+      // console.log(post,'user post')
 
       const user = await User.findById(userId)
 
       const postUserId = post.userId._id.toString()
-      console.log(postUserId,'user id')
+      // console.log(postUserId,'user id')
 
       // if (post && postUserId !== userId) {
          const notification = new Notification({
