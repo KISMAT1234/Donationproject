@@ -18,19 +18,25 @@ const Notification = () => {
   }, []);
 
   return (
-    <div>
+    <div className="mt-5">
       <h3>Notifications</h3>
       <ul>
         {notifications.map((notification) => (
           <>
-          <div>
-            <div className="flex">
+          <div className=" bg-gray-400 px-5 py-5 rounded-2xl">
+            <div className="flex justify-between">
               <div>
                 <h1>Image</h1>
               </div>
               <div>
-                 <h1>time</h1>
+                 <h1>{notification.createdAt}</h1>
               </div>
+              <div>
+                <h1>...</h1>
+              </div>
+            </div>
+            <div>
+              <h1>{notification.message}</h1>
             </div>
           </div>
           <li key={notification._id}>{notification.message}</li>
