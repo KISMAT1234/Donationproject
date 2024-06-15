@@ -4,6 +4,8 @@ import { FaSearch } from "react-icons/fa";
 import axiosUrl from "../../url/Axiosurl";
 // import { Link } from 'react-router-dom';
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { FaSignOutAlt } from "react-icons/fa";
+
 import { Link } from "react-router-dom";
 
 
@@ -28,6 +30,11 @@ function Topbar() {
         setShowSearchContainer(false);
       }
     };
+
+    const logOut = () => {
+      localStorage.clear();
+      window.location.href = "/login";
+    }
 
 
 
@@ -139,12 +146,19 @@ useEffect(() => {
            </form>
             
            </div>
-           <div className="text-4xl">
-              <Link to="/Mainpage/notification">
-
-              <IoIosNotificationsOutline />
-              </Link>
-           </div>
+           <div className="flex px-5 py-4">
+              <div className="text-5xl mx-2 hover:text-red-600">
+                <Link to="/Mainpage/notification">
+                  <IoIosNotificationsOutline />
+                </Link>
+              </div>
+              <div className="text-xl px-2 py-2 border border-green-600 font-bold text-md hover:bg-indigo-600 hover:text-slate-100 rounded-2xl ">
+                <button className="flex" onClick={logOut}>
+                  <FaSignOutAlt className=" mx-4 text-4xl md:mx-0 md:2xl"/>
+                   <h1 className="hidden md:block md:ml-2">Logout</h1>
+                </button>
+              </div>
+            </div>
     
 
        </div>
