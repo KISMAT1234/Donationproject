@@ -3,7 +3,6 @@ import { FaHome } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { FaUpload } from "react-icons/fa";
 import { FaUsers } from "react-icons/fa";
-import { FaSignOutAlt } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
 import { RxTextAlignJustify } from "react-icons/rx";
 import { useState } from "react";
@@ -72,13 +71,7 @@ const sidebar = () => {
                          <h1 className="hidden md:block md:ml-2">Member</h1>
                       </Link>
                </div>
-               {/* <div className=" py-2 md:py-3 md:text-2xl hidden md:block font-bold text-md hover:text-slate-100 hover:bg-green-400 hover:rounded-2xl ">
-                   <button className="flex" onClick={logOut}>
-                     <FaSignOutAlt className=" mx-4 text-4xl md:mx-0 md:2xl"/>
-                      <h1 className="hidden md:block md:ml-2">Logout</h1>
-                   </button>
-               </div> */}
-
+         
                <div className=" py-2 md:py-3 md:text-2xl md:hidden font-bold text-md hover:text-slate-100 hover:bg-green-400 hover:rounded-2xl ">
                    <button className="flex" onClick={sidebar}>
                      <RxTextAlignJustify className=" mx-4 text-4xl md:mx-0 md:2xl"/>
