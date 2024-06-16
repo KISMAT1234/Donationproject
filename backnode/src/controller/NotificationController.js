@@ -1,51 +1,19 @@
-// // const Notification = require('../models/Notification');
-// // const User = require('../models/User');
-// // const Post = require('../models/Post');
-// import { Server } from 'socket.io';
-
-
-// const socketIoSetup = (server) => {
-//     console.log('came to socketIoSetup')
-//     const io = new Server(server, {
-//         cors: {
-//           origin: process.env.FRONTEND_URL,
-//         },
-//       });
-//       io.on('connection', (socket) => {
-//         console.log('A user connected');
-
-//     // socket.on('comment', async ({ postId }) => {
-//     //     try {
-//     //         const commenterUser = await User.findById(commenterId);
-//     //         const postOwnerUser = await User.findById(postOwnerId);
-
-//     //         const newNotification = new Notification({
-//     //             user: postOwnerId,
-//     //             viewer: commenterId,
-//     //             message: `${commenterUser.name} commented on your post`,
-//     //             type: 'comment'
-//     //         });
-
-//     //         await newNotification.save();
-
-//     //         io.to(postOwnerUser.socketId).emit('newNotification', newNotification);
-//     //     } catch (error) {
-//     //         console.error(error);
-//     //     }
-//     // });
-    
-//     socket.on('disconnect', () => {
-//         console.log('A user disconnected');
-//     });
-// })
-// }
-// export default socketIoSetup;
-
+import Notification from "../model/Notification.js";
+import Handler from "../logger/ResponseHandler.js"
+const responseInstance = new Handler();
 
 class NotificationController {
     async getNotification(req, res) {
         try{
+         const userId = req.user.userId;
+         const notification = await Notification.find({sender: userId})
+         console.log(notification,'getting user notification')
 
+         if(notification){
+            return responseInstance.responseHandler(res,200,'Notification fetched successfull',notification)
+         }else{
+            return responseInstance.responseHandler(res,400,'there is no any notification')
+         }
         }
         catch(err){
             console.log(err)
