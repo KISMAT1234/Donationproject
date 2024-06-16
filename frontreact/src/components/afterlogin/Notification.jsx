@@ -1,10 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { socket } from '../../main';
+// import { socket } from '../../main';
+import axiosUrl from "../url/Axiosurl";
 
-const Notification = () => {
+const Notification = ({socket}) => {
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
+
+    const fetchNotifications = async () => {
+      await axiosUrl.get('/notification').then((response)=>{
+        console.log(response.data.data,'get response http');
+        setNotifications(response.data.data,'get response http');
+      }).error((error)=>{
+        console.log(error)
+      })
+    };
+    fetchNotifications();
+
   
     // console.log('came in notification component')
     socket.on("notification", (data) => {
