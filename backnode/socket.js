@@ -27,17 +27,19 @@ const initializeSocket = (app) => {
     console.log('A user connected');
     // io.emit("notification",'testing connection')
     socket.on('notification', async ({postId,userId})=>{
+      console.log(userId,'sender user id')
+      
       const post = await Post.findById(postId)
-      // console.log(post,'user post')
+      console.log(post,'user post')
 
       const user = await User.findById(userId)
 
       const postUserId = post.userId._id.toString()
-      // console.log(postUserId,'user id')
+      console.log(postUserId,'receiver user id')
 
-      // if (post && postUserId !== userId) {
+      if (postUserId !== userId) {
          const notification = new Notification({
-             sender: user,
+             sender: userId,
              receiver: postUserId,
              type: 'comment',
              message: `${user.username} commented on your post`,
@@ -46,10 +48,10 @@ const initializeSocket = (app) => {
          console.log(notification,'notification to send user and save')
          await notification.save();
    
-         io.emit('notification', notification);
+         io.to(postUserId).emit('notification', notification);
         // console.log(postId,'post id')
         // io.emit('notification',postId)
-      // }
+      }
     })
   
 
