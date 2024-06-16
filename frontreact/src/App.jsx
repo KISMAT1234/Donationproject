@@ -1,10 +1,11 @@
 import RouterList from "./router/AllRoute";
+import { socket } from "./socket";
 import "./App.css";
 
 function App() {
   return (
     <>
-           <RouterList/>
+           <RouterList socket={socket}/>
     </>
   )
 }
