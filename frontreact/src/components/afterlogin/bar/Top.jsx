@@ -33,7 +33,7 @@ function Topbar() {
 
     const logOut = () => {
       localStorage.clear();
-      window.location.href = "/login";
+      window.location.href = "/login-form";
     }
 
 
@@ -136,7 +136,6 @@ useEffect(() => {
                   <FaSearch />
                  </button>
                </Link> */}
-
                     {/* <Link to={`/Mainpage/search?name=${search}`}> */}
                         <button type="submit" className="bg-blue-400 h-[7vh] hover:bg-blue-600 rounded-md mx-4 transition duration-300 ease-in-out">
                             <FaSearch className="hover:scale-150 w-12"/>
