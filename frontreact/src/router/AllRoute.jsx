@@ -28,6 +28,8 @@ import PasswordChange from "../components/afterlogin/PasswordChange"
 import Notification from "../components/afterlogin/Notification"
 
 
+import { socket } from "../socket"
+
 
 
 
@@ -54,12 +56,9 @@ function RouterList(){
              <Route path="search" element={<Search/>}/>
              <Route path="payment-success" element={<PaymentSuccess/>}/>
              <Route path="payment-cancel" element={<PaymentCancel/>}/>
-             <Route path="notification" element={<Notification/>}/>
+             <Route path="notification" element={<Notification socket={socket}/>}/>
              <Route path="profile/change-password" element={<PasswordChange/>}/>
-            
-         
          </Route>
-
        </Routes>
  
 
