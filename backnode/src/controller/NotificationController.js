@@ -6,7 +6,7 @@ class NotificationController {
     async getNotification(req, res) {
         try{
          const userId = req.user.userId;
-         const notification = await Notification.find({sender: userId})
+         const notification = await Notification.find({receiver: userId}).sort({ createdAt: -1 });
          console.log(notification,'getting user notification')
 
          if(notification){
