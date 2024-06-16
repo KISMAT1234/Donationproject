@@ -5,16 +5,18 @@ import App from './App.jsx'
 import "./index.css"
 import { store } from './store/store'
 import { Provider } from 'react-redux'
-import { io } from 'socket.io-client'
-import {jwtDecode} from 'jwt-decode';
+import { socket } from './socket.jsx'
+// import { io } from 'socket.io-client'
+// import {jwtDecode} from 'jwt-decode';
 
-const token = localStorage.getItem('token');
-let userId;
+// const token = localStorage.getItem('token');
+// let userId;
 
-if (token) {
-  const decodedToken = jwtDecode(token);
-  userId = decodedToken.id;
-}
+// if (token) {
+//   const decodedToken = jwtDecode(token);
+//   userId = decodedToken.id;
+// }
+
 
 
 // export const socket = io(import.meta.env.BackendServer).emit('join', 'userId')
@@ -22,25 +24,28 @@ if (token) {
 //     query: { userId },
 //     withCredentials: true,
 // });
-export const socket = io("http://localhost:8000")
-// socket.emit('join', userId);
-// console.log(socket,'socket url')
+
+// export const socket = io("http://localhost:8000",{
+//   query: { userId }
+// })
+// // socket.emit('join', userId);
+// // console.log(socket,'socket url')
 
 
-socket.on('connection', () => {
-  console.log('frontend connection successfully') // x8WIv7-mJelg7on_ALbx
-})
+// socket.on('connection', () => {
+//   console.log('frontend connection successfully') // x8WIv7-mJelg7on_ALbx
+// })
 
-socket.on('disconnect', () => {
-  console.log('frontend connection disconnect') // undefined
-})
+// socket.on('disconnect', () => {
+//   console.log('frontend connection disconnect') // undefined
+// })
 
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
         <Provider store={store}>
-          <App />
+          <App socket={socket}/>
         </Provider>
      </BrowserRouter>
 )
