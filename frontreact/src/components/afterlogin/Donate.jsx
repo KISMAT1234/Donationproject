@@ -12,7 +12,7 @@ import {  Popconfirm,message } from 'antd';
 import { SmileOutlined } from '@ant-design/icons'
 import { Button, notification } from 'antd';
 
-import { socket } from '../../main';
+import { socket } from '../../socket';
 import {jwtDecode} from 'jwt-decode';
 
 
@@ -38,6 +38,7 @@ const Donate = () => {
       const decodedToken = jwtDecode(token);
       userId = decodedToken.id;
     }
+    console.log(userId,'userId');
 
     const getInfo = async() =>{
         await axiosUrl.get(`/upload/${id}`).then((response)=>{
