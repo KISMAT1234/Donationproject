@@ -101,13 +101,12 @@ useEffect(() => {
 
    return(
     <>
-       <div className="rounded-b-2xl bg-green-400 h-[12vh] flex sm:flex justify-between shadow-[0px_10px_1px_rgba(221,_221,_221,_1),_0_10px_20px_rgba(204,_204,_204,_1)]">
-           
+       <div className="rounded-b-2xl bg-green-400 h-[11vh] flex sm:flex justify-between shadow-[0px_10px_1px_rgba(221,_221,_221,_1),_0_10px_20px_rgba(204,_204,_204,_1)]">
            <div className="w-[100px]">
            <img src={logo} className="  w-[100%]"  alt="" />
            </div>
 
-           <div className="  mt-5 text-[10px] sm:text-[120%] md:text-[150%]">
+           <div className="  mt-4 text-[10px] sm:text-[120%] md:text-[150%]">
                {/* <h1 className="">DONATE ANYTHING YOU WANT</h1> */}
                <form onSubmit={handleSubmit}>
              <div className=" md:w-[30%] flex">  
@@ -145,7 +144,7 @@ useEffect(() => {
            </form>
             
            </div>
-           <div className="flex px-5 py-4">
+           <div className="flex px-5 py-3">
               <div className="text-5xl mx-2 hover:text-red-600">
                 <Link to="/Mainpage/notification">
                   <IoIosNotificationsOutline />
