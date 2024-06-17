@@ -25,8 +25,20 @@ const notificationSchema = new mongoose.Schema({
         required: true,
       },
       createdAt: {
-        type: Date,
-        default: Date.now,
+        type: String,
+        default: () => {
+          const date = new Date();
+          const monthNames = [
+            'January', 'February', 'March',
+            'April', 'May', 'June', 'July',
+            'August', 'September', 'October',
+            'November', 'December'
+          ];
+          const day = date.getDate();
+          const monthIndex = date.getMonth();
+          const year = date.getFullYear();
+          return `${monthNames[monthIndex]} ${day}, ${year}`;
+        }
       }
 })
 export default mongoose.model("Notification", notificationSchema);
