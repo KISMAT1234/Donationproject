@@ -25,6 +25,12 @@ function MemberList() {
   }, []);
 
   const onFollow = (id) => {
+       axiosUrl.get(`/follow/${id}`).then(()=>{
+        console.log(response);
+       }).catch((err) => {
+        cobsole.log(err,'error');
+       })
+   
     setFollowedUsers((prevFollowedUsers) =>
           prevFollowedUsers.includes(id)
             ? prevFollowedUsers.filter((userId) => userId !== id)
