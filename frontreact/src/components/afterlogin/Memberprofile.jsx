@@ -12,7 +12,7 @@ const Userprofile = () => {
    const {slug} = useParams()
    const [user, setUser] = useState([]);
    const [post, setPost] = useState([]);
-
+   const [follow, setFollow] = useState(false);
    useEffect(() => {
       const getSingleUser = async () => {
          try {
@@ -46,7 +46,13 @@ const Userprofile = () => {
                         <h1 className="mt-5 ">Image</h1>
                         <h1 className="mt-5 ">{data.username}</h1>
                         <h1 className="mt-5 ">Bio</h1>
-                        <h1 className="mt-5 ">Follow</h1>
+                        {
+                          follow ? (
+                            <h1>Following</h1>
+                          ) : (
+                            <h1 className="mt-5 ">Follow</h1>
+                          )
+                        }
                         <h1 className="mt-5 ">Message</h1>
                      </div>
 
