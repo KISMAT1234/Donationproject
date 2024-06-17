@@ -8,6 +8,6 @@ const followRouter = express.Router();
 const followInstance = new FollowController();
 
 
-followRouter.post("/",authenticate,followInstance.getUserProfile)
+followRouter.post("/:id",authenticate,followInstance.getUserProfile)
 
 export default followRouter;
