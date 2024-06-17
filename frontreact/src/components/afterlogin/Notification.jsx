@@ -51,7 +51,7 @@ const Notification = ({socket}) => {
               <h1>{notification.message}</h1>
             </div>
           </div>
-          <li key={notification._id}>{notification.message}</li>
+          {/* <li key={notification._id}>{notification.message}</li> */}
           {/* <li key={notification._id}>{notification.}</li>
           <li key={notification._id}>{notification.message}</li>
           <li key={notification._id}>{notification.message}</li> */}
