@@ -5,6 +5,7 @@ import {Link}from "react-router-dom"
 
 function MemberList() {
   const [loading, setLoading] = useState(true);
+  const [followedUsers, setFollowedUsers] = useState([]);
   const [users, setUsers] = useState({}); // Initialize users as an empty array
   const token = localStorage.getItem("token") ?? "";
 
@@ -22,6 +23,14 @@ function MemberList() {
     };
     getUser();
   }, []);
+
+  const onFollow = (id) => {
+    setFollowedUsers((prevFollowedUsers) =>
+          prevFollowedUsers.includes(id)
+            ? prevFollowedUsers.filter((userId) => userId !== id)
+            : [...prevFollowedUsers, id]
+        );
+  }
   // console.log(users, 'users data') // Add token as a dependency to useEffect
 
   return (
@@ -45,9 +54,20 @@ function MemberList() {
                       Profile
                      </button>
                   </Link>
-                     <button className="md:text-2xl bg-green-400 rounded-2xl px-3 py-2 hover:bg-green-600 hover:text-slate-100">
+                     {/* <button className="md:text-2xl bg-green-400 rounded-2xl px-3 py-2 hover:bg-green-600 hover:text-slate-100">
                       Follow
-                     </button>
+                     </button> */}
+                     {
+                          followedUsers.includes(data._id) ? (
+                            <button onClick={() =>onFollow(data._id)}>
+                              <h1>Following</h1>
+                            </button>
+                          ) : (
+                            <button onClick={() =>onFollow(data._id)} className="md:text-2xl  bg-green-400 rounded-2xl px-3 py-2 hover:bg-green-600 hover:text-slate-100">
+                              Follow
+                            </button> 
+                          )
+                        }
                
                 </div>
               </div>
