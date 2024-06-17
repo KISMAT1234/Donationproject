@@ -15,7 +15,7 @@ mainRouter.use('/user',userRouter);
 mainRouter.use('/upload',postRouter);
 mainRouter.use('/login',loginRouter);
 mainRouter.use('/comment',cmtRouter);
-mainRouter.use('/comment',followRouter);
+mainRouter.use('/follow',followRouter);
 mainRouter.use('/donate',paymentRouter);
 mainRouter.use('/search',searchRouter);
 mainRouter.use('/category',categoryRouter);
