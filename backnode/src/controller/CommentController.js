@@ -1,7 +1,7 @@
 import Comment from "../model/Comment.js";
 import Handler from "../logger/ResponseHandler.js"
-import Post from "../model/Post.js";
 const responseInstance = new Handler();
+import Post from "../model/Post.js";
 import {io}  from "../../app.js";
 import Notification from "../model/Notification.js";
 import User from "../model/Userprofile.js";
@@ -175,15 +175,15 @@ class CommentController{
             // console.log(commentId,"commentId")
             const userId = req.user.userId
             const comment = await Comment.findById(commentId)
-            console.log(comment.userId,'id')
-            console.log(userId,' user id')
-            console.log(comment,'comment')
+            // console.log(comment.userId,'id')
+            // console.log(userId,' user id')
+            // console.log(comment,'comment')
             if(!comment){
                return responseInstance.responseHandler(res,500,'No comment found')
             }
             if(userId === comment.userId.toString()){
               const deleteComment = await Comment.findOneAndDelete({_id:commentId})
-              console.log(deleteComment,'comment delete')
+            //   console.log(deleteComment,'comment delete')
               return responseInstance.responseHandler(res,200,'CommentDelete successfully');
             }else{
                return responseInstance.responseHandler(res,500,'You cannot delete others comment');
