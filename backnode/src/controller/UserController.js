@@ -16,11 +16,12 @@ import slugify from'slugify';
 class UserController{
     async getOneUser(req,res){
         try{
+            console.log('came here')
             const slug = req.params.slug;
             const ownerId = req.user.userId
-            // console.log(slug);
+            console.log(slug);
             const user =  await User.find({slug}).select('-password')
-            //  console.log(user,'user single')
+             console.log(user,'user single')
             if (!user) {
                 return responseInstance.responseHandler(res,400,'User not found')
             }
