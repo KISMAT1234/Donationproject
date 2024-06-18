@@ -9,6 +9,10 @@ const followSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:"User"
     },
+    isFollow:{
+       type:Boolean,
+       default:false
+    },
     createdAt: {
         type: String,
         default: () => {
