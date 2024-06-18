@@ -145,6 +145,12 @@ useEffect(() => {
             
            </div>
            <div className="flex px-5 py-3">
+             <Link to="/messages">
+
+         <button className="bg-blue-500 px-5 py-5 rounded-xl">
+            <h2>Messages</h2>
+         </button>
+         </Link>
               <div className="text-5xl mx-2 hover:text-red-600">
                 <Link to="/Mainpage/notification">
                   <IoIosNotificationsOutline />
@@ -157,12 +163,7 @@ useEffect(() => {
                 </button>
               </div>
             </div>
-    
-
        </div>
-       
-
-
     </>
    )
 }
