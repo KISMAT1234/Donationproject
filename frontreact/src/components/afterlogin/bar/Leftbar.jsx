@@ -29,10 +29,19 @@ const sidebar = () => {
       <div className="h-[100vh] px-5 py-5 w-[60%] bg-red-600 z-50   md:block absolute transform transition-transform duration-300 ease-in-out ">
         <div className="flex justify-between">
           <a href="#" className="text-xl font-bold md:absolute md:block ">Mystry message</a>
-          <button onClick={sidebar}>
-            {/* <X className="text-4xl"/> */}
-            <h1>X</h1>
-          </button>
+            <button onClick={sidebar}>
+              {/* <X className="text-4xl"/> */}
+              <h1>X</h1>
+            </button>
+        </div>
+        <div>
+        <Link to="/messages">
+
+         <button className="bg-blue-500 px-5 py-5 rounded-xl">
+            <h2>Messages</h2>
+         </button>
+         </Link>
+
         </div>
      
       </div>
