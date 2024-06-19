@@ -5,8 +5,6 @@ import {Link}from "react-router-dom"
 
 function MemberList() {
   const [loading, setLoading] = useState(true);
-  const [followedUsers, setFollowedUsers] = useState([]);
-  const [isFollow,setIsFollow] = useState(false);
   const [users, setUsers] = useState({}); // Initialize users as an empty array
   const token = localStorage.getItem("token") ?? "";
 
@@ -25,24 +23,7 @@ function MemberList() {
     getUser();
   }, []);
 
-  useEffect(()=>{
-      onFollow();
-  },[])
-
-  const onFollow = (id) => {
-       axiosUrl.post(`/follow/${id}`).then((response)=>{
-        console.log(response,'response from backend ');
-
-       }).catch((err) => {
-        cobsole.log(err,'error');
-       })
-   
-      setFollowedUsers((prevFollowedUsers) =>
-        prevFollowedUsers.includes(id)
-          ? prevFollowedUsers.filter((userId) => userId !== id)
-          : [...prevFollowedUsers, id]
-      );
-  }
+ 
 
 
   useEffect(() =>{
@@ -71,28 +52,14 @@ function MemberList() {
                       Profile
                      </button>
                   </Link>
-                     {/* <button className="md:text-2xl bg-green-400 rounded-2xl px-3 py-2 hover:bg-green-600 hover:text-slate-100">
-                      Follow
-                     </button> */}
-                     {/* {
-                          followedUsers.includes(data._id)  ? (
-                            <button onClick={() =>onFollow(data._id)}>
-                              <h1>Following</h1>
-                            </button>
-                          ) : (
-                            <button onClick={() =>onFollow(data._id)} className="md:text-2xl  bg-green-400 rounded-2xl px-3 py-2 hover:bg-green-600 hover:text-slate-100">
-                              Follow
-                            </button> 
-                          )
-                        } */}
-                        <button
+                        {/* <button
                           onClick={() => onFollow(data._id)}
                           className={`md:text-2xl rounded-2xl px-3 py-2 hover:text-slate-100 ${
                             data.isFollowing ? "bg-red-400 hover:bg-red-600" : "bg-green-400 hover:bg-green-600"
                           }`}
                         >
                           {data.isFollowing ? "Following" : "Follow"}
-                        </button>
+                        </button> */}
                
                 </div>
               </div>
