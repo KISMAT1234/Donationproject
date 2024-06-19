@@ -26,7 +26,7 @@ import PaymentCancel from "../components/afterlogin/PaymentCancel"
 import UpdatePost from "../components/afterlogin/UpdatePost"
 import PasswordChange from "../components/afterlogin/PasswordChange"
 import Notification from "../components/afterlogin/Notification"
-import Messages from "../components/afterlogin/Messages"
+import Messages from "../components/afterlogin/message/Messages"
 
 
 import { socket } from "../socket"
