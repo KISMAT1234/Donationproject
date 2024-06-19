@@ -55,12 +55,12 @@ function RouterList(){
              <Route path="upload" element={<Uploadcontent/>}/>
              <Route path="donate/:id" element={<Donate/>}/>
              <Route path="search" element={<Search/>}/>
-             <Route path="payment-success" element={<PaymentSuccess/>}/>
-             <Route path="payment-cancel" element={<PaymentCancel/>}/>
              <Route path="notification" element={<Notification socket={socket}/>}/>
              <Route path="profile/change-password" element={<PasswordChange/>}/>
 
          </Route>
+             <Route path="payment-cancel" element={<PaymentCancel/>}/>
+             <Route path="payment-success" element={<PaymentSuccess/>}/>
              <Route path="messages" element={<Messages/>}/>
 
        </Routes>
