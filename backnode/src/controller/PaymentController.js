@@ -22,6 +22,7 @@ class PaymentController{
 
             const session = await stripeInstance.checkout.sessions.create({
               payment_method_types:["card"],
+              mode:'payment',
               line_items:[{
                 price_data: {
                   currency: "usd",
@@ -33,8 +34,8 @@ class PaymentController{
                 quantity: 1,
               }],
               mode:"payment",
-              success_url: `${process.env.FRONTEND_URL}/Mainpage/payment-success`,
-              cancel_url: `${process.env.FRONTEND_URL}/Mainpage/payment-cancel`,
+              success_url: `${process.env.FRONTEND_URL}/payment-success`,
+              cancel_url: `${process.env.FRONTEND_URL}/payment-cancel`,
             //   cancel_url:"http://localhost:3000/cancel",
             })
             //  console.log(session,'session stripe');
