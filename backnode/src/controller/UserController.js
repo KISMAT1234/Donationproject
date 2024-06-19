@@ -7,34 +7,35 @@ import Handler from "../logger/ResponseHandler.js"
 const responseInstance = new Handler();
 import bcrypt from "bcrypt"
 import slugify from'slugify';
-
-
-
-
-
+import Follow from "../model/Follow.js";
 
 class UserController{
     async getOneUser(req,res){
         try{
             console.log('came here')
             const slug = req.params.slug;
-            const ownerId = req.user.userId
             console.log(slug);
-            const user =  await User.find({slug}).select('-password')
+            const ownerId = req.user.userId
+            let user =  await User.findOne({slug}).select('-password')
              console.log(user,'user single')
             if (!user) {
                 return responseInstance.responseHandler(res,400,'User not found')
             }
-            const userId = user[0]._id
+            const userId = user._id.toString()
+            console.log(userId,'id')
             if(ownerId !== userId){
-                post.profileViews++
-                await post.save()
+                 user.profileViews ++
+                await user.save()
             }
-            // console.log(userId)
+            console.log(user,'user after profile views');
              const post =  await Post.find({ userId}).select('-password')
-            //  console.log(post,'user post')
+             console.log(post,'user post')
+             
+             let  isFollowed = await Follow.findOne({following:ownerId, follower:userId})
+             console.log(isFollowed,'user follow')
+            
+            let  userInformation = { post, user, isFollowed: !!isFollowed}
           
-             const  userInformation = { post, user}
              return responseInstance.responseHandler(res,200,'data fetch success',userInformation)
 
         }catch(err){
@@ -44,8 +45,9 @@ class UserController{
 
     async getAllUser(req,res){
         try{
-            // let {userRole} = req.user    
-             const user =  await User.find().select('-password');
+            // let {userRole} = req.user 
+            const ownerId = req.user.userId
+             const user =  await User.find({ _id: { $ne: ownerId } }).select('-password');
             if(user){
             //  console.log(user)
             //  return res.status(201).json(users)
