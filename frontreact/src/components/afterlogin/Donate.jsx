@@ -240,7 +240,10 @@ const Donate = () => {
         try{
         let stripe = await loadStripe('pk_test_51P5lamRoqDgXi4MO8PsUe41RycAxZ28LQOz9hqq90lEyajIk8g0XnmmPyFHrx9khOhydesEDsWCcYcOMIqthCNz300OOPT7OmJ');
 
-        const response = await axiosUrl.post('/donate',info);
+        const response = await axiosUrl.post('/donate',{
+          postId: id,
+          postData: info
+        });
         // console.log(response,'response');
         const sessionId = response.data.data;
         await stripe.redirectToCheckout({sessionId});
