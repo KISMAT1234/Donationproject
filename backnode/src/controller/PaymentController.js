@@ -40,7 +40,7 @@ class PaymentController{
                     //   postId: paymentData.postId
                     // },
                   },
-                  unit_amount: 1000, 
+                  unit_amount: paymentData.amount, 
                 },
                 quantity: 1,
               }],
