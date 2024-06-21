@@ -1,8 +1,17 @@
 import React, { useState } from 'react'
+import axiosUrl from '../../url/Axiosurl'
 
 const Conversation = () => {
   const[conversation, setConversation] = useState([])
   const[currentChat, setCurrentChat] = useState(null)
+
+  useEffect(()=>{
+    axiosUrl.get('/message').then((response)=>{
+        console.log(response.data.data)
+    }).catch((error)=>{
+      console.log(error)
+    })
+  })
 
   return (
     <>
