@@ -1,6 +1,6 @@
 import User from "../model/Userprofile.js"
-import Handler from "../logger/ResponseHandler.js"
 import Follow from "../model/Follow.js";
+import Handler from "../logger/ResponseHandler.js"
 const responseInstance = new Handler();
 
 
