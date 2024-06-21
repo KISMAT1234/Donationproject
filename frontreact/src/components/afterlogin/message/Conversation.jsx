@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Input } from 'antd';
 import axiosUrl from '../../url/Axiosurl'
 
 const Conversation = () => {
@@ -40,7 +41,11 @@ const Conversation = () => {
              }
            </div>
            <div className="h-[10vh] bg-gray-500">
+               <div>
+                 <Input placeholder="Basic usage" />
+               </div>
              footer input field
+
            </div>
          </div>
        ) : (
