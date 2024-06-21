@@ -14,6 +14,43 @@ import { Button, notification } from 'antd';
 
 import { socket } from '../../socket';
 import {jwtDecode} from 'jwt-decode';
+import { Input, Tooltip } from 'antd';
+const formatNumber = (value) => new Intl.NumberFormat().format(value);
+const NumericInput = (props) => {
+  const { value, onChange } = props;
+  const handleChange = (e) => {
+    const { value: inputValue } = e.target;
+    const reg = /^-?\d*(\.\d*)?$/;
+    if (reg.test(inputValue) || inputValue === '' || inputValue === '-') {
+      onChange(inputValue);
+    }
+  };
+
+  // '.' at the end or only '-' in the input box.
+  const handleBlur = () => {
+    let valueTemp = value;
+    if (value.charAt(value.length - 1) === '.' || value === '-') {
+      valueTemp = value.slice(0, -1);
+    }
+    onChange(valueTemp.replace(/0*(\d+)/, '$1'));
+  };
+  const title = value ? (
+    <span className="numeric-input-title">{value !== '-' ? formatNumber(Number(value)) : '-'}</span>
+  ) : (
+    'Enter the amount in Nepelase currency'
+  );
+  return (
+    <Tooltip trigger={['focus']} title={title} placement="topLeft" overlayClassName="numeric-input">
+      <Input
+        {...props}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        placeholder="Enter the amount here for further processing"
+        maxLength={16}
+      />
+    </Tooltip>
+  );
+};
 
 
 
@@ -30,6 +67,8 @@ const Donate = () => {
     const [likeCount, setLikeCount] = useState();
     const [dislikeCount, setDislikeCount] = useState(0);
     const [delComment, setDelComment] = useState(false)
+    const [value, setValue] = useState('');
+
 
     const token = localStorage.getItem('token');
     let userId;
@@ -237,12 +276,16 @@ const Donate = () => {
   
 
     const makePayment = async () => {
+      if(value === ''){
+        alert('Please enter amount in to donate')
+      }else{
         try{
         let stripe = await loadStripe('pk_test_51P5lamRoqDgXi4MO8PsUe41RycAxZ28LQOz9hqq90lEyajIk8g0XnmmPyFHrx9khOhydesEDsWCcYcOMIqthCNz300OOPT7OmJ');
 
         const response = await axiosUrl.post('/donate',{
           postId: id,
-          postData: info
+          postData: info,
+          amount: value
         });
         // console.log(response,'response');
         const sessionId = response.data.data;
@@ -254,32 +297,43 @@ const Donate = () => {
         stripe.redirectToCheckout({
             sessionId: response.id
         })
+      }
     }
     //   console.log(info.userId?.email,'info')
 
 
     return (
         <>
-        <div className=" px-2 ">
+        <div className=" px-5 ">
             <h1 className="mb-3 text-3xl md:text-4xl font-black">{info.topic}</h1>
              <div className="md:flex">
                  <div className="md:w-[50%]  hover:opacity-100">
                     <img src={info.image} className="rounded-2xl w-[100%]"/>
                  </div>
                  <div className="md:w-[50%] md:px-10">
-                    <div>
-                       <h1 className="text-3xl ">{info.name}</h1>
-                       <h1 className="text-2xl mt-2">{info.address}</h1>
-                       <h1 className="text-2xl mt-2">{info.age}</h1>
-                       <h1 className="text-2xl mt-2">{info.gender}</h1>
-                       <h1 className="text-2xl mt-2">+{info.phone}</h1>
-                       <h1 className="text-2xl mt-2">157 Donors</h1>
-                       
+                    <div className="flex ">
+                      <div>
+                        <h1 className="text-3xl ">{info.name}</h1>
+                        <h1 className="text-2xl mt-2">{info.address}</h1>
+                        <h1 className="text-2xl mt-2">{info.age}</h1>
+                        <h1 className="text-2xl mt-2">{info.gender}</h1>
+                        <h1 className="text-2xl mt-2">+{info.phone}</h1>
+                        <h1 className="text-2xl mt-2">157 Donors</h1>
+                      </div>
+                      <div className=" bg-slate-200 px-2 py-4 w-full mx-4 rounded-2xl">
+                        <div>
+                          <h1>Donate here</h1>
+                        </div>
+                        <NumericInput
+                          value={value}
+                          onChange={setValue}
+                        />
+                        <div>
+                          <Button type="primary" ghost onClick={makePayment} className="hover:text-blue-500">Process</Button>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex justify-between mt-10">
-                       <h1 className="mt-3 text-2xl bg-purple-600"> Raised: $4500000</h1>
-                       <button onClick={makePayment} className="bg-green-500 rounded-xl text-4xl w-[200px] hover:bg-green-300">Donate</button>
-                    </div>
+                    <h1 className="mt-3 text-2xl bg-purple-600"> Raised: $4500000</h1>
 
                     <div className="flex my-5">
                         <h1 className="text-2xl font-italic">Share</h1>
