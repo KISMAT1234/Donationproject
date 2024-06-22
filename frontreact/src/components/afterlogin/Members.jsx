@@ -47,7 +47,7 @@ function MemberList() {
                 <div>{data.username}</div>
                 <div>{data.email}</div>
                 <div className="">
-                  <Link to ={data.slug}>
+                  <Link to ={data._id}>
                      <button className="md:text-2xl bg-green-400 rounded-2xl px-3 py-2 hover:bg-green-600 hover:text-slate-100">
                       Profile
                      </button>
