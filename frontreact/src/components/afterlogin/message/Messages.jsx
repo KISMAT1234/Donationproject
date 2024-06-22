@@ -6,11 +6,11 @@ const Messages = () => {
   return (
     <>
         {/* <div>Messages</div> */}
-      <div className="flex px-10 py-10">
-        <div className="w-[25%] h-[80vh] bg-red-500">
+      <div className=" px-10 py-10">
+        {/* <div className="w-[25%] h-[80vh] bg-red-500">
           <Sidebar/>
-        </div>
-        <div className="w-[75%] h-[80vh] bg-green-500">
+        </div> */}
+        <div className="">
            <Conversation />
         </div>
       </div>
