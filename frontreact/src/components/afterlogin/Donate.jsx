@@ -15,6 +15,8 @@ import { Button, notification } from 'antd';
 import { socket } from '../../socket';
 import {jwtDecode} from 'jwt-decode';
 import { Input, Tooltip } from 'antd';
+import { QRCode } from 'antd';
+
 const formatNumber = (value) => new Intl.NumberFormat().format(value);
 const NumericInput = (props) => {
   const { value, onChange } = props;
@@ -50,6 +52,19 @@ const NumericInput = (props) => {
       />
     </Tooltip>
   );
+};
+
+const downloadQRCode = () => {
+  const canvas = document.getElementById('myqrcode')?.querySelector<HTMLCanvasElement>('canvas');
+  if (canvas) {
+    const url = canvas.toDataURL();
+    const a = document.createElement('a');
+    a.download = 'QRCode.png';
+    a.href = url;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 };
 
 
@@ -283,7 +298,6 @@ const Donate = () => {
         let stripe = await loadStripe('pk_test_51P5lamRoqDgXi4MO8PsUe41RycAxZ28LQOz9hqq90lEyajIk8g0XnmmPyFHrx9khOhydesEDsWCcYcOMIqthCNz300OOPT7OmJ');
 
         const response = await axiosUrl.post('/donate',{
-          postId: id,
           postData: info,
           amount: value
         });
@@ -310,7 +324,7 @@ const Donate = () => {
                  <div className="md:w-[50%]  hover:opacity-100">
                     <img src={info.image} className="rounded-2xl w-[100%]"/>
                  </div>
-                 <div className="md:w-[50%] md:px-10">
+                 <div className="md:w-[50%] mt-4 md:px-10">
                     <div className="flex ">
                       <div>
                         <h1 className="text-3xl ">{info.name}</h1>
@@ -320,20 +334,26 @@ const Donate = () => {
                         <h1 className="text-2xl mt-2">+{info.phone}</h1>
                         <h1 className="text-2xl mt-2">157 Donors</h1>
                       </div>
-                      <div className=" bg-slate-200 px-2 py-4 w-full mx-4 rounded-2xl">
+                      <div className=" bg-orange-600 px-2 py-4 w-full mx-4 rounded-2xl shadow-2xl shadow-blue-500/20">
+                        <h1 className="text-2xl text-center font-serif">Start your process here</h1>
+                        <div id="myqrcode" className="mx-5">
+                          <QRCode value="https://ant.design/" bgColor="#fff" style={{ marginBottom: 10 }} />
+                          <Button type="primary" onClick={downloadQRCode}>
+                            Download
+                          </Button>
+                        </div>
                         <div>
-                          <h1>Donate here</h1>
                         </div>
                         <NumericInput
                           value={value}
                           onChange={setValue}
                         />
-                        <div>
-                          <Button type="primary" ghost onClick={makePayment} className="hover:text-blue-500">Process</Button>
+                        <div className="my-2 flex justify-center">
+                          <Button  ghost onClick={makePayment} className="">Donate</Button>
                         </div>
                       </div>
                     </div>
-                    <h1 className="mt-3 text-2xl bg-purple-600"> Raised: $4500000</h1>
+                    <h1 className="mt-3 text-2xl bg-red-600"> Raised: $4500000</h1>
 
                     <div className="flex my-5">
                         <h1 className="text-2xl font-italic">Share</h1>
