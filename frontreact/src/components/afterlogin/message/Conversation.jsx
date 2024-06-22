@@ -61,7 +61,11 @@ const Conversation = () => {
       <div className="flex px-10 py-10">
         <div  className="w-[25%] h-[80vh] bg-red-500">
 
-      
+        <Sidebar
+            //  onlineUsers={onlineUsers}
+            //  currentId={user._id}
+             setCurrentChat={setCurrentChat}
+        />
         </div>
         <div className="w-[75%] h-[80vh] bg-green-500">
          {currentChat ? (
