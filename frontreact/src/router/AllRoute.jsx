@@ -50,7 +50,7 @@ function RouterList(){
              <Route path="profile/update-profile/:id" element={<UpdatePost/>}/>
              <Route path="profile/:slug" element={<Update/>}/>
              <Route path="members-list" element={<MemberList/>}/>
-             <Route path="members-list/:slug" element={<Userprofile/>}/>
+             <Route path="members-list/:id" element={<Userprofile/>}/>
              <Route path="favourites" element={<Favourites/>}/>
              <Route path="upload" element={<Uploadcontent/>}/>
              <Route path="donate/:id" element={<Donate/>}/>
