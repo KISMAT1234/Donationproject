@@ -12,27 +12,26 @@ import Follow from "../model/Follow.js";
 class UserController{
     async getOneUser(req,res){
         try{
-            console.log('came here')
-            const slug = req.params.slug;
-            console.log(slug);
+            const paramId = req.params.id;
+            // console.log(paramId);
             const ownerId = req.user.userId
-            let user =  await User.findOne({slug}).select('-password')
-             console.log(user,'user single')
+            let user =  await User.findById(paramId).select('-password')
+            //  console.log(user,'user single')
             if (!user) {
                 return responseInstance.responseHandler(res,400,'User not found')
             }
             const userId = user._id.toString()
-            console.log(userId,'id')
+            // console.log(userId,'id')
             if(ownerId !== userId){
                  user.profileViews ++
                 await user.save()
             }
-            console.log(user,'user after profile views');
+            // console.log(user,'user after profile views');
              const post =  await Post.find({ userId}).select('-password')
-             console.log(post,'user post')
+            //  console.log(post,'user post')
              
              let  isFollowed = await Follow.findOne({following:ownerId, follower:userId})
-             console.log(isFollowed,'user follow')
+            //  console.log(isFollowed,'user follow')
             
             let  userInformation = { post, user, isFollowed: !!isFollowed}
           
@@ -121,7 +120,6 @@ class UserController{
             return responseInstance.responseHandler(res,501,'Failed to update')
         }
     }
-
 
     async verifyEmail(req,res){
        try{
