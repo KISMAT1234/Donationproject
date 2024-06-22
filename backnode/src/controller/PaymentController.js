@@ -4,6 +4,7 @@ import stripe from 'stripe';
 
 import dotenv from 'dotenv'
 import Handler from "../logger/ResponseHandler.js"
+import Payment from '../model/Payment.js';
 
 const secretKey = process.env.SECRET_STRIPE_KEY;
 const stripeInstance = new stripe(secretKey);
@@ -18,12 +19,18 @@ class PaymentController{
         try{
 
             const paymentData= req.body
-            console.log(paymentData.postData.name,'payment data');
-            // console.log(paymentData[0].name,'payment data');
-            console.log(paymentData,'payment data');
+            // console.log(paymentData,'payment data');
+          
 
             const userId = req.user.userId
-            console.log(userId)
+            // console.log(userId)
+
+            const paymentInfo = {
+              donorId: userId,
+              postId: paymentData.postData._id,
+              amount: paymentData.amount,
+              currency: 'Npr',
+            }
 
             const session = await stripeInstance.checkout.sessions.create({
               payment_method_types:["card"],
@@ -51,6 +58,11 @@ class PaymentController{
             //   cancel_url:"http://localhost:3000/cancel",
             })
             //  console.log(session,'session stripe');
+
+            const payment = new Payment({...paymentInfo});
+            console.log(payment,'payment')
+            await payment.save(); 
+
             return responseInstance.responseHandler(res,200,'payment', session.id)
             
         }
