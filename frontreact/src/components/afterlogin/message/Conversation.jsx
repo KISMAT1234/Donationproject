@@ -12,6 +12,7 @@ const Conversation = () => {
   const[currentChat, setCurrentChat] = useState(null) 
   const[messages,setMessages ] = useState([])
   const[inputMessage, setInputMessage] = useState();
+  const scrollRef = useRef()
 
   // const token = localStorage.getItem('token');
   // let currentUserId;
@@ -51,7 +52,9 @@ const Conversation = () => {
 
   }
 
-
+  useEffect(()=>{
+    scrollRef.current?.scrollIntoView({behavior:"smooth"})
+  },[messages])
 
   return (
     <>
