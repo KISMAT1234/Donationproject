@@ -1,11 +1,11 @@
 import mongoose from 'mongoose';
 const paymentSchema = new mongoose.Schema({
-  userId: {
+  donorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true,
   },
-  productId: {
+  postId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',
     required: true,
@@ -17,11 +17,6 @@ const paymentSchema = new mongoose.Schema({
   currency: {
     type: String,
     required: true,
-  },
-  status: {
-    type: String,
-    enum: ['pending', 'completed', 'failed'],
-    default: 'pending',
   },
 }, { timestamps: true });
 
