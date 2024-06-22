@@ -6,8 +6,8 @@ import "./index.css"
 import { store } from './store/store'
 import { Provider } from 'react-redux'
 import { socket } from './socket.jsx'
+import {jwtDecode} from 'jwt-decode';
 // import { io } from 'socket.io-client'
-// import {jwtDecode} from 'jwt-decode';
 
 // const token = localStorage.getItem('token');
 // let userId;
@@ -39,6 +39,11 @@ import { socket } from './socket.jsx'
 // socket.on('disconnect', () => {
 //   console.log('frontend connection disconnect') // undefined
 // })
+
+const token = localStorage.getItem('token');
+const decodedToken = jwtDecode(token);
+export const userId = decodedToken.id;
+  
 
 
 
