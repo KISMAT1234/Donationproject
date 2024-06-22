@@ -9,7 +9,7 @@ import { BiMaleFemale } from "react-icons/bi";
 
 
 const Userprofile = () => {
-   const {slug} = useParams()
+   const {id} = useParams()
    const [user, setUser] = useState([]);
    const [post, setPost] = useState([]);
    const [follow, setFollow] = useState(false);
@@ -17,7 +17,7 @@ const Userprofile = () => {
    useEffect(() => {
       const getSingleUser = async () => {
          try {
-            const response = await axiosUrl.get(`/user/${slug}`);
+            const response = await axiosUrl.get(`/user/${id}`);
             console.log(response.data.data,'response user');
             setUser([response.data.data.user]);
             setPost(response.data.data.post);
@@ -27,7 +27,7 @@ const Userprofile = () => {
          }
       };
       getSingleUser();
-   },[slug]);
+   },[id]);
 
    const onFollow = (id) => {
      setFollow(!follow)
