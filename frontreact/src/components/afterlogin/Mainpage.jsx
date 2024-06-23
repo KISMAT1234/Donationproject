@@ -19,12 +19,12 @@ import { Button,message,Popconfirm,Popover } from 'antd';
 
 
 
-
 function Content() {
   const [loading, setLoading] = useState(true);
   const [content, setContent] = useState([]);
   const [favourite, setFavourite] = useState({}); 
   const [current, setCurrent] = useState(1);
+
 
 
   const onChange = (page) => {
