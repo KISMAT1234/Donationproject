@@ -32,7 +32,7 @@ class MessageController {
           }
           console.log(saveMessage,'push after save conversation')
           console.log(conversation,'final push of id')
-          // await Promise.all([conversation.save(),saveMessage.save()]);
+          await Promise.all([conversation.save(),saveMessage.save()]);
           // return responseInstance.responseHandler(res,200,'Message saved successfully');
 
         } catch (err) {
@@ -43,17 +43,22 @@ class MessageController {
 
     async fetchMessage(req,res){
         try{
-            const userId = req.user.userId
-            const messageId = req.params.id
-            console.log(messageId,'params id')
-
+          const receiverId = req.params?.id
+          console.log(receiverId,'params id')
+          const userId = req.user.userId
+          console.log(userId,'user Id')
+          
+          if (!ObjectId.isValid(userId) || !ObjectId.isValid(receiverId)) {
+            return responseInstance.responseHandler(res, 400, 'Invalid ID format');
+          }
             let conversation = await Conversation.findOne({
-              participats: {$all: [userId, messageId]}
+              participants: {$all: [userId, receiverId]}
             }).populate("messages")
+            console.log(conversation,'conversation')
 
-            // if (!ObjectId.isValid(userId) || !ObjectId.isValid(messageId)) {
-            //   return responseInstance.responseHandler(res, 400, 'Invalid ID format');
-            // }
+            if (!conversation) return responseInstance.responseHandler(res,200,'Message send Successfully',[]);
+
+            return responseInstance.responseHandler(res,200,'Message send Successfully',conversation.messages);
 
             // const [senderMessages, receiverMessages] = await Promise.all([
             //     Message.find({ senderId: userId, receiverId: messageId }),
@@ -68,7 +73,6 @@ class MessageController {
             // if(!messages){
             //    return responseInstance.responseHandler(res,400,'Message not found');     
             // }
-            // return responseInstance.responseHandler(res,200,'Message send Successfully',{messages});
 
         }
         catch(err){
