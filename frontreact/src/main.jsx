@@ -6,7 +6,6 @@ import "./index.css"
 import { store } from './store/store'
 import { Provider } from 'react-redux'
 import { socket } from './socket.jsx'
-import {jwtDecode} from 'jwt-decode';
 // import { io } from 'socket.io-client'
 
 // const token = localStorage.getItem('token');
@@ -40,9 +39,7 @@ import {jwtDecode} from 'jwt-decode';
 //   console.log('frontend connection disconnect') // undefined
 // })
 
-const token = localStorage.getItem('token');
-const decodedToken = jwtDecode(token);
-export const userId = decodedToken.id;
+
   
 
 
