@@ -52,10 +52,9 @@ const Conversation = () => {
 
   }
 
-  useEffect(()=>{
-    scrollRef.current?.scrollIntoView({behavior:"smooth"})
-  },[messages])
-
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
   return (
     <>
       <div className="flex px-10 py-10">
@@ -73,7 +72,7 @@ const Conversation = () => {
               <div className="h-[10vh] bg-yellow-500">
                 top user data
               </div>
-              <div className="h-[60vh] p-4" ref={scrollRef}>
+              <div className="h-[60vh] p-4 overflow-y-auto" >
                 {messages.map((data, index) => {
                   return(
                   <div key={index}  className={`flex ${data.receiverId === userId? 'justify-start' : 'justify-end'} my-2`}>
@@ -83,6 +82,7 @@ const Conversation = () => {
                   </div>
                   )
                   })}
+                  <div ref={scrollRef}></div>
               </div>
               <div className="h-[10vh] bg-gray-500 flex items-center p-4">
                 <Input onChange={(e)=> setInputMessage(e.target.value)} value={inputMessage} placeholder="Basic usage" className="w-full" />
