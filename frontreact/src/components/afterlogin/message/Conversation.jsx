@@ -2,17 +2,25 @@ import React, { useEffect, useState,useRef } from 'react'
 import { Input } from 'antd';
 import axiosUrl from '../../url/Axiosurl'
 // import {jwtDecode} from 'jwt-decode';
-import { userId } from '../../../main';
+// import { userId } from '../Mainpage';
 import Sidebar from './Sidebar';
+import {jwtDecode} from 'jwt-decode';
+import { Skeleton } from 'antd';
+
 
 
 
 const Conversation = () => {
   const[conversation, setConversation] = useState([])
   const[currentChat, setCurrentChat] = useState(null) 
+  const[loading,setLoading] = useState(false);
   const[messages,setMessages ] = useState([])
   const[inputMessage, setInputMessage] = useState();
   const scrollRef = useRef()
+  
+  const token = localStorage.getItem('token');
+  const decodedToken = jwtDecode(token);
+  const userId = decodedToken.id;
 
   // const token = localStorage.getItem('token');
   // let currentUserId;
@@ -24,9 +32,12 @@ const Conversation = () => {
   console.log(currentChat?._id,'currentchat');
 
   useEffect(()=>{
+    setLoading(true)
     axiosUrl.get(`/message/${currentChat?._id}`).then((response)=>{
-        console.log(response.data.data.messages,'response chat-message data')
-        setMessages(response.data.data.messages)
+        // console.log(response.data.data,'response chat-message data')
+        setLoading(false)
+        setMessages(response.data.data)
+        
     }).catch((error)=>{
       console.log(error)
     })
@@ -42,7 +53,7 @@ const Conversation = () => {
 
     try{
       axiosUrl.post('/message',messageInfo).then((response)=>{
-        console.log(response)
+        console.log(response.data)
       }).catch((error)=>{
         console.log(error)
       })
@@ -73,7 +84,8 @@ const Conversation = () => {
                 top user data
               </div>
               <div className="h-[60vh] p-4 overflow-y-auto" >
-                {messages.map((data, index) => {
+                {!loading && messages.length > 0 &&
+                  messages.map((data, index) => {
                   return(
                   <div key={index}  className={`flex ${data.receiverId === userId? 'justify-start' : 'justify-end'} my-2`}>
                     <div className={`p-2 rounded-lg max-w-xs ${data.receiverId === userId ? 'bg-blue-300' : 'bg-gray-200'}`}>
@@ -82,6 +94,10 @@ const Conversation = () => {
                   </div>
                   )
                   })}
+                  {loading && [...Array(3)].map((_, idx) => <Skeleton key={idx} />)}
+                  {!loading && messages.length === 0 && (
+			             	<p className='text-center'>Send a message to start the conversation</p>
+		            	)}
                   <div ref={scrollRef}></div>
               </div>
               <div className="h-[10vh] bg-gray-500 flex items-center p-4">
