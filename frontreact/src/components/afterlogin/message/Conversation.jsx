@@ -11,6 +11,7 @@ import { Skeleton } from 'antd';
 
 
 const Conversation = () => {
+  const[user,setUser] = useState([])
   const[conversation, setConversation] = useState([])
   const[currentChat, setCurrentChat] = useState(null) 
   const[loading,setLoading] = useState(false);
@@ -22,14 +23,7 @@ const Conversation = () => {
   const decodedToken = jwtDecode(token);
   const userId = decodedToken.id;
 
-  // const token = localStorage.getItem('token');
-  // let currentUserId;
-
-  // if (token) {
-  //   const decodedToken = jwtDecode(token);
-  //   currentUserId = decodedToken.id;
-  // }
-  console.log(currentChat?._id,'currentchat');
+  // console.log(currentChat?._id,'currentchat');
 
   useEffect(()=>{
     setLoading(true)
@@ -43,6 +37,15 @@ const Conversation = () => {
     })
   },[currentChat])
 
+  useEffect(()=>{
+    axiosUrl.get(`/user/${userId}`).then((response)=>{
+        // console.log(response.data.data.user,' user fetch data');
+        setUser(response.data.data.user)
+     }).catch((err)=>{
+      console.log(err);
+    })
+  },[])
+
   const handleSubmit = async (e) => {
     e.preventdefault()
     const messageInfo = {
@@ -53,7 +56,7 @@ const Conversation = () => {
 
     try{
       axiosUrl.post('/message',messageInfo).then((response)=>{
-        console.log(response.data)
+        // console.log(response.data)
       }).catch((error)=>{
         console.log(error)
       })
@@ -96,7 +99,9 @@ const Conversation = () => {
                   })}
                   {loading && [...Array(3)].map((_, idx) => <Skeleton key={idx} />)}
                   {!loading && messages.length === 0 && (
-			             	<p className='text-center'>Send a message to start the conversation</p>
+                    <>
+			             	  <p className='text-center'>Send a message to start the conversation</p>
+                    </>
 		            	)}
                   <div ref={scrollRef}></div>
               </div>
@@ -108,7 +113,10 @@ const Conversation = () => {
               </div>
             </div>
           ) : (
+            <>
+            <p>welcome {user.username}</p>
             <h1>select people to communicate with them</h1>
+            </>
           )
         }
         </div>
