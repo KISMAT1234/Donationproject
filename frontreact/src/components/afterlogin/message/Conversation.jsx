@@ -9,8 +9,10 @@ import { Skeleton } from 'antd';
 import { IoCallOutline } from "react-icons/io5";
 import { CiVideoOn } from "react-icons/ci";
 import { BsThreeDotsVertical } from "react-icons/bs";
-
-
+import { IoMdSend } from "react-icons/io";
+import { CiCamera } from "react-icons/ci";
+import { MdOutlineKeyboardVoice } from "react-icons/md";
+import { GoPlus } from "react-icons/go";
 
 
 const Conversation = () => {
@@ -126,11 +128,14 @@ const Conversation = () => {
 		            	)}
                   <div ref={scrollRef}></div>
               </div>
-              <div className=" bg-gray-500 flex items-center p-4">
+              <div className="h-[10vh] bg-gray-500 flex items-center ">
+                <GoPlus className="text-4xl mx-2"/>
                 <Input onChange={(e)=> setInputMessage(e.target.value)} value={inputMessage} placeholder="Basic usage" className="w-full" />
-                <button className="chatSubmitButton" onClick={handleSubmit}>
-                        Send
+                <button className="chatSubmitButton " onClick={handleSubmit}>
+                  <IoMdSend className="text-4xl  "/>
                 </button>
+                <CiCamera className="text-4xl mx-2"/>
+                <MdOutlineKeyboardVoice className="text-4xl mx-2"/>
               </div>
             </div>
           ) : (
