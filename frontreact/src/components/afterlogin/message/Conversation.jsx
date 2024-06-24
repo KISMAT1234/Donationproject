@@ -97,7 +97,15 @@ const Conversation = () => {
          {currentChat ? (
             <div className="flex flex-col h-screen">
               <div className="h-[10vh] flex justify-between bg-yellow-500 px-5 py-4">
-                
+                <div className="flex text-2xl ">
+                    <h1>Image</h1>
+                    <h1 className="mx-2">{selectedUser.username}</h1>
+                </div>
+                <div className="text-3xl flex">
+                    <IoCallOutline className="mx-2"/>
+                    <CiVideoOn className="mx-2"/>
+                    <BsThreeDotsVertical className="mx-2"/>
+                </div>
               </div>
               <div className="h-[70vh] p-4 overflow-y-auto" >
                 {!loading && messages.length > 0 &&
