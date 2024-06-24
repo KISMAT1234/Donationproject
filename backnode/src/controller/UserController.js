@@ -12,7 +12,7 @@ import Follow from "../model/Follow.js";
 class UserController{
     async getOneUser(req,res){
         try{
-            const paramId = req.params.id;
+            const paramId = req.params?.id;
             // console.log(paramId);
             const ownerId = req.user.userId
             let user =  await User.findById(paramId).select('-password')
