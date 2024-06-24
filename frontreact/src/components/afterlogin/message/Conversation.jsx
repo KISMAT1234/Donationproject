@@ -61,17 +61,20 @@ const Conversation = () => {
   })
   },[currentChat])
 
-  const handleSubmit = async (e) => {
-    e.preventdefault()
+  const sendMessage = async (e) => {
+    // e.preventdefault()
     const messageInfo = {
       senderId: userId,
-      receiverId: currentChat,
+      receiverId: currentChat._id,
       message: inputMessage
     }
 
     try{
       axiosUrl.post('/message',messageInfo).then((response)=>{
         // console.log(response.data)
+        // setMessages([...messages, response.data])
+        setInputMessage('')
+        // scrollRef.current?.scrollIntoView({ behavior: "smooth" });
       }).catch((error)=>{
         console.log(error)
       })
@@ -131,7 +134,7 @@ const Conversation = () => {
               <div className="h-[10vh] bg-gray-500 flex items-center ">
                 <GoPlus className="text-4xl mx-2"/>
                 <Input onChange={(e)=> setInputMessage(e.target.value)} value={inputMessage} placeholder="Basic usage" className="w-full" />
-                <button className="chatSubmitButton " onClick={handleSubmit}>
+                <button className="chatSubmitButton " onClick={sendMessage}>
                   <IoMdSend className="text-4xl  "/>
                 </button>
                 <CiCamera className="text-4xl mx-2"/>
