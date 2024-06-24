@@ -6,6 +6,9 @@ import axiosUrl from '../../url/Axiosurl'
 import Sidebar from './Sidebar';
 import {jwtDecode} from 'jwt-decode';
 import { Skeleton } from 'antd';
+import { IoCallOutline } from "react-icons/io5";
+import { CiVideoOn } from "react-icons/ci";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
 
 
@@ -15,6 +18,7 @@ const Conversation = () => {
   const[conversation, setConversation] = useState([])
   const[currentChat, setCurrentChat] = useState(null) 
   const[loading,setLoading] = useState(false);
+  const[selectedUser, setSelectedUser] = useState([]);
   const[messages,setMessages ] = useState([])
   const[inputMessage, setInputMessage] = useState();
   const scrollRef = useRef()
@@ -46,6 +50,15 @@ const Conversation = () => {
     })
   },[])
 
+  useEffect(()=>{
+    axiosUrl.get(`/user/${currentChat?._id}`).then((response)=>{
+      console.log(response.data.data.user,' selected user fetch data');
+      setSelectedUser(response.data.data.user)
+   }).catch((err)=>{
+    console.log(err,'error in selected user');
+  })
+  },[currentChat])
+
   const handleSubmit = async (e) => {
     e.preventdefault()
     const messageInfo = {
@@ -71,8 +84,8 @@ const Conversation = () => {
   }, [messages]);
   return (
     <>
-      <div className="flex px-10 py-10">
-        <div  className="w-[25%] h-[80vh] bg-red-500">
+      <div className="flex px-10 ">
+        <div  className="w-[25%]  bg-red-500">
 
         <Sidebar
             //  onlineUsers={onlineUsers}
@@ -80,13 +93,13 @@ const Conversation = () => {
              setCurrentChat={setCurrentChat}
         />
         </div>
-        <div className="w-[75%] h-[80vh] bg-green-500">
+        <div className="w-[75%] h-[90vh] bg-green-500">
          {currentChat ? (
             <div className="flex flex-col h-screen">
-              <div className="h-[10vh] bg-yellow-500">
-                top user data
+              <div className="h-[10vh] flex justify-between bg-yellow-500 px-5 py-4">
+                
               </div>
-              <div className="h-[60vh] p-4 overflow-y-auto" >
+              <div className="h-[70vh] p-4 overflow-y-auto" >
                 {!loading && messages.length > 0 &&
                   messages.map((data, index) => {
                   return(
@@ -105,7 +118,7 @@ const Conversation = () => {
 		            	)}
                   <div ref={scrollRef}></div>
               </div>
-              <div className="h-[10vh] bg-gray-500 flex items-center p-4">
+              <div className=" bg-gray-500 flex items-center p-4">
                 <Input onChange={(e)=> setInputMessage(e.target.value)} value={inputMessage} placeholder="Basic usage" className="w-full" />
                 <button className="chatSubmitButton" onClick={handleSubmit}>
                         Send
