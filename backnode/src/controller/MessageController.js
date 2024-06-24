@@ -8,11 +8,12 @@ const ObjectId = mongoose.Types.ObjectId;
 class MessageController {
     async sendMessage(req, res) {
       try {
+        console.log('came')
         const newMessage = req.body;
         console.log(newMessage,'message rec');
 
         let conversation = await Conversation.findOne({
-          participats: {$all: [newMessage.senderId, newMessage.receiverId]}
+          participants: {$all: [newMessage.senderId, newMessage.receiverId]}
         })
         console.log(conversation,'conversation')
 
@@ -33,7 +34,7 @@ class MessageController {
           console.log(saveMessage,'push after save conversation')
           console.log(conversation,'final push of id')
           await Promise.all([conversation.save(),saveMessage.save()]);
-          // return responseInstance.responseHandler(res,200,'Message saved successfully');
+          return responseInstance.responseHandler(res,200,'Message saved successfully');
 
         } catch (err) {
             return responseInstance.responseHandler(res,500,'Error in backend')
