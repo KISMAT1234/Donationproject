@@ -13,6 +13,7 @@ import { IoMdSend } from "react-icons/io";
 import { CiCamera } from "react-icons/ci";
 import { MdOutlineKeyboardVoice } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
+import { socket } from '../../../socket';
 
 
 const Conversation = () => {
@@ -41,6 +42,10 @@ const Conversation = () => {
     }).catch((error)=>{
       console.log(error)
     })
+    socket.on("message", (data) => {
+      console.log(data,'socket connection successfull in frontend')
+      setUser((prevNotifications) => [data, ...prevNotifications]);
+    });
   },[currentChat])
 
   useEffect(()=>{
@@ -50,6 +55,7 @@ const Conversation = () => {
      }).catch((err)=>{
       console.log(err);
     })
+
   },[])
 
   useEffect(()=>{
@@ -78,6 +84,11 @@ const Conversation = () => {
       }).catch((error)=>{
         console.log(error)
       })
+
+      socket.emit('message', {
+        // commenterId: localStorage.getItem('userId'),
+        messageInfo
+    });
     }catch(err){
 
     }
