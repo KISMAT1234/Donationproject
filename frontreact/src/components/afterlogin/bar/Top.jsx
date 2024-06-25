@@ -145,7 +145,7 @@ useEffect(() => {
             
            </div>
            <div className="flex px-5 py-3">
-             <Link to="/messages">
+             <Link to="/Mainpage/messages">
 
          <button className="bg-blue-500 px-5 py-5 rounded-xl">
             <h2>Messages</h2>
