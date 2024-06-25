@@ -55,12 +55,18 @@ const initializeSocket = (app) => {
     })
 
 
-    socket.on('message',async (messageInfo)=>{
-       io.to(messageInfo.receiverId).emit('message', messageInfo.message); 
+    socket.on('message',(messageInfo)=>{
+      // const receiverSocketId = users[messageInfo.receiverId];
+      const receiverId = messageInfo.receiverId
+      const message = messageInfo.message
+      console.log(receiverId,'id receiver')
+      console.log(message,'message')
+      
+       io.to(receiverId).emit('message',message); 
+      // io.emit('message',messageInfo);
     })
     
   
-
     socket.on('disconnect', () => {
       console.log('User disconnected');
     });
