@@ -57,11 +57,10 @@ function RouterList(){
              <Route path="search" element={<Search/>}/>
              <Route path="notification" element={<Notification socket={socket}/>}/>
              <Route path="profile/change-password" element={<PasswordChange/>}/>
-
+             <Route path="messages" element={<Messages/>}/>
          </Route>
              <Route path="payment-cancel" element={<PaymentCancel/>}/>
              <Route path="payment-success" element={<PaymentSuccess/>}/>
-             <Route path="messages" element={<Messages/>}/>
 
        </Routes>
  
