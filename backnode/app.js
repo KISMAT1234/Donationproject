@@ -52,6 +52,19 @@ app.use('/documentation', swaggerUi.serve, swaggerUi.setup(docs))
  *         200:
  *            description: To test Get method
  */
+
+/**
+ * @swagger
+ * /user:
+ *   post:
+ *    Summary: Returns a user list 
+ *    description: this is user list description
+ *    parameters:
+ *          - in: query
+ *    responses:
+ *        '200':
+ *           description:to test post method
+ */
 app.use(express.urlencoded({ extended: true }));
 
 // Use import.meta.url to get the module's URL and extract the directory path
