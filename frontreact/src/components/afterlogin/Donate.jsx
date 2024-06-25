@@ -69,6 +69,20 @@ const downloadQRCode = () => {
 
 
 
+  // const token = localStorage?.getItem('token');
+  // if(token){
+  //   const decodedToken = jwtDecode(token);
+  // }
+  // export const userId = decodedToken?.id;
+
+const token = localStorage?.getItem('token');
+
+// Decode the token if it exists
+const decodedToken = token ? jwtDecode(token) : null;
+
+// Export the userId if available
+export const userId = decodedToken?.id || null;
+// console.log(userId,'user token id in donate.jsx')
   
 const Donate = () => {
     const [info, setInfo] = useState([]);
@@ -85,13 +99,6 @@ const Donate = () => {
     const [value, setValue] = useState('');
 
 
-    const token = localStorage.getItem('token');
-    let userId;
-
-    if (token) {
-      const decodedToken = jwtDecode(token);
-      userId = decodedToken.id;
-    }
     console.log(userId,'userId');
 
     const getInfo = async() =>{
