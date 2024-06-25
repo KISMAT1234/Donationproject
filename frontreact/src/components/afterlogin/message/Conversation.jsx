@@ -14,6 +14,7 @@ import { CiCamera } from "react-icons/ci";
 import { MdOutlineKeyboardVoice } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { socket } from '../../../socket';
+import { userId } from '../Donate';
 
 
 const Conversation = () => {
@@ -25,28 +26,33 @@ const Conversation = () => {
   const[messages,setMessages ] = useState([])
   const[inputMessage, setInputMessage] = useState();
   const scrollRef = useRef()
+  // console.log(userId,'token userId')
   
-  const token = localStorage.getItem('token');
-  const decodedToken = jwtDecode(token);
-  const userId = decodedToken.id;
+  // const token = localStorage.getItem('token');
+  // const decodedToken = jwtDecode(token);
+  // const userId = decodedToken.id;
 
   // console.log(currentChat?._id,'currentchat');
 
   useEffect(()=>{
     setLoading(true)
     axiosUrl.get(`/message/${currentChat?._id}`).then((response)=>{
-        // console.log(response.data.data,'response chat-message data')
+        console.log(response.data.data,'response chat-message data')
         setLoading(false)
         setMessages(response.data.data)
         
     }).catch((error)=>{
       console.log(error)
     })
-    socket.on("message", (data) => {
-      console.log(data,'socket connection successfull in frontend')
-      setUser((prevNotifications) => [data, ...prevNotifications]);
-    });
   },[currentChat])
+
+  useEffect(()=>{
+    socket.on("message", (data) => {
+      console.log(data,'connection success between users')
+      // console.log(data,'socket connection successfull in frontend')
+      // setUser((prevNotifications) => [data, ...prevNotifications]);
+    });
+  },[])
 
   useEffect(()=>{
     axiosUrl.get(`/user/${userId}`).then((response)=>{
@@ -76,23 +82,19 @@ const Conversation = () => {
     }
 
     try{
-      axiosUrl.post('/message',messageInfo).then((response)=>{
-        // console.log(response.data)
-        // setMessages([...messages, response.data])
-        setInputMessage('')
-        // scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-      }).catch((error)=>{
-        console.log(error)
-      })
-
-      socket.emit('message', {
-        // commenterId: localStorage.getItem('userId'),
-        messageInfo
-    });
+      // axiosUrl.post('/message',messageInfo).then((response)=>{
+      //   // console.log(response.data)
+      //   // setMessages([...messages, response.data])
+      //   setInputMessage('')
+      //   // scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+      // }).catch((error)=>{
+      //   console.log(error)
+      // })
+        
     }catch(err){
-
+      console.log(err,'err in backend');
     }
-
+    socket.emit('message', messageInfo);
   }
 
   useEffect(() => {
@@ -129,6 +131,7 @@ const Conversation = () => {
                   return(
                   <div key={index}  className={`flex ${data.receiverId === userId? 'justify-start' : 'justify-end'} my-2`}>
                     <div className={`p-2 rounded-lg max-w-xs ${data.receiverId === userId ? 'bg-blue-300' : 'bg-gray-200'}`}>
+                      {/* <h1>{data.username}</h1> */}
                       <h1>{data.message}</h1>
                     </div>
                   </div>
