@@ -41,6 +41,7 @@ app.use(cors({
   // credentials: true,
 }));
 const docs = swaggerJSDoc(options);
+
 app.use('/documentation', swaggerUi.serve, swaggerUi.setup(docs))
 /**
  * @swagger
@@ -65,6 +66,33 @@ app.use('/documentation', swaggerUi.serve, swaggerUi.setup(docs))
  *        '200':
  *           description:to test post method
  */
+
+/** 
+ * @swagger
+ * /user:
+ *  put:
+ *   summary: Update user by ID
+ *   description: Updates an existing user
+ *   parameters:
+ *     - name: userId
+ *       in: path
+ *       required: true
+ *       type: string
+ *       description: The ID of the user to update
+ *     - in: body
+ *       name: user
+ *       description: The user data to update
+ *       schema:
+ *         $ref: '#/definitions/User'
+ *   responses:
+ *     200:
+ *       description: User updated successfully
+ *       schema:
+ *         $ref: '#/definitions/User'
+ *     404:
+ *       description: User not found
+ */
+
 app.use(express.urlencoded({ extended: true }));
 
 // Use import.meta.url to get the module's URL and extract the directory path
