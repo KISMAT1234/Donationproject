@@ -33,9 +33,9 @@ const initializeSocket = (app) => {
       // console.log(post,'user post')
 
       const user = await User.findById(userId)
-
+      // console.log(post.userId._id,'before toString id')
       const postUserId = post.userId._id.toString()
-      // console.log(postUserId,'receiver user id')
+      // console.log(postUserId,'after toString id')
 
       if (postUserId !== userId) {
          const notification = new Notification({
@@ -62,14 +62,14 @@ const initializeSocket = (app) => {
       console.log(receiverId,'id receiver')
       console.log(message,'message')
       
-       io.to(receiverId).emit('message',message); 
-      // io.emit('message',messageInfo);
+      //  io.to(receiverId).emit('message',message); 
+      io.emit('message',messageInfo);
     })
     
   
-    socket.on('disconnect', () => {
-      console.log('User disconnected');
-    });
+    // socket.on('disconnect', () => {
+    //   console.log('User disconnected');
+    // });
   });
 
   return io;
