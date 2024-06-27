@@ -50,8 +50,12 @@ const Conversation = () => {
     socket.on("message", (data) => {
       console.log(data,'connection success between users')
       // console.log(data,'socket connection successfull in frontend')
-      // setUser((prevNotifications) => [data, ...prevNotifications]);
+      setMessages((prevData) => [ ...prevData,data])
+      // setMessages([...messages,data])
     });
+    return () => {
+      socket.off("message");
+    };
   },[])
 
   useEffect(()=>{
@@ -74,27 +78,30 @@ const Conversation = () => {
   },[currentChat])
 
   const sendMessage = async (e) => {
-    // e.preventdefault()
+    e.preventDefault()
     const messageInfo = {
       senderId: userId,
       receiverId: currentChat._id,
       message: inputMessage
     }
 
-    try{
-      // axiosUrl.post('/message',messageInfo).then((response)=>{
-      //   // console.log(response.data)
-      //   // setMessages([...messages, response.data])
-      //   setInputMessage('')
-      //   // scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-      // }).catch((error)=>{
-      //   console.log(error)
-      // })
+    // try{
+    //   axiosUrl.post('/message',messageInfo).then((response)=>{
+    //     // console.log(response.data)
+    //     // setMessages([...messages, response.data])
+    //     // scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    //   }).catch((error)=>{
+    //     console.log(error)
+    //   })
         
-    }catch(err){
-      console.log(err,'err in backend');
-    }
+    // }catch(err){
+    //   console.log(err,'err in backend');
+    // }
     socket.emit('message', messageInfo);
+    setMessages([...messages, messageInfo]);
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+    setInputMessage('')
+
   }
 
   useEffect(() => {
