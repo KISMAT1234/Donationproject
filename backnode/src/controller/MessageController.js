@@ -8,32 +8,31 @@ const ObjectId = mongoose.Types.ObjectId;
 class MessageController {
     async sendMessage(req, res) {
       try {
-        console.log('came')
         const newMessage = req.body;
-        console.log(newMessage,'message rec');
+        // console.log(newMessage,'message rec');
 
         let conversation = await Conversation.findOne({
           participants: {$all: [newMessage.senderId, newMessage.receiverId]}
         })
-        console.log(conversation,'conversation')
+        // console.log(conversation,'conversation')
 
         if(!conversation){
           conversation = await Conversation.create({
             participants: [newMessage.senderId, newMessage.receiverId]
           })
         }
-        console.log(conversation,'after save conversation')
+        // console.log(conversation,'after save conversation')
 
         
           const saveMessage = new Message({...newMessage}); 
-          console.log(saveMessage)
+          // console.log(saveMessage)
 
           if(saveMessage){
              conversation.messages.push(saveMessage._id)
           }
-          console.log(saveMessage,'push after save conversation')
-          console.log(conversation,'final push of id')
-          await Promise.all([conversation.save(),saveMessage.save()]);
+          // console.log(saveMessage,'push after save conversation')
+          // console.log(conversation,'final push of id')
+          // await Promise.all([conversation.save(),saveMessage.save()]);
           return responseInstance.responseHandler(res,200,'Message saved successfully');
 
         } catch (err) {
@@ -45,9 +44,9 @@ class MessageController {
     async fetchMessage(req,res){
         try{
           const receiverId = req.params?.id
-          console.log(receiverId,'params id')
+          // console.log(receiverId,'params id')
           const userId = req.user.userId
-          console.log(userId,'user Id')
+          // console.log(userId,'user Id')
           
           if (!ObjectId.isValid(userId) || !ObjectId.isValid(receiverId)) {
             return responseInstance.responseHandler(res, 400, 'Invalid ID format');
@@ -55,7 +54,7 @@ class MessageController {
             let conversation = await Conversation.findOne({
               participants: {$all: [userId, receiverId]}
             }).populate("messages")
-            console.log(conversation,'conversation')
+            // console.log(conversation,'conversation')
 
             if (!conversation) return responseInstance.responseHandler(res,200,'Message send Successfully',[]);
 
