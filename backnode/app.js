@@ -9,6 +9,7 @@ import initializeSocket from './socket.js';
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
 // import docs from './documentation/index.js'
+import status from 'express-status-monitor'
 
 const options = {
   definition:{
@@ -33,6 +34,8 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+
+app.use(status())
 // app.use(cors());
 app.use(cors({
   origin: 'http://localhost:5173', // replace with your frontend URL
