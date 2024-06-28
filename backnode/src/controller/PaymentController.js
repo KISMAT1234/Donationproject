@@ -77,7 +77,10 @@ class PaymentController{
         const postId = req.params.id
         const payment = await Payment.find({postId: postId}).populate("donorId")
         console.log(payment)
-      
+        if(!payment){
+          return responseInstance.responseHandler(res,200,'there is no any payment in this post ')
+        }
+        return responseInstance.responseHandler(res,200,'payment fetch successfull',payment)
       }
       catch(err){
       console.log(err);
