@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosUrl from "../url/Axiosurl";
 import { useDispatch,useSelector } from 'react-redux';
 import {fetchUpload} from "../../slices/uploadSlice"
+import {jwtDecode} from 'jwt-decode';
 import { Star } from "../../slices/addSlice";
 import { Link } from "react-router-dom";
 import { CiStar } from "react-icons/ci";
@@ -13,11 +14,20 @@ import { enUS } from 'date-fns/locale'
 
 import { Pagination } from 'antd';
 
+
 import { HeartOutlined,HeartFilled } from '@ant-design/icons'
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Button,message,Popconfirm,Popover } from 'antd';
 
 
+const token = localStorage?.getItem('token');
+
+// Decode the token if it exists
+const decodedToken = token ? jwtDecode(token) : null;
+
+// Export the userId if available
+export const userId = decodedToken?.id || null;
+// console.log(userId,'user token id in donate.jsx')
 
 function Content() {
   const [loading, setLoading] = useState(true);
