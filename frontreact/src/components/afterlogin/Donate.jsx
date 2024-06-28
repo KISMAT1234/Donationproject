@@ -420,9 +420,26 @@ const Donate = () => {
 
                    
                 </div>
-                <div className=" rounded-xl  shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
+                <div className="mx-2 rounded-xl  shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
                    <h1 className="px-5 py-5 text-4xl bg-violet-500">Donors</h1>
-                   
+                   {
+                    donationDetails.length > 0 ? (  
+                        donationDetails.map((donor,index)=>(
+                          <>
+                            <div className="flex justify-between" key={index}>
+                              <h1 className="px-10 py-2 text-2xl">Image</h1>
+                              <h1 className="px-10 py-2 text-2xl">{donor.donorId.username}</h1>
+                              <h1 className="px-5 py-2 text-2xl">${donor.amount}</h1>
+                            </div>
+                          </>
+                        ))
+                      
+                    ):(
+                      <h1 className="mx-10 mt-[25%] text-xl font-light">         
+                         There is no any donor in this campaign.
+                      </h1>
+                    )
+                   }
                 </div>      
             </div>
 
