@@ -70,6 +70,15 @@ class PaymentController{
             console.log(err);
         }
     }
+    
+    async getPaymentHistory(req,res){
+      try{
+
+      }
+      catch(err){
+
+      }
+    }
 }
 
 export default PaymentController;
