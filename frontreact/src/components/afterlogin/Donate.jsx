@@ -9,6 +9,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 import {  Popconfirm,message } from 'antd';
+import { CiEdit } from "react-icons/ci";
 import { SmileOutlined } from '@ant-design/icons'
 import { Button, notification } from 'antd';
 
@@ -440,7 +441,7 @@ const Donate = () => {
             <div className="my-2">
                 <form onSubmit={handleSubmit}>
                    <label  htmlFor="input-label" className="block text-4xl font-medium mb-2 text-black">Comments</label>
-                   <input  type="text" onChange={(e) => setComment(e.target.value)} value={comment} id="input-label" className="bg-slate-200  py-3 px-4 block w-full border-gray-200 rounded-lg text-xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" placeholder="write something..."/>
+                   <input  type="text" onChange={(e) => setComment(e.target.value)} value={comment} id="input-label" className="  py-3 px-4 block w-full border-gray-200 rounded-lg text-xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-400 dark:border-gray-700 dark:text-black" placeholder="write something..."/>
                 </form>
                 
                 
@@ -458,7 +459,15 @@ const Donate = () => {
                                               <div className="mt-3 ml-2">{cmt.createdAt}</div>
                                             </div>
                                           <div className="mt-3 text-2xl">
-                                          
+                                            {
+                                                cmt.userId._id === userId && (
+                                                  <>
+                                                    <button  className="px-1 py-1 h-10">  
+                                                       <CiEdit className="text-3xl  hover:text-blue-600"/>
+                                                     </button>
+                                                  </>
+                                                )
+                                              }
                                           </div>
                                         </div>
                                        <div className="my-5">
