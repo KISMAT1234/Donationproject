@@ -13,9 +13,10 @@ import { SmileOutlined } from '@ant-design/icons'
 import { Button, notification } from 'antd';
 
 import { socket } from '../../socket';
-import {jwtDecode} from 'jwt-decode';
 import { Input, Tooltip } from 'antd';
 import { QRCode } from 'antd';
+
+import { userId } from './Mainpage';
 
 const formatNumber = (value) => new Intl.NumberFormat().format(value);
 const NumericInput = (props) => {
@@ -75,14 +76,7 @@ const downloadQRCode = () => {
   // }
   // export const userId = decodedToken?.id;
 
-const token = localStorage?.getItem('token');
 
-// Decode the token if it exists
-const decodedToken = token ? jwtDecode(token) : null;
-
-// Export the userId if available
-export const userId = decodedToken?.id || null;
-// console.log(userId,'user token id in donate.jsx')
   
 const Donate = () => {
     const [info, setInfo] = useState([]);
@@ -100,7 +94,7 @@ const Donate = () => {
     const [donationDetails, setDonationDetails] = useState([])
 
 
-    // console.log(userId,'userId');
+    console.log(userId,'userId');
 
     const getInfo = async() =>{
         await axiosUrl.get(`/upload/${id}`).then((response)=>{
@@ -457,13 +451,15 @@ const Donate = () => {
                                     <div className="w-[7%]">
                                         <img src={cmt.userId.image} className=" rounded-[50%]"/>
                                     </div>
-                                    <div className="px-5 py-4 ml-3 w-[100%] bg-slate-400 rounded-2xl shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
+                                    <div className="px-5 py-4 ml-3 w-[100%] bg-slate-200 rounded-2xl shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
                                         <div className="flex justify-between">
                                             <div className="flex ">
                                               <div className="text-4xl font-medium">{cmt.userId.username}</div>
                                               <div className="mt-3 ml-2">{cmt.createdAt}</div>
                                             </div>
-                                          <div className="mt-3 text-2xl">Edit</div>
+                                          <div className="mt-3 text-2xl">
+                                          
+                                          </div>
                                         </div>
                                        <div className="my-5">
                                              {cmt.comment}
@@ -499,10 +495,16 @@ const Donate = () => {
                                               </div>
                                            </div>
                                            <div className="text-2xl flex">
-                                           
-                                              <button  className="px-1 py-1 h-10" onClick={()=> deleteComment(cmt._id)}>  
-                                                <MdDelete className="text-5xl text-red-500 hover:text-red-600"/>
-                                              </button>
+                                              {
+                                                cmt.userId._id === userId && (
+                                                  <>
+                                                    <button  className="px-1 py-1 h-10" onClick={()=> deleteComment(cmt._id)}>  
+                                                       <MdDelete className="text-5xl text-red-500 hover:text-red-600"/>
+                                                     </button>
+                                                  </>
+                                                )
+                                              }
+                                            
                                             </div>
                                        </div>
                                     </div>
