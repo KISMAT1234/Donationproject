@@ -97,9 +97,10 @@ const Donate = () => {
     const [dislikeCount, setDislikeCount] = useState(0);
     const [delComment, setDelComment] = useState(false)
     const [value, setValue] = useState('');
+    const [donationDetails, setDonationDetails] = useState([])
 
 
-    console.log(userId,'userId');
+    // console.log(userId,'userId');
 
     const getInfo = async() =>{
         await axiosUrl.get(`/upload/${id}`).then((response)=>{
@@ -116,7 +117,7 @@ const Donate = () => {
     const fetchComments = async () => {
       try {
             const response = await axiosUrl.get(`/comment/${id}`);
-            console.log(response.data.data,"response of fetchedcomments")
+            // console.log(response.data.data,"response of fetchedcomments")
             // console.log(response.data[0].like)  
             setCommentsList(response.data.data);  
             setLikeCount(response.data[0].like) 
@@ -143,7 +144,15 @@ const Donate = () => {
         // console.log(commentsList, "commentlists array another useEffect");
     }, [id, commentsList]);
 
-
+   useEffect(()=>{
+     axiosUrl.get(`/donate/${id}`).then((response)=>{
+       console.log(response.data.data,'payment data');
+       console.log(response.data.data,'payment data');
+       setDonationDetails(response.data.data)
+      }).catch((err)=>{
+          console.log(err)
+      })
+   },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -191,7 +200,7 @@ const Donate = () => {
         // }
         try {
             const response = await axiosUrl.post(`/comment/like/${id}`);
-            console.log(response.data.data.like,"response from backend")
+            // console.log(response.data.data.like,"response from backend")
             // setLikeCount(response.data.data.like); 
             // if (response.data.data.likeIcon === false) {
             //   setLiked(false);
@@ -256,7 +265,7 @@ const Donate = () => {
       // console.log(commentId,"delete comment Id");
       if (window.confirm('Are you sure you want to delete?')) {
         await axiosUrl.delete(`/comment/${commentId}`).then((response)=>{
-          console.log(response.data,'response of deletion');
+          // console.log(response.data,'response of deletion');
           if(response.data.success === true){
              setCommentsList(commentsList.filter(comment => comment._id !== commentId)); // used to update the state of the comments list by removing a specific comment without needing to refresh the page. Here's a detailed explanation of each part:
               notification.open({
@@ -413,26 +422,13 @@ const Donate = () => {
                 </div>
                 <div className=" rounded-xl  shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
                    <h1 className="px-5 py-5 text-4xl bg-violet-500">Donors</h1>
-                   <div className="flex justify-between">
-                      <h1 className="px-10 py-5 text-2xl">Image</h1>
-                      <h1 className="px-10 py-5 text-2xl">Name</h1>
-                      <button className="mx-2 bg-green-900 rounded-2xl">
-                        <h1 className="px-5  text-2xl">Follow</h1>
-                      </button>
-                   </div>
-                  
-                
-
-                        
-                      
-                </div>
-
-             
+                   
+                </div>      
             </div>
 
-            <div>
+            <div className="my-2">
                 <form onSubmit={handleSubmit}>
-                   <label  htmlFor="input-label" className="block text-4xl font-medium mb-2 dark:text-white">Comments</label>
+                   <label  htmlFor="input-label" className="block text-4xl font-medium mb-2 text-black">Comments</label>
                    <input  type="text" onChange={(e) => setComment(e.target.value)} value={comment} id="input-label" className="bg-slate-200  py-3 px-4 block w-full border-gray-200 rounded-lg text-xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600" placeholder="write something..."/>
                 </form>
                 
