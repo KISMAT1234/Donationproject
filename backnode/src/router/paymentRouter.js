@@ -10,5 +10,6 @@ const paymentRouter = express.Router();
 const paymentInstance = new PaymentController();
 
 paymentRouter.post('/',authenticate, paymentInstance.pay)
+paymentRouter.get('/',authenticate, paymentInstance.getPaymentHistory)
 
 export default paymentRouter;
