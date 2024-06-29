@@ -19,6 +19,9 @@ import { QRCode } from 'antd';
 
 import { userId } from './Mainpage';
 
+import { useDispatch, useSelector  } from 'react-redux';
+import { fetchPayment } from '../../slices/paymentSlice';
+
 const formatNumber = (value) => new Intl.NumberFormat().format(value);
 const NumericInput = (props) => {
   const { value, onChange } = props;
@@ -94,8 +97,15 @@ const Donate = () => {
     const [value, setValue] = useState('');
     const [donationDetails, setDonationDetails] = useState([])
 
+    const dispatch = useDispatch();
+    const state = useSelector((state) => state)
+    console.log(state,'asyncthunk state value')
 
-    console.log(userId,'userId');
+    useEffect(()=>{
+         dispatch(fetchPayment());
+    },[])
+
+    // console.log(userId,'userId');
 
     const getInfo = async() =>{
         await axiosUrl.get(`/upload/${id}`).then((response)=>{
