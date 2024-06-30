@@ -95,14 +95,14 @@ const Donate = () => {
     const [dislikeCount, setDislikeCount] = useState(0);
     const [delComment, setDelComment] = useState(false)
     const [value, setValue] = useState('');
-    const [donationDetails, setDonationDetails] = useState([])
 
     const dispatch = useDispatch();
-    const state = useSelector((state) => state)
-    console.log(state,'asyncthunk state value')
+    const paymentState = useSelector((state) => state.payment.data?.data || [])
+
+    console.log(paymentState,'asyncthunk state value')
 
     useEffect(()=>{
-         dispatch(fetchPayment());
+         dispatch(fetchPayment(id));
     },[])
 
     // console.log(userId,'userId');
@@ -149,15 +149,6 @@ const Donate = () => {
         // console.log(commentsList, "commentlists array another useEffect");
     }, [id, commentsList]);
 
-   useEffect(()=>{
-     axiosUrl.get(`/donate/${id}`).then((response)=>{
-       console.log(response.data.data,'payment data');
-       console.log(response.data.data,'payment data');
-       setDonationDetails(response.data.data)
-      }).catch((err)=>{
-          console.log(err)
-      })
-   },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -428,8 +419,8 @@ const Donate = () => {
                 <div className="mx-2 rounded-xl  shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
                    <h1 className="px-5 py-5 text-4xl bg-violet-500">Donors</h1>
                    {
-                    donationDetails.length > 0 ? (  
-                        donationDetails.map((donor,index)=>(
+                    paymentState.length > 0 ? (  
+                        paymentState.map((donor,index)=>(
                           <>
                             <div className="flex justify-between" key={index}>
                               <h1 className="px-10 py-2 text-2xl">Image</h1>
