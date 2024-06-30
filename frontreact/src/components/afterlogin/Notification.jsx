@@ -35,7 +35,7 @@ const Notification = ({socket}) => {
       <ul>
         {notifications.map((notification) => (
           <>
-          <div className=" bg-gray-400 px-5 py-5 rounded-2xl">
+          <div className=" bg-slate-200 px-5 py-5 my-1 rounded-2xl">
             <div className="flex justify-between">
               <div>
                 <h1>Image</h1>
