@@ -97,13 +97,13 @@ const Donate = () => {
     const [value, setValue] = useState('');
 
     const dispatch = useDispatch();
-    const paymentState = useSelector((state) => state.payment.data?.data || [])
+    const paymentState = useSelector((state) => state.payment || [])
 
     console.log(paymentState,'asyncthunk state value')
 
     useEffect(()=>{
          dispatch(fetchPayment(id));
-    },[])
+    },[id])
 
     // console.log(userId,'userId');
 
@@ -419,16 +419,20 @@ const Donate = () => {
                 <div className="mx-2 rounded-xl  shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
                    <h1 className="px-5 py-5 text-4xl bg-violet-500">Donors</h1>
                    {
-                    paymentState.length > 0 ? (  
-                        paymentState.map((donor,index)=>(
-                          <>
-                            <div className="flex justify-between" key={index}>
-                              <h1 className="px-10 py-2 text-2xl">Image</h1>
-                              <h1 className="px-10 py-2 text-2xl">{donor.donorId.username}</h1>
-                              <h1 className="px-5 py-2 text-2xl">${donor.amount}</h1>
-                            </div>
-                          </>
-                        ))
+                    paymentState.data?.data.length > 0 ? ( 
+                        paymentState.data.isLoading ? (
+                            <h1>Loading...</h1>
+                          ):(
+                          paymentState.data?.data.map((donor,index)=>(
+                            <>
+                              <div className="flex justify-between" key={index}>
+                                <h1 className="px-10 py-2 text-2xl">Image</h1>
+                                <h1 className="px-10 py-2 text-2xl">{donor.donorId.username}</h1>
+                                <h1 className="px-5 py-2 text-2xl">${donor.amount}</h1>
+                              </div>
+                            </>
+                          ))
+                        )
                       
                     ):(
                       <h1 className="mx-10 mt-[25%] text-xl font-light">         
