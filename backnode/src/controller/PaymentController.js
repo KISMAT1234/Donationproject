@@ -74,6 +74,7 @@ class PaymentController{
     
     async getPaymentHistory(req,res){
       try{
+        console.log('request came in getPayment')
         const postId = req.params.id
         const payment = await Payment.find({postId: postId}).populate("donorId")
         console.log(payment)
