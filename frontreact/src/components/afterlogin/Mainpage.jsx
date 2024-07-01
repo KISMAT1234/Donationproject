@@ -14,10 +14,11 @@ import { enUS } from 'date-fns/locale'
 
 import { Pagination } from 'antd';
 
-
 import { HeartOutlined,HeartFilled } from '@ant-design/icons'
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Button,message,Popconfirm,Popover } from 'antd';
+
+import { useQuery } from "@tanstack/react-query";
 
 
 const token = localStorage?.getItem('token');
@@ -29,18 +30,26 @@ const decodedToken = token ? jwtDecode(token) : null;
 export const userId = decodedToken?.id || null;
 // console.log(userId,'user token id in donate.jsx')
 
+const fetchPost = async(current) => {
+  const response = await axiosUrl.get(`/upload?page=${current}`)
+  console.log(response,'res')
+  return response.fundraise;
+}
+
 function Content() {
   const [loading, setLoading] = useState(true);
-  const [content, setContent] = useState([]);
+  // const [content, setContent] = useState([]);
   const [favourite, setFavourite] = useState({}); 
   const [current, setCurrent] = useState(1);
+  
 
-
-
+  const {isLoading,error,data:content} = useQuery({ queryKey: ['fundraise',current], queryFn:() => fetchPost(current) })
+  console.log(content,'tanstack query data')
+  // console.log(data,'tanstack query data')
+  
   const onChange = (page) => {
     setCurrent(page);
   };
-  console.log(current,'page');
 
 
   const dispatch = useDispatch();
@@ -53,24 +62,23 @@ function Content() {
 
 
 
-  // console.log(state);
-  useEffect(() => {
-    getContent();
-  }, [current])
+  // useEffect(() => {
+  //   getContent();
+  // }, [current])
 
   
-    const getContent = async () => {
+  //   const getContent = async () => {
       
-      axiosUrl.get(`/upload?page=${current}`)
-        .then((response) => {
-          // console.log(response.data.data,'response data')
-          setContent(response.data.data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+  //     axiosUrl.get(`/upload?page=${current}`)
+  //       .then((response) => {
+  //         // console.log(response.data.data,'response data')
+  //         setContent(response.data.data);
+  //         setLoading(false);
+  //       })
+  //       .catch((err) => {
+  //         console.log(err);
+  //       });
+  //   }
 
     const removePost = (postId) => {
       // console.log(postId,'id to remove')
