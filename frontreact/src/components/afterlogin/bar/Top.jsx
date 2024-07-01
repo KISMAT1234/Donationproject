@@ -5,6 +5,7 @@ import axiosUrl from "../../url/Axiosurl";
 // import { Link } from 'react-router-dom';
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaSignOutAlt } from "react-icons/fa";
+import { FaFacebookMessenger } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
 
@@ -145,11 +146,12 @@ useEffect(() => {
             
            </div>
            <div className="flex px-5 py-3">
+            <div className="text-5xl mx-2 hover:text-blue-600">
              <Link to="/Mainpage/messages">
-                <button className="bg-blue-500 px-5 py-5 rounded-xl">
-                   <h2>Messages</h2>
-                </button>
+                   <FaFacebookMessenger/>
               </Link>
+            </div>
+
               <div className="text-5xl mx-2 hover:text-red-600">
                 <Link to="/Mainpage/notification">
                   <IoIosNotificationsOutline />
