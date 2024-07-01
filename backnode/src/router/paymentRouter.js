@@ -11,6 +11,6 @@ const paymentInstance = new PaymentController();
 
 paymentRouter.post('/',authenticate, paymentInstance.donationToFundraiser)
 paymentRouter.get('/:id', paymentInstance.getPaymentHistoryByPost)
-paymentRouter.get('/', paymentInstance.getPaymentHistoryByUserId)
+paymentRouter.get('/',authenticate, paymentInstance.getPaymentHistoryByUserId)
 
 export default paymentRouter;
