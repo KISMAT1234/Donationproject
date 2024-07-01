@@ -19,6 +19,7 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Button,message,Popconfirm,Popover } from 'antd';
 
 import { useQuery } from "@tanstack/react-query";
+import { BiData } from "react-icons/bi";
 
 
 const token = localStorage?.getItem('token');
@@ -33,19 +34,23 @@ export const userId = decodedToken?.id || null;
 const fetchPost = async(current) => {
   const response = await axiosUrl.get(`/upload?page=${current}`)
   console.log(response,'res')
-  return response.fundraise;
+  return response.data.data;
 }
 
 function Content() {
-  const [loading, setLoading] = useState(true);
-  // const [content, setContent] = useState([]);
   const [favourite, setFavourite] = useState({}); 
   const [current, setCurrent] = useState(1);
   
 
-  const {isLoading,error,data:content} = useQuery({ queryKey: ['fundraise',current], queryFn:() => fetchPost(current) })
-  console.log(content,'tanstack query data')
-  // console.log(data,'tanstack query data')
+
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // if (isError) {
+  //   return <div>Error: {error.message}</div>;
+  // }
+
   
   const onChange = (page) => {
     setCurrent(page);
@@ -157,9 +162,6 @@ function Content() {
 
   return (
     <>
-      {loading ? (
-        <div className="flex  text-4xl justify-center mt-[250px]" >Loading content...</div>
-      ) : (
         <div className="" >
           <div className="mx-5 flex fixed z-10 top-14 md:justify-between md:top-20 px-2 py-2 md:w-[72%] w-[94%] rounded-2xl  bg-stone-100 shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
               <Link to="/Mainpage">
@@ -205,7 +207,7 @@ function Content() {
               </Link>
             </div>
           <div className="mt-28 md:mt-20 ">
-            {content.map((data, index) => (
+            {data?.map((data, index) => (
               <div key={index} className="md:w-[90%]  px-5 py-5 mx-10 my-10 rounded-xl  bg-white border-2 hover:border-green-500 border-gray-200  shadow-md  hover:shadow-lg transform hover:scale-105  transition duration-300 ease-in-out">
                 <div className="flex justify-between">
                   <div className="flex">
@@ -276,9 +278,6 @@ function Content() {
               <Pagination current={current} onChange={onChange} total={50} />
             </div>
         </div>
-        
-      )}
-      
     </>
   )
 }
