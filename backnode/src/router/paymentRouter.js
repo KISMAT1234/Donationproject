@@ -9,7 +9,8 @@ const paymentRouter = express.Router();
 
 const paymentInstance = new PaymentController();
 
-paymentRouter.post('/',authenticate, paymentInstance.pay)
-paymentRouter.get('/:id', paymentInstance.getPaymentHistory)
+paymentRouter.post('/',authenticate, paymentInstance.donationToFundraiser)
+paymentRouter.get('/:id', paymentInstance.getPaymentHistoryByPost)
+paymentRouter.get('/', paymentInstance.getPaymentHistoryByUserId)
 
 export default paymentRouter;
