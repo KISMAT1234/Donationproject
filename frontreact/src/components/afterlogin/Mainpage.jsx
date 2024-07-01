@@ -41,7 +41,11 @@ function Content() {
   const [favourite, setFavourite] = useState({}); 
   const [current, setCurrent] = useState(1);
   
-
+  const { data, error, isLoading, isError, isSuccess, status } = useQuery({
+    queryKey: ['payment'],
+    queryFn:() => fetchPost(current)
+  });
+  console.log(data,'tanstack query data')
 
   // if (isLoading) {
   //   return <div>Loading...</div>;
