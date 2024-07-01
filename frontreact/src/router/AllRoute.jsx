@@ -30,6 +30,7 @@ import Messages from "../components/afterlogin/message/Messages"
 
 
 import { socket } from "../socket"
+import PaymentDetails from "../components/afterlogin/PaymentDetails"
 
 
 
@@ -60,6 +61,7 @@ function RouterList(){
              <Route path="messages" element={<Messages/>}/>
              <Route path="payment-cancel" element={<PaymentCancel/>}/>
              <Route path="payment-success" element={<PaymentSuccess/>}/>
+             <Route path="payment-details" element={<PaymentDetails/>}/>
          </Route>
 
        </Routes>
