@@ -1,9 +1,44 @@
-import React from 'react'
+import React, { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import axiosUrl from '../url/Axiosurl';
+
+const fetchPost = async () => {
+  const response = await axiosUrl.get('/donate');
+  console.log(response, 'res');
+//   const data = await response.json();
+  return response.data; // Returning the whole data as there is no payment field in the API response
+};
 
 const PaymentDetails = () => {
-  return (
-    <div>PaymentDetails</div>
-  )
-}
+  const { data, error, isLoading, isError, isSuccess, status } = useQuery({
+    queryKey: ['payment'],
+    queryFn: fetchPost
+  });
+  console.log('Data:', data);
 
-export default PaymentDetails
+
+//   useEffect(() => {
+//     console.log('Loading:', isLoading);
+//     console.log('Error:', isError);
+//     console.log('Success:', isSuccess);
+//     console.log('Status:', status);
+//     if (data) {
+//       console.log('Data:', data);
+//     }
+//     if (error) {
+//       console.log('Error:', error);
+//     }
+//   }, [isLoading, isError, isSuccess, status, data, error]);
+
+//   if (isLoading) return <div>Loading...</div>;
+//   if (isError) return <div>Error: {error.message}</div>;
+
+  return (
+    <div>
+      <h1>User Data</h1>
+      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+    </div>
+  );
+};
+
+export default PaymentDetails;
