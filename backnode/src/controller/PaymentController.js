@@ -1,7 +1,4 @@
 import stripe from 'stripe';
-
-
-
 import dotenv from 'dotenv'
 import Handler from "../logger/ResponseHandler.js"
 import Payment from '../model/Payment.js';
@@ -11,17 +8,12 @@ const stripeInstance = new stripe(secretKey);
 const responseInstance = new Handler();
 
 dotenv.config();
-
-
-
 class PaymentController{
-    async pay(req,res){
+    async donationToFundraiser(req,res){
         try{
 
             const paymentData= req.body
             // console.log(paymentData,'payment data');
-          
-
             const userId = req.user.userId
             // console.log(userId)
 
@@ -72,7 +64,7 @@ class PaymentController{
         }
     }
     
-    async getPaymentHistory(req,res){
+    async getPaymentHistoryByPost(req,res){
       try{
         console.log('request came in getPayment')
         const postId = req.params.id
@@ -85,6 +77,21 @@ class PaymentController{
       }
       catch(err){
       console.log(err);
+      return responseInstance.responseHandler(res,400,'Backend Sever error')
+
+      }
+    }
+
+    async getPaymentHistoryByUserId(req,res){
+      try{
+        console.log('request came in getPayment')
+        const userId = req.user.userId
+        const payment = await Payment.find({donorId: userId}).populate("postId").populate("donorId")
+        console.log(payment,'specific user payment')
+        
+      }catch(error){
+        console.log(error)
+        return responseInstance.responseHandler(res,400,'Backend Sever error')
       }
     }
 }
