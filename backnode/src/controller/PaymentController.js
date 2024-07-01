@@ -86,8 +86,12 @@ class PaymentController{
       try{
         console.log('request came in getPayment')
         const userId = req.user.userId
-        const payment = await Payment.find({donorId: userId}).populate("postId").populate("donorId")
-        console.log(payment,'specific user payment')
+        const userPaymentList = await Payment.find({donorId: userId}).populate("postId").populate("donorId")
+        console.log(userPaymentList ,'specific user payment')
+        if(!userPaymentList){
+          return responseInstance.responseHandler(res,200,'there is no any payment in this post ')
+        }
+        return responseInstance.responseHandler(res,200,'payment fetch successfull',userPaymentList )
         
       }catch(error){
         console.log(error)
