@@ -19,12 +19,31 @@ const PaymentDetails = () => {
 
   return (
     <div>
-      <h1>User Payment Details</h1>
       {
         isLoading ? (
           <h1>Loading...</h1>
           ):(
-          <h1>Data</h1>
+            <>
+              <h1>Payment Details</h1>
+              {
+                data.length>0 ? (
+                  data.map((item,index) => (
+                    <div key={index}>
+                      <h2>Amount: {item.amount}</h2>
+                      <p>{item.createdAt} </p>
+                      <p>{item.postId.name} </p>
+                      <p>Image </p>
+                      <p>{item.postId.gender} </p>
+                      <p>{item.postId.address} </p>
+                      <p>{item.postId.age} </p>
+                      <p>{item.postId.phone} </p>
+                    </div>
+                ))
+                ): (
+                  <h1 className="text-4xl text-red-500 text-center mt-[20]">You haven't done any payment</h1>
+                )
+              } 
+          </>
         )
       }
 
