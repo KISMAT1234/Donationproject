@@ -18,7 +18,7 @@ import { HeartOutlined,HeartFilled } from '@ant-design/icons'
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Button,message,Popconfirm,Popover } from 'antd';
 
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { BiData } from "react-icons/bi";
 
 
@@ -32,18 +32,24 @@ export const userId = decodedToken?.id || null;
 // console.log(userId,'user token id in donate.jsx')
 
 const fetchPost = async(current) => {
-  const response = await axiosUrl.get(`/upload?page=${current}`)
-  console.log(response,'res')
-  return response.data.data;
+ 
 }
 
 function Content() {
   const [favourite, setFavourite] = useState({}); 
   const [current, setCurrent] = useState(1);
+  const dispatch = useDispatch();
+
   
   const { data, error, isLoading, isError, isSuccess, status } = useQuery({
-    queryKey: ['payment'],
-    queryFn:() => fetchPost(current)
+    queryKey: ['payment',current],
+    queryFn:async() =>{
+      const response = await axiosUrl.get(`/upload?page=${current}`)
+      console.log(response,'res')
+      return response.data.data;
+    } ,
+    // placeholderData: keepPreviousData,
+    staleTime: 10000,
   });
   console.log(data,'tanstack query data')
 
@@ -61,11 +67,9 @@ function Content() {
   };
 
 
-  const dispatch = useDispatch();
   // const storeData = useSelector((state)=> state.users);
   // console.log(storeData,'data')
   useEffect(() => {
-    // Dispatch an action to fetch the data when the component mounts
     dispatch(fetchUpload());
   }, []);
 
