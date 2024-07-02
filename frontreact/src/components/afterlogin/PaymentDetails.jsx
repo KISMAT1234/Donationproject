@@ -6,13 +6,14 @@ const fetchPost = async () => {
   const response = await axiosUrl.get('/donate');
   console.log(response, 'res');
 //   const data = await response.json();
-  return response.data; // Returning the whole data as there is no payment field in the API response
+  return response.data.data; // Returning the whole data as there is no payment field in the API response
 };
 
 const PaymentDetails = () => {
   const { data, error, isLoading, isError, isSuccess, status } = useQuery({
     queryKey: ['payment'],
-    queryFn: fetchPost
+    queryFn: fetchPost,
+    staleTime: 5 * 1000,
   });
   console.log('Data:', data);
 
