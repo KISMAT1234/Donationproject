@@ -4,7 +4,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import {fetchUpload} from "../../slices/uploadSlice"
 import {jwtDecode} from 'jwt-decode';
 import { Star } from "../../slices/addSlice";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { CiStar } from "react-icons/ci";
 import { CiTimer } from "react-icons/ci";
 import { TbDots } from "react-icons/tb";
@@ -31,20 +31,20 @@ const decodedToken = token ? jwtDecode(token) : null;
 export const userId = decodedToken?.id || null;
 // console.log(userId,'user token id in donate.jsx')
 
-const fetchPost = async(current) => {
- 
-}
 
 function Content() {
   const [favourite, setFavourite] = useState({}); 
-  const [current, setCurrent] = useState(1);
+  // const [current, setCurrent] = useState(1);
   const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams({page:1});
+
+  const skip = parseInt(searchParams.get('page') || 1);
 
   
   const { data, error, isLoading, isError, isSuccess, status } = useQuery({
-    queryKey: ['payment',current],
+    queryKey: ['payment',skip],
     queryFn:async() =>{
-      const response = await axiosUrl.get(`/upload?page=${current}`)
+      const response = await axiosUrl.get(`/upload?page=${skip}`)
       console.log(response,'res')
       return response.data.data;
     } ,
@@ -53,17 +53,8 @@ function Content() {
   });
   console.log(data,'tanstack query data')
 
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (isError) {
-  //   return <div>Error: {error.message}</div>;
-  // }
-
-  
   const onChange = (page) => {
-    setCurrent(page);
+    setSearchParams({ page: page.toString() });
   };
 
 
@@ -72,26 +63,6 @@ function Content() {
   useEffect(() => {
     dispatch(fetchUpload());
   }, []);
-
-
-
-  // useEffect(() => {
-  //   getContent();
-  // }, [current])
-
-  
-  //   const getContent = async () => {
-      
-  //     axiosUrl.get(`/upload?page=${current}`)
-  //       .then((response) => {
-  //         // console.log(response.data.data,'response data')
-  //         setContent(response.data.data);
-  //         setLoading(false);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   }
 
     const removePost = (postId) => {
       // console.log(postId,'id to remove')
@@ -283,7 +254,7 @@ function Content() {
             ))}
            </div>
             <div className="my-20 flex justify-center">
-              <Pagination current={current} onChange={onChange} total={50} />
+              <Pagination  current={skip} onChange={onChange} total={50} />
             </div>
         </div>
     </>
