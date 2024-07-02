@@ -41,6 +41,7 @@ function Content() {
   const skip = parseInt(searchParams.get('page') || 1);
 
   
+  
   const { data, error, isLoading, isError, isSuccess, status } = useQuery({
     queryKey: ['payment',skip],
     queryFn:async() =>{
