@@ -17,27 +17,17 @@ const PaymentDetails = () => {
   });
   console.log('Data:', data);
 
-
-//   useEffect(() => {
-//     console.log('Loading:', isLoading);
-//     console.log('Error:', isError);
-//     console.log('Success:', isSuccess);
-//     console.log('Status:', status);
-//     if (data) {
-//       console.log('Data:', data);
-//     }
-//     if (error) {
-//       console.log('Error:', error);
-//     }
-//   }, [isLoading, isError, isSuccess, status, data, error]);
-
-//   if (isLoading) return <div>Loading...</div>;
-//   if (isError) return <div>Error: {error.message}</div>;
-
   return (
     <div>
-      <h1>User Data</h1>
-      {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+      <h1>User Payment Details</h1>
+      {
+        isLoading ? (
+          <h1>Loading...</h1>
+          ):(
+          <h1>Data</h1>
+        )
+      }
+
     </div>
   );
 };
