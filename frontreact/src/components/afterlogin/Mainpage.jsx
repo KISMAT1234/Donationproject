@@ -6,7 +6,7 @@ import {jwtDecode} from 'jwt-decode';
 import { Star } from "../../slices/addSlice";
 import { Link, useSearchParams } from "react-router-dom";
 import { CiStar } from "react-icons/ci";
-import { CiTimer } from "react-icons/ci";
+import { MdAccessTime } from "react-icons/md";
 import { TbDots } from "react-icons/tb";
 import { CiSquareRemove } from "react-icons/ci";
 import { formatDistanceToNow, format  } from 'date-fns';
@@ -49,7 +49,7 @@ function Content() {
       console.log(response,'res')
       return response.data.data;
     } ,
-    // placeholderData: keepPreviousData,
+    placeholderData: keepPreviousData,
     staleTime: 10000,
   });
   console.log(data,'tanstack query data')
@@ -188,7 +188,7 @@ function Content() {
             </div>
           <div className="mt-28 md:mt-20 ">
             {data?.map((data, index) => (
-              <div key={index} className="md:w-[90%]  px-5 py-5 mx-10 my-10 rounded-xl  bg-white border-2 hover:border-green-500 border-gray-200  shadow-md  hover:shadow-lg transform hover:scale-105  transition duration-300 ease-in-out">
+              <div key={index} className="md:w-[90%]  px-5 py-5 mx-10 my-10 rounded-xl  bg-gray-400 200 border-2 hover:border-green-500 border-gray-200  shadow-md  hover:shadow-lg transform hover:scale-105  transition duration-300 ease-in-out">
                 <div className="flex justify-between">
                   <div className="flex">
                     <div className="w-[10%] md:w-[20%]">
@@ -196,7 +196,7 @@ function Content() {
                     </div>
                     <div className="ml-5 font-extrabold  text-3xl">{data.userId.username}</div>
                     <div className="text-xl ml-10 flex"> 
-                      <CiTimer />
+                      <MdAccessTime />
                       <h1 className="ml-1">{renderTime(data.createdAt)}</h1>
                     </div>
                     </div> 
