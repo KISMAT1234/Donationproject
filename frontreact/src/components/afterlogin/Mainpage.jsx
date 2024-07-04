@@ -18,8 +18,10 @@ import { HeartOutlined,HeartFilled } from '@ant-design/icons'
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { Button,message,Popconfirm,Popover } from 'antd';
 
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { BiData } from "react-icons/bi";
+
+import InfiniteScroll from 'react-infinite-scroller'
 
 
 const token = localStorage?.getItem('token');
@@ -36,27 +38,34 @@ function Content() {
   const [favourite, setFavourite] = useState({}); 
   // const [current, setCurrent] = useState(1);
   const dispatch = useDispatch();
-  const [searchParams, setSearchParams] = useSearchParams({page:1});
+  // const [searchParams, setSearchParams] = useSearchParams({page:1});
 
-  const skip = parseInt(searchParams.get('page') || 1);
+  // const skip = parseInt(searchParams.get('page') || 1);
 
   
-  
-  const { data, error, isLoading, isError, isSuccess, status } = useQuery({
-    queryKey: ['payment',skip],
-    queryFn:async() =>{
-      const response = await axiosUrl.get(`/upload?page=${skip}`)
-      console.log(response,'res')
-      return response.data.data;
+  const { data, error, isLoading, isError, isSuccess, status, fetchNextPage,hasNextPage,isFetchingNextPage,isFetching } = useInfiniteQuery({
+    queryKey: ['payment'],
+    queryFn:async({pageParam=1}) =>{
+      const response = await axiosUrl.get(`/upload?page=${pageParam}`)
+      console.log(response.data.data,'res')
+      return response.data.data
     } ,
-    placeholderData: keepPreviousData,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, pages) => lastPage.nextPage || undefined,
+    // placeholderData: keepPreviousData,
     staleTime: 10000,
   });
   console.log(data,'tanstack query data')
+  const flattenedData = data?.pages?.flat() || [];
+  
+  // if(isLoading) return <div className="text-4xl my-5">Loading..</div>
+  // if(!data && !isLoading){
+  //   return <div className="text-4xl my-5">No Data Found</div>
+  // }
 
-  const onChange = (page) => {
-    setSearchParams({ page: page.toString() });
-  };
+  // const onChange = (page) => {
+  //   setSearchParams({ page: page.toString() });
+  // };
 
 
   // const storeData = useSelector((state)=> state.users);
@@ -99,6 +108,8 @@ function Content() {
     dispatch(Star([data]));
   }
   // console.log(content,'content data')
+
+
 
   const more = (
     <div className=" mx-10 block">
@@ -186,8 +197,16 @@ function Content() {
               </div>
               </Link>
             </div>
+            <InfiniteScroll 
+              loadMore={()=>{
+                if(!isFetching && hasNextPage){
+                  fetchNextPage()
+                }
+              }}
+              hasMore={!isFetching && hasNextPage}
+            >
           <div className="mt-28 md:mt-20 ">
-            {data?.map((data, index) => (
+            {flattenedData.map((data, index) => (
               <div key={index} className="md:w-[90%]  px-5 py-5 mx-10 my-10 rounded-xl  bg-gray-400 200 border-2 hover:border-green-500 border-gray-200  shadow-md  hover:shadow-lg transform hover:scale-105  transition duration-300 ease-in-out">
                 <div className="flex justify-between">
                   <div className="flex">
@@ -254,15 +273,18 @@ function Content() {
               </div>
             ))}
            </div>
-            <div className="my-20 flex justify-center">
-              <Pagination  current={skip} onChange={onChange} total={50} />
-            </div>
+            </InfiniteScroll>
+            {isFetchingNextPage && <div className="text-4xl mx-10 my-10">Loading..</div>}
+            {/* {!hasNextPage && <div className="text-4xl my-5">No more data</div>} */}
         </div>
     </>
   )
 }
 
 export default Content
+{/* <div className="my-20 flex justify-center">
+  <Pagination  current={skip} onChange={onChange} total={50} />
+</div> */}
 
 
 
