@@ -29,7 +29,6 @@ const paymentSlice = createSlice({
             console.log("error",action.payload)
             state.isError = true
        });
-        
      }
 })
 
