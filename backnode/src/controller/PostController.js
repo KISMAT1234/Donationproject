@@ -30,7 +30,7 @@ class PostController{
 
     async content(req,res){
         try{
-
+            console.log('came here in post1')
             let { skip, size } = Pagination(req)
         
             let {name} = req.query;
