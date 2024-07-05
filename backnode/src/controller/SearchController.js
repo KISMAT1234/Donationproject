@@ -1,17 +1,17 @@
 import Handler from "../logger/ResponseHandler.js"
-import Search from "../model/search.js";
+import Search from "../model/Search.js";
 const responseInstance = new Handler();
 
 class SearchController {
 
     async postSearch(req,res){
         try{
-        //    console.log("search post route")
-           //   const search = req.body;
+            const search = req.body;
+            console.log(search,"search post route")
            let userId = req.user.userId
         //    console.log(userId);
-           const user = new Search({...req.body,userID: userId});
-        //    console.log(user,'search value');
+           const user = new Search({...req.body,userId: userId});
+           console.log(user,'search value');
            await user.save();
            return responseInstance.responseHandler(res, 200,"search data send  successfully");
         }
