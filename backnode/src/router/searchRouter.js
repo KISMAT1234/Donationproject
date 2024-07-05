@@ -7,7 +7,7 @@ const searchRouter = express.Router();
 const searchInstance = new SearchController();
 
 searchRouter.post("/",authenticate,searchInstance.postSearch);
-searchRouter.get("/",searchInstance.getSearch);
+searchRouter.get("/",authenticate,searchInstance.getSearch);
 searchRouter.delete("/",searchInstance.deleteSearch);
 
 
