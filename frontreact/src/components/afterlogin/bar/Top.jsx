@@ -7,22 +7,31 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { FaSignOutAlt } from "react-icons/fa";
 import { FaFacebookMessenger } from "react-icons/fa";
 import { FaMoneyCheckAlt } from "react-icons/fa";
+import { MdHistory } from "react-icons/md";
+import { CiCircleRemove } from "react-icons/ci";
 
 import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 
-const  searchFunction = async(search) => {
-  const response = await axiosUrl.get(`/upload?name=${search}`)
-  console.log(response,'response')
+const  searchFunction = async() => {
+  const response = await axiosUrl.get(`/search`)
+  console.log(response,'response of search')
   return response.data.data
 }
 
+const fetchDataBasedOnSearch = async (search) => {
+  console.log(search,'inside search')
+  const response = await axiosUrl.get(`/search/${search}`);
+  console.log(response, "response of search based on click");
+  return response.data.data;
+};
 
 function Topbar() {
-
-   const [search,setSearch] = useState();
+   const [search,setSearch] = useState("");
    const [showSearchContainer,setShowSearchContainer] = useState(false)
+   const [highlightedIndex, setHighlightedIndex] = useState(-1);
+  //  const [selectedSearchTerm, setSelectedSearchTerm] = useState(null);
    const containerRef = useRef(null);   // useRef lets you reference a value that’s not needed for rendering.
 
    const handleInputClick = () => {
@@ -46,8 +55,17 @@ function Topbar() {
       queryKey: ['search'],
       queryFn: searchFunction,
    })
-   console.log(data,'data in tanstack')
+   console.log(data,'search fetched value')
 
+   const {
+    data: searchData,
+    error: searchError,
+    isLoading: searchLoading,
+  } = useQuery({   
+    queryKey: ['search',search],
+    queryFn: () => fetchDataBasedOnSearch(search),
+    enabled: !!search,
+  });
 
     useEffect(() => {
       document.addEventListener('mousedown', handleClickOutside);
@@ -71,11 +89,37 @@ function Topbar() {
       e.preventDefault();
       mutate(search);
     }
-    //  const response = await axiosUrl.post("/search",{search:search});
-    //  setApi(response.data.data);
-    //  console.log(response);
+  
+    const handleSearchItemClick = (value) => {
+      setSearch(value);
+      setShowSearchContainer(false);
+    };
 
+    const handleKeyDown = (e) => {
+      if (data && data.length > 0) {
+        if (e.key === "ArrowDown") {
+          setHighlightedIndex((prevIndex) => (prevIndex + 1) % data.length);
+        } else if (e.key === "ArrowUp") {
+          setHighlightedIndex((prevIndex) => (prevIndex - 1 + data.length) % data.length);
+        } else if (e.key === "Enter") {
+          if (highlightedIndex >= 0 && highlightedIndex < data.length) {
+            handleSearchItemClick(data[highlightedIndex].search);
+          }
+        }
+      }
+    };
 
+    const deleteSearchHistory = () => {
+      const { mutate } = useMutation({
+        mutationFn: () =>axiosUrl.delete("/search"),
+        onSuccess: () => {
+          console.log('Data sent to backend successfully');
+        },
+        onError: (err) => {
+          console.error('Error sending data to backend:', err);
+        },
+      })
+    }
    return(
     <>
        <div className="rounded-b-2xl bg-green-400 h-[11vh] flex sm:flex justify-between shadow-[0px_10px_1px_rgba(221,_221,_221,_1),_0_10px_20px_rgba(204,_204,_204,_1)]">
@@ -88,35 +132,64 @@ function Topbar() {
                <form onSubmit={handleSubmit}>
              <div className=" md:w-[30%] flex">  
               <div className="">
-                  <input type="text" value={search} onChange={(e)=>setSearch(e.target.value)} onClick={handleInputClick} className="w-[500px] placeholder-yellow-600::placeholder bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-black focus:ring-2 focus:ring-purple-600 focus:outline-none focus:border-transparent  py-1 px-2 rounded-lg shadow-lg border-none transform transition-transform duration-300 focus:scale-105" placeholder="Search fund raiser Here"/> 
-                {showSearchContainer && (
-                  <div ref={containerRef} className="container w-[100%] z-20  bg-white border border-gray-800 h-[60vh] shadow-md p-4 rounded-md animate-fadeIn">
-                     <h1>kismat</h1>
-                  { 
-                     data.slice(0, 10).map((search, index)=>{
-                        return(
-                           <div key={index} >
-                              <h1 className="px-2 py-2 text-2xl font-extralight  hover:bg-gray-200 rounded-2xl">{search.name}</h1>
-                           </div>
-                        )
-                     })
-                  } 
-                </div>
+                  <input type="text" 
+                    value={search} 
+                    onChange={(e)=>setSearch(e.target.value)} 
+                    onClick={handleInputClick} 
+                    onKeyDown={handleKeyDown}
+                    className="w-[500px] placeholder-yellow-600::placeholder bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-black focus:ring-2 focus:ring-purple-600 focus:outline-none focus:border-transparent  py-1 px-2 rounded-lg shadow-lg border-none transform transition-transform duration-300 focus:scale-105" placeholder="Search fund raiser Here"
+                  /> 
+
+                 {showSearchContainer && (
+                  <div
+                    ref={containerRef}
+                    className="container text-white w-[100%] z-20 bg-gray-600 border border-gray-800 h-[60vh] shadow-md p-4 rounded-md animate-fadeIn"
+                  >
+                    {searchData && searchData.length > 0 ? (
+                      searchData.slice(0, 10).map((value, index) => (
+                        <div
+                          key={index}
+                          onClick={() => handleSearchItemClick(value.search)}
+                          className={`px-2 flex justify-between hover:text-black py-2 text-2xl font-normal cursor-pointer hover:bg-gray-200 rounded-2xl ${
+                            index === highlightedIndex ? "bg-gray-300" : ""
+                          }`}
+                        >
+                          <div className="">
+                            <h1>{value.username}</h1>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      data &&
+                      data.slice(0, 10).map((value, index) => (
+                        <div
+                          key={index}
+                          onClick={() => handleSearchItemClick(value.search)}
+                          className={`px-2 flex justify-between hover:text-black py-2 text-2xl font-normal cursor-pointer hover:bg-gray-200 rounded-2xl ${
+                            index === highlightedIndex ? "bg-gray-300" : ""
+                          }`}
+                        >
+                          <div className="flex">
+                            <h1 className="mt-2 mx-2">
+                              <MdHistory />
+                            </h1>
+                            <h1>{value.search}</h1>
+                          </div>
+                          <div>
+                            <button className="mt-2 hover:text-red-500" onClick={deleteSearchHistory}>
+                              <CiCircleRemove />
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
                 )}
-                {/* <div className="h-[40vh] w-[100%] bg-gray-200 z-1">
-                    <h1>This is suggestion div</h1>
-                </div> */}
+          
               </div>  
-              {/* <Link to={`/Mainpage/search?name=${search}`}>
-                <button type = "submit" className=" bg-blue-400  h-[6vh] mt-2 rounded-2xl mx-1 px-4 py-4 ">
-                  <FaSearch />
-                 </button>
-               </Link> */}
-                    {/* <Link to={`/Mainpage/search?name=${search}`}> */}
-                        <button type="submit" className="bg-blue-400 h-[7vh] hover:bg-blue-600 rounded-md mx-4 transition duration-300 ease-in-out">
-                            <FaSearch className="hover:scale-150 w-12"/>
-                        </button>
-                    {/* </Link> */}
+              <button type="submit" className="bg-blue-400 h-[7vh] hover:bg-blue-600 rounded-md mx-4 transition duration-300 ease-in-out">
+                  <FaSearch className="hover:scale-150 w-12"/>
+              </button>
            </div> 
            </form>
             
