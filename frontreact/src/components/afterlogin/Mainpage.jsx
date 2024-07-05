@@ -38,14 +38,12 @@ function Content() {
   const [favourite, setFavourite] = useState({}); 
   // const [current, setCurrent] = useState(1);
   const dispatch = useDispatch();
-  // const [searchParams, setSearchParams] = useSearchParams({page:1});
 
-  // const skip = parseInt(searchParams.get('page') || 1);
 
-  
-  const { data, error, isLoading, isError, isSuccess, status, fetchNextPage,hasNextPage,isFetchingNextPage,isFetching } = useInfiniteQuery({
-    queryKey: ['payment'],
-    queryFn:async({pageParam=1}) =>{
+  const { data, error, isLoading,fetchNextPage,hasNextPage,isFetchingNextPage,isFetching } = useInfiniteQuery({
+    queryKey: ['post'],
+    queryFn:async({pageParam = 1}) =>{
+      console.log(pageParam,'param value')
       const response = await axiosUrl.get(`/upload?page=${pageParam}`)
       console.log(response.data.data,'res')
       return response.data.data
@@ -58,18 +56,6 @@ function Content() {
   console.log(data,'tanstack query data')
   const flattenedData = data?.pages?.flat() || [];
   
-  // if(isLoading) return <div className="text-4xl my-5">Loading..</div>
-  // if(!data && !isLoading){
-  //   return <div className="text-4xl my-5">No Data Found</div>
-  // }
-
-  // const onChange = (page) => {
-  //   setSearchParams({ page: page.toString() });
-  // };
-
-
-  // const storeData = useSelector((state)=> state.users);
-  // console.log(storeData,'data')
   useEffect(() => {
     dispatch(fetchUpload());
   }, []);
@@ -83,26 +69,13 @@ function Content() {
       message.error('Cancelled');
     };
  
-  // const onSubmit = (data, index) => {
-  //   if(favourite === false){
-  //     setFavourite(true)
-  //   }else{
-  //     setFavourite(false)
-  //   }
-  //   // dispatch(Star([data]));
-  //   // setClickedIndex(index); 
-  // }
+
   const onSubmit = (data, index) => {
     console.log(favourite,'fav')
     const updatedFavorites = { ...favourite };
     console.log(updatedFavorites,'update') // Copy current favorites
     updatedFavorites[index] = !updatedFavorites[index] //This line toggles the favorite status for the item at the specified index. It first accesses the favorite status for that index (updatedFavorites[index]) and then uses the logical NOT operator (!) to toggle its value. If the current value is true, it becomes false, and vice versa.
     console.log(updatedFavorites,'index update');
-    // if(updatedFavorites === true){
-    //   alert('added to favourites')
-    // } else{
-    //   alert('removed from favourites')
-    // }
     setFavourite(updatedFavorites);
     console.log(favourite,'favour')
     dispatch(Star([data]));
@@ -199,80 +172,81 @@ function Content() {
             </div>
             <InfiniteScroll 
               loadMore={()=>{
-                if(!isFetching && hasNextPage){
-                  fetchNextPage()
+                if(!isFetching){
+                  fetchNextPage();
                 }
               }}
-              hasMore={!isFetching && hasNextPage}
+              // loadMore={fetchNextPage()}
+              hasMore={hasNextPage}
             >
-          <div className="mt-28 md:mt-20 ">
-            {flattenedData.map((data, index) => (
-              <div key={index} className="md:w-[90%]  px-5 py-5 mx-10 my-10 rounded-xl  bg-gray-400 200 border-2 hover:border-green-500 border-gray-200  shadow-md  hover:shadow-lg transform hover:scale-105  transition duration-300 ease-in-out">
-                <div className="flex justify-between">
-                  <div className="flex">
-                    <div className="w-[10%] md:w-[20%]">
-                      <img src={data.userId.image} width="100" className=" rounded-[50%]" />
+              <div className="mt-28 md:mt-20 ">
+                {flattenedData.map((data, index) => (
+                  <div key={index} className="md:w-[90%]  px-5 py-5 mx-10 my-10 rounded-xl  bg-gray-400 200 border-2 hover:border-green-500 border-gray-200  shadow-md  hover:shadow-lg transform hover:scale-105  transition duration-300 ease-in-out">
+                    <div className="flex justify-between">
+                      <div className="flex">
+                        <div className="w-[10%] md:w-[20%]">
+                          <img src={data.userId.image} width="100" className=" rounded-[50%]" />
+                        </div>
+                        <div className="ml-5 font-extrabold  text-3xl">{data.userId.username}</div>
+                        <div className="text-xl ml-10 flex"> 
+                          <MdAccessTime />
+                          <h1 className="ml-1">{renderTime(data.createdAt)}</h1>
+                        </div>
+                        </div> 
+                        <div className="flex text-2xl ">
+                          <Popover content={more} trigger="click">
+                            <button>
+                              <TbDots className="mr-2 hover:text-blue-500"/>
+                            </button>
+                          </Popover>
+                          <Popconfirm
+                            title="Remove the task"
+                            description="Are you sure to remove this task?"
+                            onConfirm={() => removePost(data._id)}
+                            onCancel={cancel}
+                            icon={
+                              <QuestionCircleOutlined
+                                style={{
+                                  color: 'red',
+                                }}
+                              />
+                            }
+                          >
+                            <button className=""><CiSquareRemove className="text-4xl  hover:text-red-600 mx-5 my-5"/></button>
+                          </Popconfirm>
+                      </div>
                     </div>
-                    <div className="ml-5 font-extrabold  text-3xl">{data.userId.username}</div>
-                    <div className="text-xl ml-10 flex"> 
-                      <MdAccessTime />
-                      <h1 className="ml-1">{renderTime(data.createdAt)}</h1>
+                    <div className="my-2 text-xl font-light">Name: {data.name}</div>
+                    <div className="my-2 text-xl font-light">Address: {data.address}</div>
+                    <div className="my-2 text-xl font-normal text-red-600">End Date: {data.endDate}</div>
+                    <div className="">
+                      <img src={data.image} width="100" className="w-[90%]" alt="image" />
                     </div>
-                    </div> 
-                    <div className="flex text-2xl ">
-                      <Popover content={more} trigger="click">
-                        <button>
-                          <TbDots className="mr-2 hover:text-blue-500"/>
-                        </button>
-                      </Popover>
-                      <Popconfirm
-                        title="Remove the task"
-                        description="Are you sure to remove this task?"
-                        onConfirm={() => removePost(data._id)}
-                        onCancel={cancel}
-                        icon={
-                          <QuestionCircleOutlined
-                            style={{
-                              color: 'red',
-                            }}
-                          />
+                    <div className="mt-5 flex justify-between">
+                      <div>
+                        <Link to={"donate/" + data._id}>
+                          <button className="bg-green-500 border-2 border-gray-300 hover:border-green-500 hover:bg-indigo-700 hover:text-slate-100  transition duration-300 ease-in-out  h-[50px] text-xl w-[120%] hover:scale-90 rounded-xl">
+                            Donate Now
+                          </button>
+                        </Link>
+                      </div>
+                      <div>
+                        { favourite[index] ? (
+                          <button onClick={() => onSubmit(data, index)}>
+                            <HeartFilled style={{ color: 'red' }}  className="text-4xl"  />
+                          </button>
+                          
+                        ) : (
+                          <button onClick={() => onSubmit(data, index)}>
+                            <HeartOutlined    className="text-4xl"  />
+                          </button>
+                        )
                         }
-                      >
-                        <button className=""><CiSquareRemove className="text-4xl  hover:text-red-600 mx-5 my-5"/></button>
-                      </Popconfirm>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="my-2 text-xl font-light">Name: {data.name}</div>
-                <div className="my-2 text-xl font-light">Address: {data.address}</div>
-                <div className="my-2 text-xl font-normal text-red-600">End Date: {data.endDate}</div>
-                <div className="">
-                  <img src={data.image} width="100" className="w-[90%]" alt="image" />
-                </div>
-                <div className="mt-5 flex justify-between">
-                  <div>
-                    <Link to={"donate/" + data._id}>
-                      <button className="bg-green-500 border-2 border-gray-300 hover:border-green-500 hover:bg-indigo-700 hover:text-slate-100  transition duration-300 ease-in-out  h-[50px] text-xl w-[120%] hover:scale-90 rounded-xl">
-                        Donate Now
-                      </button>
-                    </Link>
-                  </div>
-                  <div>
-                    { favourite[index] ? (
-                      <button onClick={() => onSubmit(data, index)}>
-                        <HeartFilled style={{ color: 'red' }}  className="text-4xl"  />
-                      </button>
-                      
-                    ) : (
-                      <button onClick={() => onSubmit(data, index)}>
-                        <HeartOutlined    className="text-4xl"  />
-                      </button>
-                    )
-                    }
-                  </div>
-                </div>
+                ))}
               </div>
-            ))}
-           </div>
             </InfiniteScroll>
             {isFetchingNextPage && <div className="text-4xl mx-10 my-10">Loading..</div>}
             {/* {!hasNextPage && <div className="text-4xl my-5">No more data</div>} */}
