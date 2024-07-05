@@ -21,15 +21,15 @@ const SmallCard = ({ onClose }) => (
 
 const Layout = () => {
 
-  const [showCard, setShowCard] = useState(true);
+  // const [showCard, setShowCard] = useState(true);
 
-  const handleCloseCard = () => {
-    setShowCard(false);
-  };
+  // const handleCloseCard = () => {
+  //   setShowCard(false);
+  // };
   return (
     <>
-     {showCard && <SmallCard onClose={handleCloseCard} />}
-    <div className="" style={{ filter: showCard ? 'blur(2px)' : 'none' }}>
+     {/* {showCard && <SmallCard onClose={handleCloseCard} />}
+    <div className="" style={{ filter: showCard ? 'blur(2px)' : 'none' }}> */}
        <div className="fixed z-50 top-0  hidden md:block w-full">
          <Topbar />
        </div>
@@ -42,7 +42,7 @@ const Layout = () => {
              <Outlet/>
            </div>
        </div>
-     </div>
+     {/* </div> */}
    
        </>
   )   
