@@ -6,7 +6,7 @@ import { IoMdTime } from "react-icons/io";
 
 const fetchPost = async () => {
   const response = await axiosUrl.get('/donate');
-  console.log(response, 'res');
+  // console.log(response, 'res');
 //   const data = await response.json();
   return response.data.data; // Returning the whole data as there is no payment field in the API response
 };
@@ -17,7 +17,7 @@ const PaymentDetails = () => {
     queryFn: fetchPost,
     staleTime: 5 * 1000,
   });
-  console.log('Data:', data);
+  // console.log('Data:', data);
 
   return (
     <div className="px-5 py-2">
