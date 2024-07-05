@@ -5,7 +5,11 @@ const searchSchema = new mongoose.Schema({
     userId:{
         type:mongoose.Schema.Types.ObjectId, 
         ref:'User'
-    }  // userId of user who made search
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 export default mongoose.model("Search",searchSchema);
