@@ -36,6 +36,25 @@ class SearchController {
         }
     }
 
+    async getOnTimeSearch(req,res){
+        try{
+            try{
+                // console.log("search post route")
+                let paramsId = req.params.id
+                const searchData = await Search.find({userId:ownerId }).sort({ createdAt: -1 })
+                console.log(searchData,'fetched data');
+                    return responseInstance.responseHandler(res, 200,"search data fetched  successfully",searchData);
+                
+            }
+            catch(err){
+                console.log(err,'error in fetching data')
+                return responseInstance.responseHandler(res, 500,"server side error");
+            }
+        }
+        catch(err){
+            console.log(err,'error in setting on time search')
+        }
+    }
     async deleteSearch(req,res){
         try{
             let searchId = req.params.id;
