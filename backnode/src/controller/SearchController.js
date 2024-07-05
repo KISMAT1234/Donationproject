@@ -1,5 +1,6 @@
 import Handler from "../logger/ResponseHandler.js"
 import Search from "../model/Search.js";
+import User from "../model/Userprofile.js";
 const responseInstance = new Handler();
 
 class SearchController {
@@ -26,7 +27,6 @@ class SearchController {
             // console.log("search post route")
             let ownerId = req.user.userId
             const searchData = await Search.find({userId:ownerId }).sort({ createdAt: -1 })
-            console.log(searchData,'fetched data');
                 return responseInstance.responseHandler(res, 200,"search data fetched  successfully",searchData);
             
         }
@@ -39,11 +39,12 @@ class SearchController {
     async getOnTimeSearch(req,res){
         try{
             try{
-                // console.log("search post route")
-                let paramsId = req.params.id
-                const searchData = await Search.find({userId:ownerId }).sort({ createdAt: -1 })
+                let searchQuery = req.params.value
+                console.log(searchQuery,"search post route")
+                const regex = new RegExp(searchQuery, 'i');
+                const searchData = await User.find({ username: regex })
                 console.log(searchData,'fetched data');
-                    return responseInstance.responseHandler(res, 200,"search data fetched  successfully",searchData);
+                return responseInstance.responseHandler(res, 200,"search data fetched  successfully",searchData);
                 
             }
             catch(err){
