@@ -2,7 +2,7 @@
   "name": "backnode",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
+  "type":"module",
   "scripts": {
     "start": "nodemon index.js",
     "test": "mocha"
