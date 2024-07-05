@@ -9,23 +9,26 @@ import { FaFacebookMessenger } from "react-icons/fa";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 
 import { Link } from "react-router-dom";
+import { useMutation, useQuery } from "@tanstack/react-query";
+
+
+const  searchFunction = async(search) => {
+  const response = await axiosUrl.get(`/upload?name=${search}`)
+  console.log(response,'response')
+  return response.data.data
+}
 
 
 function Topbar() {
 
    const [search,setSearch] = useState();
    const [showSearchContainer,setShowSearchContainer] = useState(false)
-   const [api, setApi] = useState([]);
    const containerRef = useRef(null);   // useRef lets you reference a value that’s not needed for rendering.
-
-   const changeValue = (e) => {
-      setSearch(e.target.value);
-  }
 
    const handleInputClick = () => {
       setShowSearchContainer(true);
     };
-
+  
   
     const handleClickOutside = (event) => {
       if (containerRef.current && !containerRef.current.contains(event.target)) {
@@ -39,22 +42,11 @@ function Topbar() {
     }
 
 
-
-useEffect(() => {
-   const fetchData = async () => {
-     try {
-       const response = await axiosUrl.get(`/upload?name=${search}`);
-       setApi(response.data.data);
-     } catch (err) {
-       console.log(err);
-     }
-   };
-
-   if (search !== "") {
-     fetchData();
-   }
- }, [search]);
-
+   const {data,error,isLoading} = useQuery({
+      queryKey: ['search'],
+      queryFn: searchFunction,
+   })
+   console.log(data,'data in tanstack')
 
 
     useEffect(() => {
@@ -64,42 +56,25 @@ useEffect(() => {
       };
     }, []);
 
-   
+    const { mutate } = useMutation({
+      mutationFn: (search) =>axiosUrl.post("/search",{search:search}),
+      onSuccess: () => {
+        console.log('Data sent to backend successfully');
+        window.location.href =`/Mainpage/search?name=${search}`;
+      },
+      onError: (err) => {
+        console.error('Error sending data to backend:', err);
+      },
+    })
 
-   const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
       e.preventDefault();
-    //   if (search.trim() === '') {
-    //      // Reload the page or handle the empty search case
-    //      window.location.reload();
-    //  } else {
-       const searchData = new FormData()
-       searchData.append('data', search);
-    //   //  const searchData = new FormData(e.target);
-       console.log(searchData,'search form')
-       try {
-        //  const response = await axiosUrl.post("/search",searchData);
-         // setApi(response.data.data);
-        //  console.log(response);
-        } catch (err) {
-          console.log(err);
-        }
-       window.location.href = `/Mainpage/search?name=${search}`;
-    //  }
-    //  console.log(search,'search value')
+      mutate(search);
+    }
+    //  const response = await axiosUrl.post("/search",{search:search});
+    //  setApi(response.data.data);
+    //  console.log(response);
 
-    //  const formData = new FormData();
-    //  formData.append('search', search);
- 
-
-
-
-      // setSearch('');
-     
-    
-   }
-
-   // console.log(search, 'search value');
-  
 
    return(
     <>
@@ -113,12 +88,12 @@ useEffect(() => {
                <form onSubmit={handleSubmit}>
              <div className=" md:w-[30%] flex">  
               <div className="">
-                  <input type="text" value={search} onChange={changeValue} onClick={handleInputClick} className="w-[500px] placeholder-yellow-600::placeholder bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-black focus:ring-2 focus:ring-purple-600 focus:outline-none focus:border-transparent  py-1 px-2 rounded-lg shadow-lg border-none transform transition-transform duration-300 focus:scale-105" placeholder="Search fund raiser Here"/> 
+                  <input type="text" value={search} onChange={(e)=>setSearch(e.target.value)} onClick={handleInputClick} className="w-[500px] placeholder-yellow-600::placeholder bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-black focus:ring-2 focus:ring-purple-600 focus:outline-none focus:border-transparent  py-1 px-2 rounded-lg shadow-lg border-none transform transition-transform duration-300 focus:scale-105" placeholder="Search fund raiser Here"/> 
                 {showSearchContainer && (
                   <div ref={containerRef} className="container w-[100%] z-20  bg-white border border-gray-800 h-[60vh] shadow-md p-4 rounded-md animate-fadeIn">
                      <h1>kismat</h1>
                   { 
-                     api.slice(0, 10).map((search, index)=>{
+                     data.slice(0, 10).map((search, index)=>{
                         return(
                            <div key={index} >
                               <h1 className="px-2 py-2 text-2xl font-extralight  hover:bg-gray-200 rounded-2xl">{search.name}</h1>
