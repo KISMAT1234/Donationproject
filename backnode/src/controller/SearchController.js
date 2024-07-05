@@ -24,17 +24,15 @@ class SearchController {
     async getSearch(req,res){
         try{
             // console.log("search post route")
-            let userId = req.user.userId
-            const searchData = await Search.find({userId: userId})
-            // console.log(searchData,'fetched data');
-            if(searchData){
-                return responseInstance.responseHandler(res, 200,"search data fetched  successfully");
-            }else{
-              return responseInstance.responseHandler(res, 400,"there is no any history");
-            }   
+            let ownerId = req.user.userId
+            const searchData = await Search.find({userId:ownerId }).sort({ createdAt: -1 })
+            console.log(searchData,'fetched data');
+                return responseInstance.responseHandler(res, 200,"search data fetched  successfully",searchData);
+            
         }
         catch(err){
-           console.log(err,'error in fetching data')
+            console.log(err,'error in fetching data')
+            return responseInstance.responseHandler(res, 500,"server side error");
         }
     }
 
