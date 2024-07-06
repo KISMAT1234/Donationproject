@@ -188,12 +188,12 @@ function Content() {
                           <img src={data.userId.image} width="100" className=" rounded-[50%]" />
                         </div>
                         <div className="ml-5 font-extrabold  text-3xl">{data.userId.username}</div>
-                        <div className="text-xl ml-10 flex"> 
-                          <MdAccessTime />
+                        </div> 
+                        <div className="text-xl flex"> 
+                          <MdAccessTime className="mt-1 text-2xl"/>
                           <h1 className="ml-1">{renderTime(data.createdAt)}</h1>
                         </div>
-                        </div> 
-                        <div className="flex text-2xl ">
+                        <div className="flex text-2xl">
                           <Popover content={more} trigger="click">
                             <button>
                               <TbDots className="mr-2 hover:text-blue-500"/>
