@@ -10,6 +10,13 @@ import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUi from 'swagger-ui-express'
 // import docs from './documentation/index.js'
 import status from 'express-status-monitor'
+import {ApolloServer} from '@apollo/server'
+import {expressMiddleware} from '@apollo/server/express4'
+import rootSchema from "./src/graphql/Schemas/index.js"
+import rootResolver  from './src/graphql/Resolvers/index.js'
+// import User from './src/model/Userprofile.js';
+
+
 
 const options = {
   definition:{
@@ -105,6 +112,32 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Your other middleware and routes here
 app.use(mainRouter);
+
+
+
+//Graphql Server
+const graphServer = new ApolloServer({
+  typeDefs: rootSchema,
+  rootResolver 
+  // typeDefs: `
+  //    type User{
+  //     id:ID!
+  //     username: String!
+  //    }
+
+  //    type Query {
+  //       users: [User]
+  //    }
+  // `,
+  // resolvers:{
+  //   Query: {
+  //     users: async () => await User.find()
+  //   },
+  // }
+});
+// server.applyMiddleware({ app })
+await graphServer.start()
+app.use("/graphql", expressMiddleware(graphServer))
 
 
 app.get('/', (req, res) => {
