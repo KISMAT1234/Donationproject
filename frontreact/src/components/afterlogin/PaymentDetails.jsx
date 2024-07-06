@@ -17,7 +17,7 @@ const PaymentDetails = () => {
     queryFn: fetchPost,
     staleTime: 5 * 1000,
   });
-  // console.log('Data:', data);
+  console.log('Data:', data);
 
   return (
     <div className="px-5 py-2">
