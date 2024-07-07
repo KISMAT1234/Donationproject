@@ -1,34 +1,33 @@
-
 import React, { useEffect, useState } from "react";
 import axiosUrl from "../url/Axiosurl";
 import {Link}from "react-router-dom"
+import { useQuery } from '@apollo/client';
+import { GET_USERS } from "../../graphql/queries/userQuery";
 
 function MemberList() {
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState({}); // Initialize users as an empty array
   const token = localStorage.getItem("token") ?? "";
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await axiosUrl.get("/user")
+  const { loading,error, data } = useQuery(GET_USERS);
+  console.log(data,'graphql user data')
+  console.log(data.users,'graphql user data')
+
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       const response = await axiosUrl.get("/user")
        
-        // console.log(response.data.data.username,'console data');
-          setUsers(response.data.data);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error fetching user data:", err);
-      }
-    };
-    getUser();
-  }, []);
+  //       // console.log(response.data.data.username,'console data');
+  //         setUsers(response.data.data);
+  //       setLoading(false);
+  //     } catch (err) {
+  //       console.error("Error fetching user data:", err);
+  //     }
+  //   };
+  //   getUser();
+  // }, []);
 
- 
-
-
-  useEffect(() =>{
-     console.log('hello')
-  },[]);
   // console.log(users, 'users data') // Add token as a dependency to useEffect
 
   return (
@@ -39,10 +38,10 @@ function MemberList() {
         ) : (
           <div className="">
             {
-            users && users.map((data, index) => (
+            data.users && data.users.map((data, index) => (
               <div className="flex py-10 justify-between border-b-2 border-gray-600" key={index}>
                 <div className="w-[40%] md:w-[20%] rounded-[50%]">
-                  <img src={data.image}  className="rounded-[50%]" />
+                   <h1>Image</h1>
                 </div>
                 <div>{data.username}</div>
                 <div>{data.email}</div>
