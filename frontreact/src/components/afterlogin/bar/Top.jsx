@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 
-const  searchFunction = async() => {
+const  searchHistory = async() => {
   const response = await axiosUrl.get(`/search`)
   console.log(response,'response of search')
   return response.data.data
@@ -53,7 +53,8 @@ function Topbar() {
 
    const {data,error,isLoading} = useQuery({
       queryKey: ['search'],
-      queryFn: searchFunction,
+      queryFn: searchHistory,
+      enabled: showSearchContainer
    })
    console.log(data,'search fetched value')
 
