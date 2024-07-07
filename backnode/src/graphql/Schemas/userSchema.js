@@ -5,14 +5,6 @@ export default gql`
         id: ID!
         username: String!
         email: String!
-        password: String!
-        image: String
-        role: String!
-        slug: String!
-        profileViews: Int!
-        followers: [User]
-        following: [User]
-        isVerified: Boolean!
     }
 
     type Query {
