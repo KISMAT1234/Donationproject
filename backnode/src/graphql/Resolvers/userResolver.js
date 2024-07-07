@@ -1,7 +1,7 @@
 import User from "../../model/Userprofile.js";
 
 export default {
-    // Query: {
+    Query: {
         users: async () => await User.find()
-    // },
+    },
 };
