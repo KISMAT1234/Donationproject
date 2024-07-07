@@ -26,8 +26,10 @@ class SearchController {
         try{
             // console.log("search post route")
             let ownerId = req.user.userId
+            // console.log(ownerId,'owner-id')
             const searchData = await Search.find({userId:ownerId }).sort({ createdAt: -1 })
-                return responseInstance.responseHandler(res, 200,"search data fetched  successfully",searchData);
+            // console.log(searchData,'search-history data');
+            return responseInstance.responseHandler(res, 200,"search data fetched  successfully",searchData);
             
         }
         catch(err){
