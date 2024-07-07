@@ -6,6 +6,7 @@ import "./index.css"
 import { store } from './store/store'
 import { Provider } from 'react-redux'
 import { socket } from './socket.jsx'
+import ApolloProvider from './ApolloProvider.jsx'
 
 import {
   QueryClient,
@@ -14,16 +15,13 @@ import {
 
 const queryClient = new QueryClient()
 
-
-  
-
-
-
 ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
         <Provider store={store}>
           <QueryClientProvider client={queryClient}>
-            <App socket={socket}/>
+            <ApolloProvider>
+              <App socket={socket} />
+            </ApolloProvider>
           </QueryClientProvider>
         </Provider>
      </BrowserRouter>
