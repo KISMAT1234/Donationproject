@@ -118,7 +118,7 @@ app.use(mainRouter);
 //Graphql Server
 const graphServer = new ApolloServer({
   typeDefs: rootSchema,
-  rootResolver 
+  resolvers: rootResolver 
   // typeDefs: `
   //    type User{
   //     id:ID!
