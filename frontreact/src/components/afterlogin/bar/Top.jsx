@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 
-const  searchHistory = async() => {
+const  searchHistory =  async() => {
   const response = await axiosUrl.get(`/search`)
   console.log(response,'response of search')
   return response.data.data
@@ -75,11 +75,10 @@ function Topbar() {
       };
     }, []);
 
-    const { mutate } = useMutation({
+    const { mutate:createSearchMutation,loading,err} = useMutation({
       mutationFn: (search) =>axiosUrl.post("/search",{search:search}),
       onSuccess: () => {
         console.log('Data sent to backend successfully');
-        window.location.href =`/Mainpage/search?name=${search}`;
       },
       onError: (err) => {
         console.error('Error sending data to backend:', err);
@@ -88,12 +87,17 @@ function Topbar() {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      mutate(search);
+      createSearchMutation(search);
+      window.location.href =`/Mainpage/search?name=${search}`;
     }
   
     const handleSearchItemClick = (value) => {
-      setSearch(value);
-      setShowSearchContainer(false);
+      if(value == ""){
+        alert("please provide a search value")
+      }else{
+        setSearch(value);
+        setShowSearchContainer(false);
+      }
     };
 
     const handleKeyDown = (e) => {
@@ -110,16 +114,24 @@ function Topbar() {
       }
     };
 
-    const deleteSearchHistory = () => {
-      const { mutate } = useMutation({
-        mutationFn: () =>axiosUrl.delete("/search"),
-        onSuccess: () => {
-          console.log('Data sent to backend successfully');
-        },
-        onError: (err) => {
-          console.error('Error sending data to backend:', err);
-        },
-      })
+    const { mutate: deleteMutation } = useMutation({
+      mutationFn: (id) => axiosUrl.delete(`/search/${id}`),
+      onSuccess: (deletedItem) => {
+        console.log("Search history item deleted successfully");
+        setData((prevData) =>
+          prevData.filter((item) => item._id !== deletedItem._id)
+        );
+        // You may want to refetch the search history or update state accordingly
+      },
+      onError: (err) => {
+        console.error("Error deleting search history item:", err);
+      },
+    });
+
+ 
+    const deleteSearchHistory = (id) => {
+      deleteMutation(id);
+      console.log(id)
     }
    return(
     <>
@@ -163,25 +175,29 @@ function Topbar() {
                     ) : (
                       data &&
                       data.slice(0, 10).map((value, index) => (
-                        <div
-                          key={index}
-                          onClick={() => handleSearchItemClick(value.search)}
-                          className={`px-2 flex justify-between hover:text-black py-2 text-2xl font-normal cursor-pointer hover:bg-gray-200 rounded-2xl ${
-                            index === highlightedIndex ? "bg-gray-300" : ""
-                          }`}
-                        >
-                          <div className="flex">
-                            <h1 className="mt-2 mx-2">
-                              <MdHistory />
-                            </h1>
-                            <h1>{value.search}</h1>
+                        <>
+                          <div className="flex justify-between">
+                            <div
+                              key={index}
+                              onClick={() => handleSearchItemClick(value.search)}
+                              className={`px-2 w-[90%] flex justify-between hover:text-black py-2 text-2xl font-normal cursor-pointer hover:bg-gray-200 rounded-2xl ${
+                                index === highlightedIndex ? "bg-gray-300" : ""
+                              }`}
+                            >
+                              <div className="flex">
+                                <h1 className="mt-2 mx-2">
+                                  <MdHistory />
+                                </h1>
+                                <h1>{value.search}</h1>
+                              </div>
+                            </div>
+                            <div>
+                              <button className="mt-2 text-4xl hover:text-red-500" onClick={()=>deleteSearchHistory(value._id)}>
+                                <CiCircleRemove />
+                              </button>
+                            </div>
                           </div>
-                          <div>
-                            <button className="mt-2 hover:text-red-500" onClick={deleteSearchHistory}>
-                              <CiCircleRemove />
-                            </button>
-                          </div>
-                        </div>
+                        </>
                       ))
                     )}
                   </div>
