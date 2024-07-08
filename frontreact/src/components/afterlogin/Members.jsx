@@ -10,8 +10,8 @@ function MemberList() {
   const token = localStorage.getItem("token") ?? "";
 
   const { loading,error, data } = useQuery(GET_USERS);
-  console.log(data,'graphql user data')
-  console.log(data.users,'graphql user data')
+  // console.log(data,'graphql')
+  // console.log(data?.users,'graphql user data')
 
   // useEffect(() => {
   //   const getUser = async () => {
