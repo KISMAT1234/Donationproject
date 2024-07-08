@@ -39,7 +39,6 @@ class SearchController {
     }
 
     async getOnTimeSearch(req,res){
-        try{
             try{
                 let searchQuery = req.params.value
                 console.log(searchQuery,"search post route")
@@ -53,10 +52,6 @@ class SearchController {
                 console.log(err,'error in fetching data')
                 return responseInstance.responseHandler(res, 500,"server side error");
             }
-        }
-        catch(err){
-            console.log(err,'error in setting on time search')
-        }
     }
     async deleteSearch(req,res){
         try{
@@ -64,10 +59,14 @@ class SearchController {
             let searchId = req.params.id;
             console.log(searchId,'id delete search')
             let userId = req.user.userId
-             
+            let searchDeletion = await Search.findOneAndDelete({_id:searchId})
+            console.log(searchDeletion,'----')
+            return responseInstance.responseHandler(res, 200,"deletion successfull");
         }
         catch(err){
            console.log(err,'error in deleting data')
+           return responseInstance.responseHandler(res, 500,"server side error");
+
         }
     }
 
