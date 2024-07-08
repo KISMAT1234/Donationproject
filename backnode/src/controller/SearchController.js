@@ -60,7 +60,9 @@ class SearchController {
     }
     async deleteSearch(req,res){
         try{
+            console.log('came delete req ')
             let searchId = req.params.id;
+            console.log(searchId,'id delete search')
             let userId = req.user.userId
              
         }
