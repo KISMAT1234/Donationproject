@@ -9,7 +9,7 @@ const searchInstance = new SearchController();
 searchRouter.post("/",authenticate,searchInstance.postSearch);
 searchRouter.get("/",authenticate,searchInstance.getSearch);
 searchRouter.get("/:value",searchInstance.getOnTimeSearch);
-searchRouter.delete("/",searchInstance.deleteSearch);
+searchRouter.delete("/:id",authenticate,searchInstance.deleteSearch);
 
 
 export default searchRouter
