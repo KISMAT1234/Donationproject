@@ -9,6 +9,7 @@ import searchRouter from './searchRouter.js';
 import categoryRouter from './categoryRouter.js';
 import notificationRouter from './notificationRouter.js';
 import messageRouter from './messageRouter.js';
+import favouriteRouter from './favouriteRouter.js';
 
 const mainRouter= express.Router();
 
@@ -22,6 +23,7 @@ mainRouter.use('/search',searchRouter);
 mainRouter.use('/category',categoryRouter);
 mainRouter.use('/notification',notificationRouter);
 mainRouter.use('/message',messageRouter);
+mainRouter.use('/favourite',favouriteRouter);
 
 
 
