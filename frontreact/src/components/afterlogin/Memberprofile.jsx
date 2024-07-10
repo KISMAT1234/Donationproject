@@ -26,7 +26,9 @@ const Userprofile = () => {
             console.error("Error fetching user data:", err);
          }
       };
+  
       getSingleUser();
+
    },[id]);
 
    const onFollow = (id) => {
