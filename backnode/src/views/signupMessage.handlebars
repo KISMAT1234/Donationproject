@@ -5,10 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     {{>styles}}
+     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 40px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .header img {
+            max-width: 50px;
+            margin-bottom: 20px;
+        }
+        .content h1 {
+            font-size: 24px;
+            color: #333333;
+            margin-bottom: 10px;
+        }
+        .content p {
+            font-size: 16px;
+            color: #666666;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+       
+        .footer p {
+            font-size: 14px;
+            color: #666666;
+        }
+        .footer a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>{{title}}</h1>
-    <p>Please click the link to verify your account so that you can access in mainpage</p>
-    <h1>{{link}}</h1>
+    <div class="container">
+        <div class="header">
+            <img src="logo.png" alt="Your Logo">
+        </div>
+        <div class="content">
+            <h1>{{title}}</h1>
+            <p>Please click the button below to confirm your email address and finish setting up your account. This link is valid for 48 hours.</p>
+            <h1>{{link}}</h1>
+         </div>
+        <div class="footer">
+            <p>If you did not sign up for this account, please ignore this email.</p>
+            <p>Thank you,<br> Our Team</p>
+            <p>Location- Kathmandu</p>
+            <p>Num-984433505</p>
+        </div>
+    </div>
+   
 </body>
 </html>
+
+
+   
