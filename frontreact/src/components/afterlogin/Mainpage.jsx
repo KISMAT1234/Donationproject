@@ -56,11 +56,8 @@ function Content() {
   console.log(data,'tanstack query data')
   const flattenedData = data?.pages?.flat() || [];
   
-  useEffect(() => {
-    dispatch(fetchUpload());
-  }, []);
-
-    const removePost = (postId) => {
+  
+  const removePost = (postId) => {
       // console.log(postId,'id to remove')
       message.success('removed success');
     }
@@ -70,15 +67,46 @@ function Content() {
     };
  
 
-  const onSubmit = (data, index) => {
-    console.log(favourite,'fav')
-    const updatedFavorites = { ...favourite };
-    console.log(updatedFavorites,'update') // Copy current favorites
-    updatedFavorites[index] = !updatedFavorites[index] //This line toggles the favorite status for the item at the specified index. It first accesses the favorite status for that index (updatedFavorites[index]) and then uses the logical NOT operator (!) to toggle its value. If the current value is true, it becomes false, and vice versa.
-    console.log(updatedFavorites,'index update');
-    setFavourite(updatedFavorites);
-    console.log(favourite,'favour')
-    dispatch(Star([data]));
+    useEffect(() => {
+      const getFavourite = async() => {
+        try {
+           const response = await axiosUrl.get("/favourite");
+           console.log(response.data.data.map(fav => fav.postId),'response follower');
+           setFavourite(response.data.data.map(fav => fav.postId))
+        } catch (err) {
+           console.error("Error fetching user follower data:", err);
+        }
+     }
+      getFavourite();
+      dispatch(fetchUpload());
+    }, []);
+    
+
+    const addToCart = async(data, id) => {
+      // console.log(data,'data of fav')
+      console.log(id,'data of fav')
+      if(favourite.includes(id)){  
+          setFavourite(favourite.filter(data => data !== id))
+      } else{
+        favourite.push(id)
+      }    
+      try {
+      const response = await axiosUrl.post(`/favourite/${id}`);
+      console.log(response.data.data,'response follower');
+      
+    } catch (err) {
+      console.error("Error fetching user follower data:", err);
+    }
+
+
+    // console.log(favourite,'fav')
+    // const updatedFavorites = { ...favourite };
+    // console.log(updatedFavorites,'update') // Copy current favorites
+    // updatedFavorites[index] = !updatedFavorites[index] //This line toggles the favorite status for the item at the specified index. It first accesses the favorite status for that index (updatedFavorites[index]) and then uses the logical NOT operator (!) to toggle its value. If the current value is true, it becomes false, and vice versa.
+    // console.log(updatedFavorites,'index update');
+    // setFavourite(updatedFavorites);
+    // console.log(favourite,'favour')
+    // dispatch(Star([data]));
   }
   // console.log(content,'content data')
 
@@ -231,7 +259,7 @@ function Content() {
                         </Link>
                       </div>
                       <div>
-                        { favourite[index] ? (
+                        {/* { favourite[index] ? (
                           <button onClick={() => onSubmit(data, index)}>
                             <HeartFilled style={{ color: 'red' }}  className="text-4xl"  />
                           </button>
@@ -241,6 +269,19 @@ function Content() {
                             <HeartOutlined    className="text-4xl"  />
                           </button>
                         )
+                        } */}
+                        {
+                          favourite?.includes(data._id) ? (
+                            <button onClick={() => addToCart(data,data._id)}>
+                              <HeartFilled style={{ color:'red' }}  className="text-4xl"  />
+                            </button>
+                          ) : (
+                        <button 
+                          onClick={()=>addToCart(data, data._id)}
+                        >
+                          <HeartOutlined  className="text-4xl"  />
+                        </button>
+                          )
                         }
                       </div>
                     </div>
