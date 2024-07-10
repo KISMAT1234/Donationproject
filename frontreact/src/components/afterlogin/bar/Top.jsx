@@ -79,6 +79,7 @@ function Topbar() {
       mutationFn: (search) =>axiosUrl.post("/search",{search:search}),
       onSuccess: () => {
         console.log('Data sent to backend successfully');
+        window.location.href =`/Mainpage/search?name=${search}`;
       },
       onError: (err) => {
         console.error('Error sending data to backend:', err);
@@ -88,7 +89,6 @@ function Topbar() {
     const handleSubmit = (e) => {
       e.preventDefault();
       createSearchMutation(search);
-      window.location.href =`/Mainpage/search?name=${search}`;
     }
   
     const handleSearchItemClick = (value) => {
