@@ -13,7 +13,7 @@ let upload = fPInstance.custom_upload("uploads/posts")
 const routerInstance = new PostController();
 
 postRouter.post('/',authenticate, upload.single('image'), routerInstance.insert)
-postRouter.get('/', routerInstance.content)
+postRouter.get('/',authenticate, routerInstance.content)
 postRouter.get('/:id', routerInstance.donate)
 postRouter.delete('/:id',authenticate, routerInstance.deletePost)
 
