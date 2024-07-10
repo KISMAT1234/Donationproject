@@ -2,6 +2,7 @@ import Post from "../model/Post.js";
 import User from "../model/Userprofile.js";
 import Pagination from "../helper/Pagination.js";
 import Handler from "../logger/ResponseHandler.js";
+import Favourite from "../model/Favourite.js";
 const responseInstance = new Handler();
 
 
@@ -31,6 +32,8 @@ class PostController{
     async content(req,res){
         try{
             // console.log('came here in post1')
+            const userId = req.user.userId
+            // console.log('userId',userId)
             let { skip, size } = Pagination(req)
         
             let {name} = req.query;
@@ -43,8 +46,10 @@ class PostController{
             const uploadsWithUser = await Promise.all(uploads.map(async (upload) => {  // mapping over uploads inside Promise.all  to ensure all user queries are completed before continuing
                 const user = await User.findById(upload.userId); // Fetching  user information  which user is going to post
                 upload = {...upload.toJSON()}  //converting mongoose document into a plain Javascript object
-                // console.log(upload);
+                // console.log(upload,'upload after toJSON');
                 upload.userId = user   //Assign user information in userId 
+                // console.log(upload,'upload final value');
+                
                 return upload;
             }));
             // console.log(uploadsWithUser,'user data')
