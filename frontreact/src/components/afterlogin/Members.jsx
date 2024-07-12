@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axiosUrl from "../url/Axiosurl";
 import {Link}from "react-router-dom"
 import { useQuery } from '@apollo/client';
+// import { useQuery } from "@tanstack/react-query";
 import { GET_USERS } from "../../graphql/queries/userQuery";
 
 function MemberList() {
@@ -10,7 +11,8 @@ function MemberList() {
   const token = localStorage.getItem("token") ?? "";
 
   const { loading,error, data } = useQuery(GET_USERS);
-  // console.log(data,'graphql')
+  console.log(data,'graphql')
+  // console.log(data,'graphql error')
   // console.log(data?.users,'graphql user data')
 
   // useEffect(() => {
