@@ -28,6 +28,19 @@ class FavouriteController {
         }
     }
 
+    async getFavourites(req,res){
+        try{
+            const userId = req.user.userId;
+            const favs = await Favourite.find({userId});
+            return responseInstance.responseHandler(res,200,'Favourites',favs)
+        }
+        catch(err){
+            console.log(err)
+            return responseInstance.responseHandler(res,500,'Backend server error')
+
+        }
+    }
+
 
 }
 
