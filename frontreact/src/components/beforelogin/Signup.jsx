@@ -13,6 +13,10 @@ import {
 } from 'antd';
 import { Link } from "react-router-dom";
 
+import { SIGNUP_MUTATION } from "../../graphql/mutations/userMutation";
+import { useMutation } from "@apollo/client";
+
+
 
 const App = () => {
 
@@ -51,6 +55,7 @@ const App = () => {
   const [form] = Form.useForm();
   const [imageFile, setImageFile] = useState(null);
   const [emailMessage, setEmailMessage] = useState('');
+  const [signup] = useMutation(SIGNUP_MUTATION)
 
   const onFinish = (values) => {
     console.log(values,'console value')
