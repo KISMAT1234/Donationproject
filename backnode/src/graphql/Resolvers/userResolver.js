@@ -13,8 +13,16 @@ export default {
             }catch(err){
             console.log(err)
             // return responseInstance.responseHandler(res,500,'Backend server error')
-
         }
         }
     },
+
+    Mutation: {
+        createUser: async (_, { username, email, password }) => {
+            console.log({username,email,password})
+          const user = new User({ username, email, password });
+          console.log(user,'user')
+        //   return user.save();
+        },
+    }
 };
