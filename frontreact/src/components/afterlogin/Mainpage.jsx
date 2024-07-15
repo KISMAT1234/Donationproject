@@ -56,7 +56,9 @@ function Content() {
       return undefined;
     },
     // placeholderData: keepPreviousData,
-    staleTime: 10000,
+    staleTime: 8000,
+    retry: 3,
+    retryDelay: 2000,
   });
   console.log(data,'tanstack query data')
   const flattenedData = data?.pages?.flat() || [];
