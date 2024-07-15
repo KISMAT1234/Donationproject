@@ -49,7 +49,12 @@ function Content() {
       return response.data.data
     } ,
     initialPageParam: 1,
-    getNextPageParam: (lastPage, pages) => lastPage.nextPage || undefined,
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.length > 0) {
+        return allPages.length + 1;
+      }
+      return undefined;
+    },
     // placeholderData: keepPreviousData,
     staleTime: 10000,
   });
@@ -196,6 +201,7 @@ function Content() {
               }}
               // loadMore={fetchNextPage()}
               hasMore={hasNextPage}
+              endMessage={<p>End of Users</p>}
             >
               <div className="mt-28 md:mt-20 ">
                 {flattenedData.map((data, index) => (
