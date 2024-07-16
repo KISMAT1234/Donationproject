@@ -30,13 +30,13 @@ versionKey: false,
 
 // hashing  the password before saving it to database
 
-userSchema.pre("save", async function(next){
+userSchema.pre("save", async function (next){
     try{
         // this.slug = slugify(this.username, { lower: true });
 
         if(this.isModified("password")){
             const hashedPassword = await bcrypt.hash(this.password, 10);
-            // console.log(hashedPassword)
+            console.log(hashedPassword)
             this.password = hashedPassword;
         }
         next();
