@@ -18,8 +18,8 @@ export default {
     },
 
     Mutation: {
-        createUser: async (_, { username, email, password }) => {
-            console.log({username,email,password})
+        Signup: async (_, { username, email, password }) => {
+          console.log({username,email,password})
           const user = new User({ username, email, password });
           console.log(user,'user')
         //   return user.save();
