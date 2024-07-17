@@ -1,10 +1,12 @@
-// src/graphql/mutations.js
 import { gql } from '@apollo/client';
 
 export const SIGNUP_MUTATION = gql`
-  mutation Signup($input: SignupInput!) {
-    signup(input: $input) {
-      message
+  mutation SignUp($username: String!, $email: String!, $password: String!) {
+    Signup(username: $username, email: $email, password: $password) {
+      username
+      email
     }
   }
+
 `;
+
