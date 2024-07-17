@@ -18,10 +18,13 @@ export default {
     },
 
     Mutation: {
-        Signup: async (_, { username, email, password }) => {
-          console.log({username,email,password})
+        Signup: async (_, {username,email,password }) => {
+          console.log(username,'user information')
+        //   const { username, name, password, gender } = input;
+        //   console.log(username,'user name after destructured')
           const user = new User({ username, email, password });
           console.log(user,'user')
+          return user
         //   return user.save();
         },
     }
