@@ -11,9 +11,19 @@ export default gql`
         users: [User]
     }
 
-     type Mutation{
-        Signup(username: String!, email: String!, password: String!): User
-    }
-    
-`;
 
+    # type SignupResponse {
+    #     message: String
+    # }
+
+     type Mutation{
+        # Signup(username: String!, email: String!, password: String!): User
+        Signup(username: String!, email: String!, password: String!): User!
+    }
+
+    input SignupInput {
+    username: String!
+    email: String!
+    password: String!
+    }
+`;
