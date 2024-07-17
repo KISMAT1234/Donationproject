@@ -56,35 +56,49 @@ const App = () => {
   const [imageFile, setImageFile] = useState(null);
   const [emailMessage, setEmailMessage] = useState('');
   const [signup] = useMutation(SIGNUP_MUTATION)
+  console.log(signup,'sign-up')
 
-  const onFinish = (values) => {
+  const onFinish = async(values) => {
     console.log(values,'console value')
+
+  
+   
     // if (!imageFile) {
     //   message.error('Please upload an image');
     //   return;
     // }
     // const values =  form.validateFields(); 
-    const formData = new FormData();
-    formData.append('username', values.username);
-    formData.append('email', values.email);
-    formData.append('password', values.password);
-    formData.append('confirmpassword', values.confirmpassword);
-    formData.append('image', imageFile);
 
-    console.log('data: ', formData);
-    axiosUrl.post("/user",formData).then((response)=>{
-      console.log(response.data,'response signup')
-      setEmailMessage(response.data.message)
-      if(response.data.message){
-        Swal.fire({
-          icon: "success",
-          title: response.data.message,
-          timer: 1500
-        });
-      }
-    }).catch((err)=>{
-      console.log(err,'errror ');
-    })
+    const { username, email, password, confirmpassword } = values;
+
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('email', email);
+    formData.append('password', password);
+
+    try {
+      const { data: userData } = await signup({
+        variables: { username, email, password },
+      });
+      console.log('User created:', userData.createUser);
+    } catch (error) {
+      console.error('Error creating user:', error);
+    }
+
+
+    // axiosUrl.post("/user",formData).then((response)=>{
+    //   console.log(response.data,'response signup')
+    //   setEmailMessage(response.data.message)
+    //   if(response.data.message){
+    //     Swal.fire({
+    //       icon: "success",
+    //       title: response.data.message,
+    //       timer: 1500
+    //     });
+    //   }
+    // }).catch((err)=>{
+    //   console.log(err,'errror ');
+    // })
 };
 
 const beforeUpload = (file) => {
