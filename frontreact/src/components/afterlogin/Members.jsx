@@ -4,14 +4,24 @@ import {Link}from "react-router-dom"
 import { useQuery } from '@apollo/client';
 // import { useQuery } from "@tanstack/react-query";
 import { GET_USERS } from "../../graphql/queries/userQuery";
+import { NetworkStatus } from '@apollo/client';
 
 function MemberList() {
   // const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState({}); // Initialize users as an empty array
   const token = localStorage.getItem("token") ?? "";
+  const { loading,error, data, refetch, networkStatus } = useQuery(GET_USERS,{
+    notifyOnNetworkStatusChange: true,
+  });
+  console.log(data,'graphql user data')
 
-  const { loading,error, data } = useQuery(GET_USERS);
-  console.log(data,'graphql')
+  if (networkStatus === NetworkStatus.refetch) return <p>Refetching</p>;
+
+  if (loading) return null;
+
+  if (error) return `Error! ${error}`;
+
+
   // console.log(data,'graphql error')
   // console.log(data?.users,'graphql user data')
 
@@ -65,6 +75,9 @@ function MemberList() {
                 </div>
               </div>
             ))}
+            <button className="my-5 px-2 py-2 bg-green-500 text-white text-xl font-serif rounded-2xl" onClick={() => refetch()}>
+                Refetch 
+            </button>
           </div>
         )}
       </div>
