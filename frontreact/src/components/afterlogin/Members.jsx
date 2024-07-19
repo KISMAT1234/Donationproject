@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,Suspense } from "react";
 import axiosUrl from "../url/Axiosurl";
 import {Link}from "react-router-dom"
-import { useQuery } from '@apollo/client';
+import { useQuery,useLazyQuery} from '@apollo/client';
 // import { useQuery } from "@tanstack/react-query";
 import { GET_USERS } from "../../graphql/queries/userQuery";
 import { NetworkStatus } from '@apollo/client';
 
 function MemberList() {
   // const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState({}); // Initialize users as an empty array
+  const [users, setUsers] = useState({}); 
   const token = localStorage.getItem("token") ?? "";
-  const { loading,error, data, refetch, networkStatus } = useQuery(GET_USERS,{
+
+  const  {loading,error, data, refetch, networkStatus } = useQuery(GET_USERS,{
     notifyOnNetworkStatusChange: true,
+    fetchPolicy: 'network-only',
+    nextFetchPolicy: 'cache-first',
+
   });
   console.log(data,'graphql user data')
 
@@ -50,7 +54,7 @@ function MemberList() {
         ) : (
           <div className="">
             {
-            data.users && data.users.map((data, index) => (
+            data?.users && data.users.map((data, index) => (
               <div className="flex py-10 justify-between border-b-2 border-gray-600" key={index}>
                 <div className="w-[40%] md:w-[20%] rounded-[50%]">
                    <h1>Image</h1>
@@ -76,14 +80,18 @@ function MemberList() {
               </div>
             ))}
             <button className="my-5 px-2 py-2 bg-green-500 text-white text-xl font-serif rounded-2xl" onClick={() => refetch()}>
-                Refetch 
+                Fetch
             </button>
+            <Suspense fallback={<div>Loading...</div>}>
+              
+            </Suspense>
           </div>
         )}
       </div>
     </>
   );
 }
+
 
 export default MemberList;
 
