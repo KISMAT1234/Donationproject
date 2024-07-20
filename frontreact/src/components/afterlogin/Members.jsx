@@ -1,7 +1,7 @@
 import React, { useEffect, useState,Suspense } from "react";
 import axiosUrl from "../url/Axiosurl";
 import {Link}from "react-router-dom"
-import { useQuery,useLazyQuery} from '@apollo/client';
+import { useQuery,useLazyQuery,useSuspenseQuery} from '@apollo/client';
 // import { useQuery } from "@tanstack/react-query";
 import { GET_USERS } from "../../graphql/queries/userQuery";
 import { NetworkStatus } from '@apollo/client';
@@ -11,7 +11,7 @@ function MemberList() {
   const [users, setUsers] = useState({}); 
   const token = localStorage.getItem("token") ?? "";
 
-  const  {loading,error, data, refetch, networkStatus } = useQuery(GET_USERS,{
+  const  {loading,error, data, refetch, networkStatus } = useSuspenseQuery(GET_USERS,{
     notifyOnNetworkStatusChange: true,
     fetchPolicy: 'network-only',
     nextFetchPolicy: 'cache-first',
@@ -21,7 +21,7 @@ function MemberList() {
 
   if (networkStatus === NetworkStatus.refetch) return <p>Refetching</p>;
 
-  if (loading) return null;
+  // if (loading) return null;
 
   if (error) return `Error! ${error}`;
 
