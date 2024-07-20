@@ -7,6 +7,8 @@ import { store } from './store/store'
 import { Provider } from 'react-redux'
 import { socket } from './socket.jsx'
 import ApolloProvider from './ApolloProvider.jsx'
+import { Suspense } from 'react'
+// import MemberList from './components/afterlogin/Members.jsx'
 
 import {
   QueryClient,
@@ -16,13 +18,15 @@ import {
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <BrowserRouter>
-        <Provider store={store}>
-          <QueryClientProvider client={queryClient}>
-            <ApolloProvider>
-              <App socket={socket} />
-            </ApolloProvider>
-          </QueryClientProvider>
-        </Provider>
-     </BrowserRouter>
+  <BrowserRouter>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <ApolloProvider>
+        <Suspense fallback={null}>
+            <App socket={socket} />
+          </Suspense>
+        </ApolloProvider>
+      </QueryClientProvider>
+    </Provider>
+  </BrowserRouter>
 )
