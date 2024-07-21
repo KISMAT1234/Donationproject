@@ -1,4 +1,4 @@
-import React, { useEffect, useState,Suspense } from "react";
+import React, { useEffect, useState,Suspense,startTransition } from "react";
 import axiosUrl from "../url/Axiosurl";
 import {Link}from "react-router-dom"
 import { useQuery,useLazyQuery,useSuspenseQuery} from '@apollo/client';
@@ -24,27 +24,6 @@ function MemberList() {
   // if (loading) return null;
 
   if (error) return `Error! ${error}`;
-
-
-  // console.log(data,'graphql error')
-  // console.log(data?.users,'graphql user data')
-
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     try {
-  //       const response = await axiosUrl.get("/user")
-       
-  //       // console.log(response.data.data.username,'console data');
-  //         setUsers(response.data.data);
-  //       setLoading(false);
-  //     } catch (err) {
-  //       console.error("Error fetching user data:", err);
-  //     }
-  //   };
-  //   getUser();
-  // }, []);
-
-  // console.log(users, 'users data') // Add token as a dependency to useEffect
 
   return (
     <>
@@ -79,19 +58,20 @@ function MemberList() {
                 </div>
               </div>
             ))}
-            <button className="my-5 px-2 py-2 bg-green-500 text-white text-xl font-serif rounded-2xl" onClick={() => refetch()}>
+            <button className="my-5 px-2 py-2 bg-green-500 text-white text-xl font-serif rounded-2xl" 
+               onClick={() => {
+                startTransition(() => {
+                  refetch();
+                });
+              }}
+              >
                 Fetch
             </button>
-            <Suspense fallback={<div>Loading...</div>}>
-              
-            </Suspense>
           </div>
         )}
       </div>
     </>
   );
 }
-
-
 export default MemberList;
 
