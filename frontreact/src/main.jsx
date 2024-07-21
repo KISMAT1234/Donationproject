@@ -22,7 +22,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <ApolloProvider>
-        <Suspense fallback={null}>
+        <Suspense fallback={<div className="text-4xl">Loading...</div>}>
             <App socket={socket} />
           </Suspense>
         </ApolloProvider>
