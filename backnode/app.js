@@ -4,6 +4,7 @@ import mainRouter from './src/router/mainRouter.js';
 import path from 'path';
 import morgan from 'morgan';
 import errorHandler from './src/middleware/errorHandler.js';
+import helmet from 'helmet'
 import dotenv from 'dotenv';
 import initializeSocket from './socket.js';
 import swaggerJSDoc from 'swagger-jsdoc'
@@ -41,6 +42,8 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+
+app.use(helmet());
 
 app.use(status())
 // app.use(cors());
