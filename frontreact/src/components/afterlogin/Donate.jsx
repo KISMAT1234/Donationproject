@@ -21,6 +21,7 @@ import { userId } from './Mainpage';
 
 import { useDispatch, useSelector  } from 'react-redux';
 import { fetchPayment } from '../../slices/paymentSlice';
+import { useQuery } from '@tanstack/react-query';
 
 const formatNumber = (value) => new Intl.NumberFormat().format(value);
 const NumericInput = (props) => {
@@ -72,18 +73,8 @@ const downloadQRCode = () => {
   }
 };
 
-
-
-  // const token = localStorage?.getItem('token');
-  // if(token){
-  //   const decodedToken = jwtDecode(token);
-  // }
-  // export const userId = decodedToken?.id;
-
-
   
 const Donate = () => {
-    const [info, setInfo] = useState([]);
     const [comments, setComments] = useState([]);
     const [user, setUser] = useState([]);
     const {id} = useParams();
@@ -99,7 +90,7 @@ const Donate = () => {
     const dispatch = useDispatch();
     const paymentState = useSelector((state) => state.payment || [])
 
-    console.log(paymentState,'asyncthunk state value')
+    // console.log(paymentState,'asyncthunk state value')
 
     useEffect(()=>{
          dispatch(fetchPayment(id));
@@ -107,23 +98,35 @@ const Donate = () => {
 
     // console.log(userId,'userId');
 
-    const getInfo = async() =>{
-        await axiosUrl.get(`/upload/${id}`).then((response)=>{
-        //  console.log(response.data);
-            setInfo(response.data)
-        }).catch((err)=>{
-            console.log(err)
-        })
+    // const getdata = async() =>{
+    //     await axiosUrl.get(`/upload/${id}`).then((response)=>{
+    //     //  console.log(response.data);
+    //         setdata(response.data)
+    //     }).catch((err)=>{
+    //         console.log(err)
+    //     })
+    // }
+    // useEffect(()=>{
+    //     getdata()
+    // },[id]);
+
+
+    const getPostData = async(id) => {
+      const response = await axiosUrl.get(`/upload/${id}`)
+      // console.log(response.data,'data in response')
+      return response.data
     }
-    useEffect(()=>{
-        getInfo()
-    },[id]);
+
+    const {data,isLoading} = useQuery({
+       queryKey:['fundRaiserInformation',],
+       queryFn:() => getPostData(id)
+    })
+    console.log(data,'data in tanstack-query')
     
     const fetchComments = async () => {
       try {
             const response = await axiosUrl.get(`/comment/${id}`);
             // console.log(response.data.data,"response of fetchedcomments")
-            // console.log(response.data[0].like)  
             setCommentsList(response.data.data);  
             setLikeCount(response.data[0].like) 
             setDislikeCount(response.data[0].dislike) 
@@ -310,7 +313,7 @@ const Donate = () => {
         let stripe = await loadStripe('pk_test_51P5lamRoqDgXi4MO8PsUe41RycAxZ28LQOz9hqq90lEyajIk8g0XnmmPyFHrx9khOhydesEDsWCcYcOMIqthCNz300OOPT7OmJ');
 
         const response = await axiosUrl.post('/donate',{
-          postData: info,
+          postData: data,
           amount: value
         });
         // console.log(response,'response');
@@ -325,25 +328,25 @@ const Donate = () => {
         })
       }
     }
-    //   console.log(info.userId?.email,'info')
+    //   console.log(data.userId?.email,'data')
 
 
     return (
         <>
         <div className=" px-5 ">
-            <h1 className="mb-3 text-3xl md:text-4xl font-black">{info.topic}</h1>
+            <h1 className="mb-3 text-3xl md:text-4xl font-black">{data?.topic}</h1>
              <div className="md:flex">
                  <div className="md:w-[50%]  hover:opacity-100">
-                    <img src={info.image} className="rounded-2xl w-[100%]"/>
+                    <img src={data?.image} className="rounded-2xl w-[100%]"/>
                  </div>
                  <div className="md:w-[50%] mt-4 md:px-10">
                     <div className="flex ">
                       <div>
-                        <h1 className="text-3xl ">{info.name}</h1>
-                        <h1 className="text-2xl mt-2">{info.address}</h1>
-                        <h1 className="text-2xl mt-2">{info.age}</h1>
-                        <h1 className="text-2xl mt-2">{info.gender}</h1>
-                        <h1 className="text-2xl mt-2">+{info.phone}</h1>
+                        <h1 className="text-3xl ">{data?.name}</h1>
+                        <h1 className="text-2xl mt-2">{data?.address}</h1>
+                        <h1 className="text-2xl mt-2">{data?.age}</h1>
+                        <h1 className="text-2xl mt-2">{data?.gender}</h1>
+                        <h1 className="text-2xl mt-2">+{data?.phone}</h1>
                         <h1 className="text-2xl mt-2">157 Donors</h1>
                       </div>
                       <div className=" bg-orange-600 px-2 py-4 w-full mx-4 rounded-2xl shadow-2xl shadow-blue-500/20">
@@ -384,7 +387,7 @@ const Donate = () => {
              </div>
             <div>
                 <h1 className="text-2xl mt-5 font-serif mb-10">
-                     {info.description}
+                     {data?.description}
                 </h1>
             </div>
 
@@ -396,12 +399,12 @@ const Donate = () => {
 
                    <div className="flex text-3xl mx-5 my-5">
                         <FaUser  className="mr-2"/>
-                        {info.userId?.username} 
+                        {data?.userId?.username} 
                     </div>  
 
                     <div className="flex text-3xl mx-5 my-5">
                         <MdOutlineMailOutline className="mr-2"/>
-                        {info.userId?.email} 
+                        {data?.userId?.email} 
                     </div> 
 
                     <div className="flex text-3xl mx-5 my-5">
