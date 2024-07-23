@@ -1,6 +1,6 @@
 import express from 'express'
 import PostController from "../controller/PostController.js"
-import FileUpload from '../multerfile/Upload.js';
+import FileUpload from '../config/Upload.js';
 import authenticate from "../middleware/Authenticate.js"
 
 

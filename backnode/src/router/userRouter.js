@@ -1,6 +1,6 @@
 import express from 'express'
 import UserController from "../controller/UserController.js"
-import FileUpload from '../multerfile/Upload.js';
+import FileUpload from '../config/Upload.js';
 // import authorize from "../middleware/Authorize.js"
 import authenticate from "../middleware/Authenticate.js"
 // import signupSchema from "../validation/SignupValidation.js"
