@@ -79,7 +79,7 @@ const Donate = () => {
     const [user, setUser] = useState([]);
     const {id} = useParams();
     const [comment, setComment] = useState('');
-    const [commentsList, setCommentsList] = useState([]);
+    // const [commentsList, setCommentsList] = useState([]);
     const [liked, setLiked] = useState()
     const [disliked, setDisliked] = useState();
     const [likeCount, setLikeCount] = useState();
@@ -102,12 +102,24 @@ const Donate = () => {
       return response.data
     }
 
-    const {data,isLoading} = useQuery({
-       queryKey:['fundRaiserInformation',],
+    const {data:postData,isLoading} = useQuery({
+       queryKey:['fundRaiserInformation',id],
        queryFn:() => getPostData(id)
     })
-    console.log(data,'data in tanstack-query')
+    console.log(postData,'data in tanstack-query')
     
+
+    const getCommentData = async(id) => {
+        const response = await axiosUrl.get(`/comment/${id}`);
+        console.log(response.data.data,'comment data-list')
+        return response.data.data
+    }
+    const {data:commentsList,isError} = useQuery({
+      queryKey:['comment',id],
+      queryFn: () => getCommentData(id)
+
+    })
+    console.log(commentsList,'commentsList data com')
     // const fetchComments = async () => {
     //   try {
     //         const response = await axiosUrl.get(`/comment/${id}`);
@@ -259,7 +271,7 @@ const Donate = () => {
         await axiosUrl.delete(`/comment/${commentId}`).then((response)=>{
           // console.log(response.data,'response of deletion');
           if(response.data.success === true){
-             setCommentsList(commentsList.filter(comment => comment._id !== commentId)); // used to update the state of the comments list by removing a specific comment without needing to refresh the page. Here's a detailed explanation of each part:
+            //  setCommentsList(commentsList.filter(comment => comment._id !== commentId)); // used to update the state of the comments list by removing a specific comment without needing to refresh the page. Here's a detailed explanation of each part:
               notification.open({
                 message: 'Comment deleted Succesfully',
                 description:'Comment deleted from this post. Hope you provide a positive feedback so that we can help to others needy people for fund raising',
@@ -306,7 +318,7 @@ const Donate = () => {
         let stripe = await loadStripe('pk_test_51P5lamRoqDgXi4MO8PsUe41RycAxZ28LQOz9hqq90lEyajIk8g0XnmmPyFHrx9khOhydesEDsWCcYcOMIqthCNz300OOPT7OmJ');
 
         const response = await axiosUrl.post('/donate',{
-          postData: data,
+          postData: postData,
           amount: value
         });
         // console.log(response,'response');
@@ -327,19 +339,19 @@ const Donate = () => {
     return (
         <>
         <div className=" px-5 ">
-            <h1 className="mb-3 text-3xl md:text-4xl font-black">{data?.topic}</h1>
+            <h1 className="mb-3 text-3xl md:text-4xl font-black">{postData?.topic}</h1>
              <div className="md:flex">
                  <div className="md:w-[50%]  hover:opacity-100">
-                    <img src={data?.image} className="rounded-2xl w-[100%]"/>
+                    <img src={postData?.image} className="rounded-2xl w-[100%]"/>
                  </div>
                  <div className="md:w-[50%] mt-4 md:px-10">
                     <div className="flex ">
                       <div>
-                        <h1 className="text-3xl ">{data?.name}</h1>
-                        <h1 className="text-2xl mt-2">{data?.address}</h1>
-                        <h1 className="text-2xl mt-2">{data?.age}</h1>
-                        <h1 className="text-2xl mt-2">{data?.gender}</h1>
-                        <h1 className="text-2xl mt-2">+{data?.phone}</h1>
+                        <h1 className="text-3xl ">{postData?.name}</h1>
+                        <h1 className="text-2xl mt-2">{postData?.address}</h1>
+                        <h1 className="text-2xl mt-2">{postData?.age}</h1>
+                        <h1 className="text-2xl mt-2">{postData?.gender}</h1>
+                        <h1 className="text-2xl mt-2">+{postData?.phone}</h1>
                         <h1 className="text-2xl mt-2">157 Donors</h1>
                       </div>
                       <div className=" bg-orange-600 px-2 py-4 w-full mx-4 rounded-2xl shadow-2xl shadow-blue-500/20">
@@ -380,7 +392,7 @@ const Donate = () => {
              </div>
             <div>
                 <h1 className="text-2xl mt-5 font-serif mb-10">
-                     {data?.description}
+                     {postData?.description}
                 </h1>
             </div>
 
@@ -392,12 +404,12 @@ const Donate = () => {
 
                    <div className="flex text-3xl mx-5 my-5">
                         <FaUser  className="mr-2"/>
-                        {data?.userId?.username} 
+                        {postData?.userId?.username} 
                     </div>  
 
                     <div className="flex text-3xl mx-5 my-5">
                         <MdOutlineMailOutline className="mr-2"/>
-                        {data?.userId?.email} 
+                        {postData?.userId?.email} 
                     </div> 
 
                     <div className="flex text-3xl mx-5 my-5">
@@ -420,13 +432,11 @@ const Donate = () => {
                             <h1>Loading...</h1>
                           ):(
                           paymentState.data?.data.map((donor,index)=>(
-                            <>
                               <div className="flex justify-between" key={index}>
                                 <h1 className="px-10 py-2 text-2xl">Image</h1>
                                 <h1 className="px-10 py-2 text-2xl">{donor.donorId.username}</h1>
                                 <h1 className="px-5 py-2 text-2xl">${donor.amount}</h1>
                               </div>
-                            </>
                           ))
                         )
                       
@@ -439,89 +449,97 @@ const Donate = () => {
                 </div>      
             </div>
 
-            <div className="my-2">
+            <div className="mt-10">
                 <form onSubmit={handleSubmit}>
-                   <label  htmlFor="input-label" className="block text-4xl font-medium mb-2 text-black">Comments</label>
+                   <label  htmlFor="input-label" className="block text-4xl font-medium mb-2 text-black">Send Comments</label>
                    <input  type="text" onChange={(e) => setComment(e.target.value)} value={comment} id="input-label" className="  py-3 px-4 block w-full border-gray-200 rounded-lg text-xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-400 dark:border-gray-700 dark:text-black" placeholder="write something..."/>
                 </form>
-                
-                
-                 <div className="my-5 ">
-                      {commentsList.map((cmt, countId)=>(
-                         <div key={countId} className="mt-5">
-                                <div className="flex">
-                                    <div className="w-[7%]">
-                                        <img src={cmt.userId.image} className=" rounded-[50%]"/>
-                                    </div>
-                                    <div className="px-5 py-4 ml-3 w-[100%] bg-slate-200 rounded-2xl shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
-                                        <div className="flex justify-between">
-                                            <div className="flex ">
-                                              <div className="text-4xl font-medium">{cmt.userId.username}</div>
-                                              <div className="mt-3 ml-2">{cmt.createdAt}</div>
+                <div className="border-2 border-black mx-20 mt-10"></div>
+                 <div className="my-10">
+                      {
+                        commentsList?.length > 0 ? (
+                          commentsList?.map((cmt, countId)=>(
+                             <div key={countId} className="mt-5">
+                                    <div className="flex">
+                                        <div className="w-[7%]">
+                                            <img src={cmt?.userId.image} className=" rounded-[50%]"/>
+                                        </div>
+                                        <div className="px-5 py-4 ml-3 w-[100%] bg-slate-200 rounded-2xl shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]">
+                                            <div className="flex justify-between">
+                                                <div className="flex ">
+                                                  <div className="text-4xl font-medium">{cmt?.userId.username}</div>
+                                                  <div className="mt-3 ml-2">{cmt?.createdAt}</div>
+                                                </div>
+                                              <div className="mt-3 text-2xl">
+                                                {
+                                                    cmt?.userId._id === userId && (
+                                                      <>
+                                                        <button  className="px-1 py-1 h-10">  
+                                                           <CiEdit className="text-3xl  hover:text-blue-600"/>
+                                                         </button>
+                                                      </>
+                                                    )
+                                                  }
+                                              </div>
                                             </div>
-                                          <div className="mt-3 text-2xl">
-                                            {
-                                                cmt.userId._id === userId && (
-                                                  <>
-                                                    <button  className="px-1 py-1 h-10">  
-                                                       <CiEdit className="text-3xl  hover:text-blue-600"/>
-                                                     </button>
-                                                  </>
-                                                )
-                                              }
-                                          </div>
-                                        </div>
-                                       <div className="my-5">
-                                             {cmt.comment}
-                                        </div>
-                                       <div className="mb-5 flex justify-between">
-                                           <div className="flex">
-                                              <div className="text-4xl flex ">
-                                                  <button 
-                                                    onClick={()=>handleLike(cmt._id)} 
-                                                    style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
-                                                  >
-                                                    {liked ? (
-                                                      <FaThumbsUp style={{ color: 'blue' }} />
-                                                    ) : (
-                                                      <FaRegThumbsUp style={{ color: 'black' }} />
-                                                    )}
-                                                  </button>
-                                                <h1 className="ml-2">{likeCount}</h1>
-                                              </div>
-                                              <div className="text-4xl flex ml-10 mt-1">
-                                                <button 
-                                                    onClick={()=>handleDislike(cmt._id)} 
-                                                    style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
-                                                  >
-                                                    {disliked ? (
-                                                      <FaThumbsDown style={{ color: 'blue' }} />
-                                                    ) : (
-                                                      <FaRegThumbsDown style={{ color: 'black' }} />
-                                                    )}
-                                                  </button>
-                                                <h1 className="ml-2">{dislikeCount}</h1>
-    
-                                              </div>
+                                           <div className="my-5">
+                                                 {cmt?.comment}
+                                            </div>
+                                           <div className="mb-5 flex justify-between">
+                                               <div className="flex">
+                                                  <div className="text-4xl flex ">
+                                                      <button 
+                                                        onClick={()=>handleLike(cmt._id)} 
+                                                        style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
+                                                      >
+                                                        {liked ? (
+                                                          <FaThumbsUp style={{ color: 'blue' }} />
+                                                        ) : (
+                                                          <FaRegThumbsUp style={{ color: 'black' }} />
+                                                        )}
+                                                      </button>
+                                                    <h1 className="ml-2">{likeCount}</h1>
+                                                  </div>
+                                                  <div className="text-4xl flex ml-10 mt-1">
+                                                    <button 
+                                                        onClick={()=>handleDislike(cmt._id)} 
+                                                        style={{ border: 'none', background: 'none', cursor: 'pointer', padding: 0 }}
+                                                      >
+                                                        {disliked ? (
+                                                          <FaThumbsDown style={{ color: 'blue' }} />
+                                                        ) : (
+                                                          <FaRegThumbsDown style={{ color: 'black' }} />
+                                                        )}
+                                                      </button>
+                                                    <h1 className="ml-2">{dislikeCount}</h1>
+        
+                                                  </div>
+                                               </div>
+                                               <div className="text-2xl flex">
+                                                  {
+                                                    cmt?.userId._id === userId && (
+                                                      <>
+                                                        <button  className="px-1 py-1 h-10" onClick={()=> deleteComment(cmt._id)}>  
+                                                           <MdDelete className="text-5xl text-red-500 hover:text-red-600"/>
+                                                         </button>
+                                                      </>
+                                                    )
+                                                  }
+                                                
+                                                </div>
                                            </div>
-                                           <div className="text-2xl flex">
-                                              {
-                                                cmt.userId._id === userId && (
-                                                  <>
-                                                    <button  className="px-1 py-1 h-10" onClick={()=> deleteComment(cmt._id)}>  
-                                                       <MdDelete className="text-5xl text-red-500 hover:text-red-600"/>
-                                                     </button>
-                                                  </>
-                                                )
-                                              }
-                                            
-                                            </div>
-                                       </div>
+                                        </div>
                                     </div>
-                                </div>
-                          </div>
-                       ))}
-                </div>
+                              </div>
+                           ))
+                         ) : (
+                        <h1 className="text-2xl font-medium text-center">
+                          No comments found. Be the first to comment. 
+                        </h1>
+                       )
+                      
+                      }
+                 </div>
             </div>
           </div> 
         </>
