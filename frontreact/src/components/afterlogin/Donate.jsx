@@ -21,7 +21,7 @@ import { userId } from './Mainpage';
 
 import { useDispatch, useSelector  } from 'react-redux';
 import { fetchPayment } from '../../slices/paymentSlice';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 const formatNumber = (value) => new Intl.NumberFormat().format(value);
 const NumericInput = (props) => {
@@ -96,21 +96,6 @@ const Donate = () => {
          dispatch(fetchPayment(id));
     },[id])
 
-    // console.log(userId,'userId');
-
-    // const getdata = async() =>{
-    //     await axiosUrl.get(`/upload/${id}`).then((response)=>{
-    //     //  console.log(response.data);
-    //         setdata(response.data)
-    //     }).catch((err)=>{
-    //         console.log(err)
-    //     })
-    // }
-    // useEffect(()=>{
-    //     getdata()
-    // },[id]);
-
-
     const getPostData = async(id) => {
       const response = await axiosUrl.get(`/upload/${id}`)
       // console.log(response.data,'data in response')
@@ -123,26 +108,26 @@ const Donate = () => {
     })
     console.log(data,'data in tanstack-query')
     
-    const fetchComments = async () => {
-      try {
-            const response = await axiosUrl.get(`/comment/${id}`);
-            // console.log(response.data.data,"response of fetchedcomments")
-            setCommentsList(response.data.data);  
-            setLikeCount(response.data[0].like) 
-            setDislikeCount(response.data[0].dislike) 
-            setLiked(response.data[0].likeIcon)  
-            // setdisLiked(response.data[0].disLikeIcon) 
+    // const fetchComments = async () => {
+    //   try {
+    //         const response = await axiosUrl.get(`/comment/${id}`);
+    //         // console.log(response.data.data,"response of fetchedcomments")
+    //         setCommentsList(response.data.data);  
+    //         setLikeCount(response.data[0].like) 
+    //         setDislikeCount(response.data[0].dislike) 
+    //         setLiked(response.data[0].likeIcon)  
+    //         // setdisLiked(response.data[0].disLikeIcon) 
 
-            // if(response.data..)
+    //         // if(response.data..)
             
-          } catch (error) {
-            console.error('Error fetching comments:', error);
-          }
-        };
+    //       } catch (error) {
+    //         console.error('Error fetching comments:', error);
+    //       }
+    //     };
         
-      useEffect(() => {
-        fetchComments();
-     }, [id,liked,disliked]);
+    //   useEffect(() => {
+    //     fetchComments();
+    //  }, [id,liked,disliked]);
 
     useEffect(() => {
         // console.log(commentsList, "commentlists array extra useEffect");
@@ -155,39 +140,47 @@ const Donate = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        sendComment.mutate(comment)
+
         // console.log(comment,'state comment')
-        try {
-            const response = await axiosUrl.post(`/comment/${id}`, { comment });
-            setComment(''); // Clear input after submitting
-             // Refresh comments after submitting
-             fetchComments()
-             notification.open({
-              message: 'Comment added Succesfully',
-              description:'Thank you for adding comment and giving review. Hope this comment motivates us to be more active in social welfare.',
-              icon: (
-                <SmileOutlined
-                  style={{
-                    color: '#108ee9',
-                  }}
-                />
-              ),
-              onClick: () => {
-                console.log('Notification Clicked!');
-              },
-            });
+        // try {
+        //     const response = await axiosUrl.post(`/comment/${id}`, { comment });
+        //     setComment(''); // Clear input after submitting
+        //      // Refresh comments after submitting
+        //      fetchComments()
+        //      notification.open({
+        //       message: 'Comment added Succesfully',
+        //       description:'Thank you for adding comment and giving review. Hope this comment motivates us to be more active in social welfare.',
+        //       icon: (
+        //         <SmileOutlined
+        //           style={{
+        //             color: '#108ee9',
+        //           }}
+        //         />
+        //       ),
+        //       onClick: () => {
+        //         console.log('Notification Clicked!');
+        //       },
+        //     });
 
-            // if(response.data.data.success === true){
-              socket.emit('notification', {
-                // commenterId: localStorage.getItem('userId'),
-                postId:id,
-                userId:userId,
-            });
-            // }
+        //     // if(response.data.data.success === true){
+        //       socket.emit('notification', {
+        //         // commenterId: localStorage.getItem('userId'),
+        //         postId:id,
+        //         userId:userId,
+        //     });
+        //     // }
 
-        } catch (error) {
-            console.error('Error adding comment:', error);
-        }
+        // } catch (error) {
+        //     console.error('Error adding comment:', error);
+        // }
     };
+
+    const sendComment = useMutation({
+      mutationFn: (comment) => {
+        return axiosUrl.post(`/comment/${id}`, { comment })
+      }
+    })
 
     const handleLike = async(id) => {
         console.log(id,'cmt id')
