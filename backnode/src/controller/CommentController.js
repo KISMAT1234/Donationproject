@@ -9,34 +9,19 @@ import User from "../model/Userprofile.js";
 class CommentController{
      async storeComment(req,res){
         try{
-        //   const {comment} = req.body
-        //   console.log(comment)
+          const {comment} = req.body
+          console.log(comment)
         const postId = req.params.id
         // console.log(postId, "post id");
         let userId = req.user.userId
         // console.log(userId,"user Id")
 
         const userCmt = new Comment({...req.body,userId:userId,postId:postId})
+        console.log(userCmt)
+        if(!userCmt){
+            return responseInstance.responseHandler(res,400,'Failed to send comment')
+        }
         await userCmt.save();
-
-      //   const post = await Post.findById(postId)
-      //   console.log(post,'user post')
-
-      //   const user = await User.findById(userId)
-
-      //   const postUserId = post.userId._id.toString()
-      //   console.log(postUserId,'user id')
-
-      //   if (post && postUserId !== userId) {
-      //      const notification = new Notification({
-      //          sender: userId,
-      //          receiver: postUserId,
-      //          type: 'comment',
-      //          message: `${user.username} commented on your post`,
-      //          postId:postId
-      //      });
-      //      console.log(notification,'notification to send user and save')
-      //      await notification.save();
             return responseInstance.responseHandler(res,200,'Comment send successfull')
           }
     catch(err){
