@@ -446,7 +446,7 @@ const Donate = () => {
                 <div className="border-2 border-black mx-20 mt-10"></div>
                  <div className="my-10">
                      
-                      
+                      {isError && <p className="text-xl text-red-500">Failed to send data!</p>}
                       {
                         commentsList?.length > 0 ? (
                           commentsList?.map((cmt, countId)=>(
