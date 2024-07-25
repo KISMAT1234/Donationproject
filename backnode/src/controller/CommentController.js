@@ -18,10 +18,10 @@ class CommentController{
 
         const userCmt = new Comment({...req.body,userId:userId,postId:postId})
         console.log(userCmt)
+        await userCmt.save();
         if(!userCmt){
             return responseInstance.responseHandler(res,400,'Failed to send comment')
         }
-        await userCmt.save();
             return responseInstance.responseHandler(res,200,'Comment send successfull')
           }
     catch(err){
@@ -31,16 +31,13 @@ class CommentController{
 
      async getComment(req,res){
         try{
-        //   const cmt = new Comment(...req.body)
         const Id = req.params.id
         // console.log(postId,"fetch id")
-        // console.log("fetch")
 
- 
         
-        const cmtData = await Comment.find({postId: Id}).populate('userId',['username','image'])
-        // console.log(cmtData,"fetch comment");
-        return responseInstance.responseHandler(res,200,'Comment fetch successfull',cmtData)
+        const comments = await Comment.find({postId: Id}).populate('userId',['username','image']).sort({ createdAt: -1 }) .exec();
+        console.log(comments,'commetn')
+        return responseInstance.responseHandler(res,200,'Comment fetch successfull',comments)
 
         }
         catch(err){
