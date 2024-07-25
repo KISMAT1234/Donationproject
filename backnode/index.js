@@ -7,11 +7,20 @@ Database();
 
 const port = process.env.PORT || 8000;
 
+
+
 const server = app.listen(port, () => {
   console.log(`Express server running on port ${port}`);
 });
 
 io.attach(server); 
+
+export const add = (a,b) => {
+  return a + b
+}
+
+// module.exports = { add }
+
 
 
 
