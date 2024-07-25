@@ -177,7 +177,9 @@ const Donate = () => {
       mutationFn: (comment) => {
         return axiosUrl.post(`/comment/${id}`, { comment })
       },
-
+      onSuccess: async(comment) => {
+        return await queryClient.invalidateQueries({ queryKey: ['comments'] })
+      }
     })
     console.log(variables,'variable data')
 
