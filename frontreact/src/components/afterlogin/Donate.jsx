@@ -445,7 +445,9 @@ const Donate = () => {
                 </form>
                 <div className="border-2 border-black mx-20 mt-10"></div>
                  <div className="my-10">
-                     
+                      {isPending && (
+                        <h1 className="text-4xl my-10">Sending....</h1>
+                      )}
                       {isError && <p className="text-xl text-red-500">Failed to send data!</p>}
                       {
                         commentsList?.length > 0 ? (
