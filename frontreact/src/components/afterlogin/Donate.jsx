@@ -21,7 +21,7 @@ import { userId } from './Mainpage';
 
 import { useDispatch, useSelector  } from 'react-redux';
 import { fetchPayment } from '../../slices/paymentSlice';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const formatNumber = (value) => new Intl.NumberFormat().format(value);
 const NumericInput = (props) => {
@@ -75,11 +75,9 @@ const downloadQRCode = () => {
 
   
 const Donate = () => {
-    const [comments, setComments] = useState([]);
     const [user, setUser] = useState([]);
     const {id} = useParams();
     const [comment, setComment] = useState('');
-    // const [commentsList, setCommentsList] = useState([]);
     const [liked, setLiked] = useState()
     const [disliked, setDisliked] = useState();
     const [likeCount, setLikeCount] = useState();
@@ -87,6 +85,9 @@ const Donate = () => {
     const [delComment, setDelComment] = useState(false)
     const [value, setValue] = useState('');
 
+
+    const queryClient = useQueryClient()
+    console.log(queryClient,'queryClient checking')
     const dispatch = useDispatch();
     const paymentState = useSelector((state) => state.payment || [])
 
@@ -102,7 +103,11 @@ const Donate = () => {
       return response.data
     }
 
-    const {data:postData,isLoading} = useQuery({
+    const {
+      data:postData,
+      isLoading
+    
+    } = useQuery({
        queryKey:['fundRaiserInformation',id],
        queryFn:() => getPostData(id)
     })
@@ -114,45 +119,18 @@ const Donate = () => {
         console.log(response.data.data,'comment data-list')
         return response.data.data
     }
-    const {data:commentsList,isError} = useQuery({
-      queryKey:['comment',id],
+    const {data:commentsList} = useQuery({
+      queryKey:['comments',id],
       queryFn: () => getCommentData(id)
 
     })
     console.log(commentsList,'commentsList data com')
-    // const fetchComments = async () => {
-    //   try {
-    //         const response = await axiosUrl.get(`/comment/${id}`);
-    //         // console.log(response.data.data,"response of fetchedcomments")
-    //         setCommentsList(response.data.data);  
-    //         setLikeCount(response.data[0].like) 
-    //         setDislikeCount(response.data[0].dislike) 
-    //         setLiked(response.data[0].likeIcon)  
-    //         // setdisLiked(response.data[0].disLikeIcon) 
-
-    //         // if(response.data..)
-            
-    //       } catch (error) {
-    //         console.error('Error fetching comments:', error);
-    //       }
-    //     };
-        
-    //   useEffect(() => {
-    //     fetchComments();
-    //  }, [id,liked,disliked]);
-
-    useEffect(() => {
-        // console.log(commentsList, "commentlists array extra useEffect");
-    }, [commentsList]);
     
-    useEffect(() => {
-        // console.log(commentsList, "commentlists array another useEffect");
-    }, [id, commentsList]);
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        sendComment.mutate(comment)
+        mutate(comment)
+        setComment('')
 
         // console.log(comment,'state comment')
         // try {
@@ -188,11 +166,20 @@ const Donate = () => {
         // }
     };
 
-    const sendComment = useMutation({
+    const {
+      mutate,
+      isError,
+      isPending,
+      isSuccess,
+      variables
+
+    } = useMutation({
       mutationFn: (comment) => {
         return axiosUrl.post(`/comment/${id}`, { comment })
-      }
+      },
+
     })
+    console.log(variables,'variable data')
 
     const handleLike = async(id) => {
         console.log(id,'cmt id')
@@ -456,10 +443,12 @@ const Donate = () => {
                 </form>
                 <div className="border-2 border-black mx-20 mt-10"></div>
                  <div className="my-10">
+                     
+                      
                       {
                         commentsList?.length > 0 ? (
                           commentsList?.map((cmt, countId)=>(
-                             <div key={countId} className="mt-5">
+                              <div key={countId} className="mt-5">
                                     <div className="flex">
                                         <div className="w-[7%]">
                                             <img src={cmt?.userId.image} className=" rounded-[50%]"/>
