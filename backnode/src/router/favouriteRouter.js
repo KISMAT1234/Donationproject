@@ -10,3 +10,4 @@ favouriteRouter.get("/",authenticate, favouriteInstance.getFavourites)
 
 export default favouriteRouter;
 
+
