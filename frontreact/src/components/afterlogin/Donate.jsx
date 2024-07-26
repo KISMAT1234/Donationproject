@@ -131,39 +131,6 @@ const Donate = () => {
         e.preventDefault();
         mutate(comment)
         setComment('')
-
-        // console.log(comment,'state comment')
-        // try {
-        //     const response = await axiosUrl.post(`/comment/${id}`, { comment });
-        //     setComment(''); // Clear input after submitting
-        //      // Refresh comments after submitting
-        //      fetchComments()
-        //      notification.open({
-        //       message: 'Comment added Succesfully',
-        //       description:'Thank you for adding comment and giving review. Hope this comment motivates us to be more active in social welfare.',
-        //       icon: (
-        //         <SmileOutlined
-        //           style={{
-        //             color: '#108ee9',
-        //           }}
-        //         />
-        //       ),
-        //       onClick: () => {
-        //         console.log('Notification Clicked!');
-        //       },
-        //     });
-
-        //     // if(response.data.data.success === true){
-        //       socket.emit('notification', {
-        //         // commenterId: localStorage.getItem('userId'),
-        //         postId:id,
-        //         userId:userId,
-        //     });
-        //     // }
-
-        // } catch (error) {
-        //     console.error('Error adding comment:', error);
-        // }
     };
 
     const {
@@ -171,7 +138,7 @@ const Donate = () => {
       isError,
       isPending,
       isSuccess,
-      variables
+      variables,
 
     } = useMutation({
       mutationFn: (comment) => {
@@ -254,49 +221,84 @@ const Donate = () => {
     //     }
     //   },[])
 
+
+    const {mutate:deleteCommentById} = useMutation({
+      muationFn: (commentId) => {
+        return axiosUrl.delete(`/comment/${commentId}`)
+      },
+
+      onSuccess: async() => {
+        setDelComment(true);
+        await queryClient.invalidateQueries({ queryKey: ['comments'] })
+      },
+
+      onMutate: async(commentId) => {
+          
+        await queryClient.cancelQueries(['comments'])
+ 
+        const previousComments = queryClient.getQueryData(['comments']);
+        console.log(previousComments,'previous cached-data')
+
+        await queryClient.setQueryData(['comments'], (oldData)=> 
+          oldData.filter(comment => comment._id !== commentId)
+        )
+      },
+
+      onError: (error, commentId, context) => {
+        queryClient.setQueryData(['comments'], context.previousComments);
+        console.error("Error deleting comment:", error);
+      },
+      
+      onSettled: () => {
+        queryClient.invalidateQueries(['comments']); // Optional: Ensure data is up-to-date after mutation
+      },
+    
+    })
     const deleteComment = async (commentId) => {
       // console.log(commentId,"delete comment Id");
       if (window.confirm('Are you sure you want to delete?')) {
-        await axiosUrl.delete(`/comment/${commentId}`).then((response)=>{
-          // console.log(response.data,'response of deletion');
-          if(response.data.success === true){
-            //  setCommentsList(commentsList.filter(comment => comment._id !== commentId)); // used to update the state of the comments list by removing a specific comment without needing to refresh the page. Here's a detailed explanation of each part:
-              notification.open({
-                message: 'Comment deleted Succesfully',
-                description:'Comment deleted from this post. Hope you provide a positive feedback so that we can help to others needy people for fund raising',
-                icon: (
-                  <SmileOutlined
-                    style={{
-                      color: '#108ee9',
-                    }}
-                  />
-                ),
-                onClick: () => {
-                  console.log('Notification Clicked!');
-                },
-              });
-            }else{ 
-              notification.open({
-               message: 'Unsuccessfull deleting comment!',
-               description:'You cannot delete others user comment',
-                onClick: () => {
-                 console.log('Notification Clicked!');
-                },
-              });
-              alert('unsuccessfull deleting comment')
-            }
-          }).catch((err)=>{
-              console.log(err)
-          })
-      }
-      try{
-          // axiosUrl.delete("/comment/")
-      }
-      catch(err){
-        console.log(err);
+        deleteCommentById(commentId)
       }
     }
-
+      //   await axiosUrl.delete(`/comment/${commentId}`).then((response)=>{
+      //     // console.log(response.data,'response of deletion');
+      //     if(response.data.success === true){
+            //  setCommentsList(commentsList.filter(comment => comment._id !== commentId)); // used to update the state of the comments list by removing a specific comment without needing to refresh the page. Here's a detailed explanation of each part:
+      //         notification.open({
+      //           message: 'Comment deleted Succesfully',
+      //           description:'Comment deleted from this post. Hope you provide a positive feedback so that we can help to others needy people for fund raising',
+      //           icon: (
+      //             <SmileOutlined
+      //               style={{
+      //                 color: '#108ee9',
+      //               }}
+      //             />
+      //           ),
+      //           onClick: () => {
+      //             console.log('Notification Clicked!');
+      //           },
+      //         });
+      //       }else{ 
+      //         notification.open({
+      //          message: 'Unsuccessfull deleting comment!',
+      //          description:'You cannot delete others user comment',
+      //           onClick: () => {
+      //            console.log('Notification Clicked!');
+      //           },
+      //         });
+      //         alert('unsuccessfull deleting comment')
+      //       }
+      //     }).catch((err)=>{
+      //         console.log(err)
+      //     })
+      // }
+      // try{
+      //     // axiosUrl.delete("/comment/")
+      // }
+      // catch(err){
+      //   console.log(err);
+      // }
+  
   
 
     const makePayment = async () => {
