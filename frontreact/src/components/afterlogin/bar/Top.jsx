@@ -11,7 +11,7 @@ import { MdHistory } from "react-icons/md";
 import { CiCircleRemove } from "react-icons/ci";
 
 import { Link } from "react-router-dom";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 
 const  searchHistory =  async() => {
@@ -31,8 +31,8 @@ function Topbar() {
    const [search,setSearch] = useState("");
    const [showSearchContainer,setShowSearchContainer] = useState(false)
    const [highlightedIndex, setHighlightedIndex] = useState(-1);
-  //  const [selectedSearchTerm, setSelectedSearchTerm] = useState(null);
-   const containerRef = useRef(null);   // useRef lets you reference a value that’s not needed for rendering.
+   const queryClient =  useQueryClient()
+   const containerRef = useRef(null);  
 
    const handleInputClick = () => {
       setShowSearchContainer(true);
@@ -116,12 +116,12 @@ function Topbar() {
 
     const { mutate: deleteMutation } = useMutation({
       mutationFn: (id) => axiosUrl.delete(`/search/${id}`),
-      onSuccess: (deletedItem) => {
+      onSuccess: async(deletedItem) => {
         console.log("Search history item deleted successfully");
-        setData((prevData) =>
-          prevData.filter((item) => item._id !== deletedItem._id)
-        );
-        // You may want to refetch the search history or update state accordingly
+        // searchData((prevData) =>
+        //   prevData.filter((item) => item._id !== deletedItem._id)
+        // );
+        await queryClient.invalidateQueries({queryKey:['search']})
       },
       onError: (err) => {
         console.error("Error deleting search history item:", err);
@@ -129,7 +129,8 @@ function Topbar() {
     });
 
  
-    const deleteSearchHistory = (id) => {
+    const deleteSearchHistory = (e,id) => {
+      // e.stopPropagation();
       deleteMutation(id);
       console.log(id)
     }
@@ -142,9 +143,9 @@ function Topbar() {
 
            <div className="  mt-4 text-[10px] sm:text-[120%] md:text-[150%]">
                {/* <h1 className="">DONATE ANYTHING YOU WANT</h1> */}
-               <form onSubmit={handleSubmit}>
-             <div className=" md:w-[30%] flex">  
-              <div className="">
+              <form onSubmit={handleSubmit}>
+              <div className=" md:w-[30%] flex">  
+                <div className="">
                   <input type="text" 
                     value={search} 
                     onChange={(e)=>setSearch(e.target.value)} 
@@ -152,6 +153,15 @@ function Topbar() {
                     onKeyDown={handleKeyDown}
                     className="w-[500px] placeholder-yellow-600::placeholder bg-gradient-to-r from-purple-600 via-pink-500 to-red-500 text-black focus:ring-2 focus:ring-purple-600 focus:outline-none focus:border-transparent  py-1 px-2 rounded-lg shadow-lg border-none transform transition-transform duration-300 focus:scale-105" placeholder="Search fund raiser Here"
                   /> 
+                </div>
+                <div>  
+                  <button type="submit" className="bg-blue-400 h-[7vh] hover:bg-blue-600 rounded-md mx-4 transition duration-300 ease-in-out">
+                  <FaSearch className="hover:scale-150 w-12"/>
+                  </button>
+               </div> 
+              </div> 
+           </form>
+
 
                  {showSearchContainer && (
                   <div
@@ -192,7 +202,7 @@ function Topbar() {
                               </div>
                             </div>
                             <div>
-                              <button className="mt-2 text-4xl hover:text-red-500" onClick={()=>deleteSearchHistory(value._id)}>
+                              <button className="mt-2 text-4xl hover:text-red-500" onClick={(e)=>deleteSearchHistory(e,value._id)}>
                                 <CiCircleRemove />
                               </button>
                             </div>
@@ -201,15 +211,7 @@ function Topbar() {
                       ))
                     )}
                   </div>
-                )}
-          
-              </div>  
-              <button type="submit" className="bg-blue-400 h-[7vh] hover:bg-blue-600 rounded-md mx-4 transition duration-300 ease-in-out">
-                  <FaSearch className="hover:scale-150 w-12"/>
-              </button>
-           </div> 
-           </form>
-            
+                )}   
            </div>
            <div className="flex px-5 py-3">
             <div className="text-3xl mx-2 mt-2 hover:text-blue-600">
