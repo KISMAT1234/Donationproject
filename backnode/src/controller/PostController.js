@@ -3,6 +3,7 @@ import User from "../model/Userprofile.js";
 import Pagination from "../helper/Pagination.js";
 import Handler from "../logger/ResponseHandler.js";
 import Favourite from "../model/Favourite.js";
+import Comment from "../model/Comment.js";
 const responseInstance = new Handler();
 
 
@@ -84,14 +85,18 @@ class PostController{
         return responseInstance.responseHandler(res, 400,"Ops! you are unauthorized to delete this post");
        }
 
-       const post = await Post.findByIdAndDelete(postId)
+    //    const post = await Post.findByIdAndDelete(postId)
+    //    const comment = await Comment.deleteMany({postId: postId})
     //    console.log(post,'post')
-       if(!post){
+
+       const [post,comment] = await Promise.all([
+            Post.findByIdAndDelete(postId),
+            Comment.deleteMany({postId: postId})
+       ])
+       if(!post || !comment){
         return responseInstance.responseHandler(res, 400,"Post not found");
        }
-       
        return responseInstance.responseHandler(res, 200,"Your post has been Deleted Successfully");
-
     }
       catch(error){
         console.log(error,'error in server');
