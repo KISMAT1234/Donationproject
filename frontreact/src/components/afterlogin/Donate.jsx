@@ -87,7 +87,6 @@ const Donate = () => {
 
 
     const queryClient = useQueryClient()
-    console.log(queryClient,'queryClient checking')
     const dispatch = useDispatch();
     const paymentState = useSelector((state) => state.payment || [])
 
@@ -98,6 +97,7 @@ const Donate = () => {
     },[id])
 
     const getPostData = async(id) => {
+      // console.log('call in getting post data')
       const response = await axiosUrl.get(`/upload/${id}`)
       // console.log(response.data,'data in response')
       return response.data
@@ -116,7 +116,8 @@ const Donate = () => {
 
     const getCommentData = async(id) => {
         const response = await axiosUrl.get(`/comment/${id}`);
-        console.log(response.data.data,'comment data-list')
+        // console.log('call in getting comment data')
+        // console.log(response.data.data,'comment data-list')
         return response.data.data
     }
     const {data:commentsList} = useQuery({
@@ -124,22 +125,17 @@ const Donate = () => {
       queryFn: () => getCommentData(id)
 
     })
-    console.log(commentsList,'commentsList data com')
+    // console.log(commentsList,'commentsList data com')
     
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        mutate(comment)
-        setComment('')
-    };
-
+    
     const {
-      mutate,
+      mutate:sendComment,
       isError,
       isPending,
       isSuccess,
       variables,
-
+      
     } = useMutation({
       mutationFn: (comment) => {
         return axiosUrl.post(`/comment/${id}`, { comment })
@@ -149,6 +145,12 @@ const Donate = () => {
       }
     })
     console.log(variables,'variable data')
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        sendComment(comment)
+        setComment('')
+    };
 
     const handleLike = async(id) => {
         console.log(id,'cmt id')
@@ -223,40 +225,17 @@ const Donate = () => {
 
 
     const {mutate:deleteCommentById} = useMutation({
-      muationFn: (commentId) => {
+      mutationFn: (commentId) => {
+        console.log('came in mutation',commentId)
         return axiosUrl.delete(`/comment/${commentId}`)
       },
 
-      onSuccess: async() => {
-        setDelComment(true);
-        await queryClient.invalidateQueries({ queryKey: ['comments'] })
-      },
-
-      onMutate: async(commentId) => {
-          
-        await queryClient.cancelQueries(['comments'])
- 
-        const previousComments = queryClient.getQueryData(['comments']);
-        console.log(previousComments,'previous cached-data')
-
-        await queryClient.setQueryData(['comments'], (oldData)=> 
-          oldData.filter(comment => comment._id !== commentId)
-        )
-      },
-
-      onError: (error, commentId, context) => {
-        queryClient.setQueryData(['comments'], context.previousComments);
-        console.error("Error deleting comment:", error);
-      },
-      
-      onSettled: () => {
-        queryClient.invalidateQueries(['comments']); // Optional: Ensure data is up-to-date after mutation
-      },
     
     })
+    
     const deleteComment = async (commentId) => {
-      // console.log(commentId,"delete comment Id");
       if (window.confirm('Are you sure you want to delete?')) {
+        console.log(commentId,"delete comment Id");
         deleteCommentById(commentId)
       }
     }
