@@ -109,48 +109,17 @@ const Donate = () => {
     
     } = useQuery({
        queryKey:['fundRaiserInformation',id],
-       queryFn:() => getPostData(id)
+       queryFn:() => getPostData(id),
+       staleTime: 5 * 1000,
     })
     console.log(postData,'data in tanstack-query')
     
 
-    const getCommentData = async(id) => {
-        const response = await axiosUrl.get(`/comment/${id}`);
-        // console.log('call in getting comment data')
-        // console.log(response.data.data,'comment data-list')
-        return response.data.data
-    }
-    const {data:commentsList} = useQuery({
-      queryKey:['comments',id],
-      queryFn: () => getCommentData(id)
 
-    })
-    // console.log(commentsList,'commentsList data com')
     
 
     
-    const {
-      mutate:sendComment,
-      isError,
-      isPending,
-      isSuccess,
-      variables,
-      
-    } = useMutation({
-      mutationFn: (comment) => {
-        return axiosUrl.post(`/comment/${id}`, { comment })
-      },
-      onSuccess: async(comment) => {
-        return await queryClient.invalidateQueries({ queryKey: ['comments'] })
-      }
-    })
-    console.log(variables,'variable data')
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        sendComment(comment)
-        setComment('')
-    };
 
     const handleLike = async(id) => {
         console.log(id,'cmt id')
@@ -224,12 +193,78 @@ const Donate = () => {
     //   },[])
 
 
+
+
+    //FOR COMMENTS
+    const getCommentData = async(id) => {
+      const response = await axiosUrl.get(`/comment/${id}`);
+      // console.log('call in getting comment data')
+      // console.log(response.data.data,'comment data-list')
+      return response.data.data
+  }
+  const {data:commentsList} = useQuery({
+    queryKey:['comments',id],
+    queryFn: () => getCommentData(id),
+    staleTime: 3000,
+
+  })
+  // console.log(commentsList,'commentsList data com')
+
+  const {
+    mutate:sendComment,
+    isError,
+    isPending,
+    isSuccess,
+    variables,
+    
+  } = useMutation({
+    mutationFn: (comment) => {
+      return axiosUrl.post(`/comment/${id}`, { comment })
+    },
+    onSuccess: async(comment) => {
+      return await queryClient.invalidateQueries({ queryKey: ['comments'] })
+
+    }
+  })
+  console.log(variables,'variable data')
+
+  const handleSubmit = async (e) => {
+      e.preventDefault();
+      sendComment(comment)
+      setComment('')
+  };
+
     const {mutate:deleteCommentById} = useMutation({
       mutationFn: (commentId) => {
         console.log('came in mutation',commentId)
         return axiosUrl.delete(`/comment/${commentId}`)
       },
+      onSuccess: async() => {
+        setDelComment(true);
+        await queryClient.invalidateQueries({ queryKey: ['comments'] })
+      },
+      
+      // onMutate: async(commentId) => {
+          
+      //   await queryClient.cancelQueries(['comments'])
+ 
+      //   const previousComments = queryClient.getQueryData(['comments']);
+      //   console.log(previousComments,'previous cached-data')
 
+      //   await queryClient.setQueryData(['comments'], (oldData)=> 
+      //     oldData.filter(comment => comment._id !== commentId)
+      //   )
+      //   return {previousComments}
+      // },
+
+      // onError: (error, commentId, context) => {
+      //   queryClient.setQueryData(['comments'], context.previousComments);
+      //   console.error("Error deleting comment:", error);
+      // },
+
+      // onSettled: async() => {
+      //   await queryClient.invalidateQueries(['comments']); // Optional: Ensure data is up-to-date after mutation
+      // },
     
     })
     
