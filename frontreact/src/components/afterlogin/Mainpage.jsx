@@ -35,7 +35,7 @@ export const userId = decodedToken?.id || null;
 
 
 function Content() {
-  const [favourite, setFavourite] = useState({}); 
+  const [isFavourite, setIsFavourite] = useState([]); 
   // const [current, setCurrent] = useState(1);
   const dispatch = useDispatch();
 
@@ -63,7 +63,6 @@ function Content() {
   console.log(data,'tanstack query data')
   const flattenedData = data?.pages?.flat() || [];
   
-  
   const removePost = (postId) => {
       // console.log(postId,'id to remove')
       message.success('removed success');
@@ -73,30 +72,18 @@ function Content() {
       message.error('Cancelled');
     };
  
+   
 
-    useEffect(() => {
-      const getFavourite = async() => {
-        try {
-           const response = await axiosUrl.get("/favourite");
-           console.log(response.data.data.map(fav => fav.postId),'response follower');
-           setFavourite(response.data.data.map(fav => fav.postId))
-        } catch (err) {
-           console.error("Error fetching user follower data:", err);
-        }
-     }
-      getFavourite();
-      dispatch(fetchUpload());
-    }, []);
+
+
+//FAVOURITE
+    // const isPostFavourite = (postId) => {
+    //   return favourite.includes(postId);
+    // };
     
-
-
-    const isPostFavourite = (postId) => {
-      return favourite.includes(postId);
-    };
-
-    const addToCart = async(data, id) => {
+    const addToFavourite = async(data, id) => {
       // console.log(data,'data of fav')
-  
+      // dispatch(fetchUpload(data));
       try {
       const response = await axiosUrl.post(`/favourite/${id}`);
       console.log(response.data.data,'response follower');
@@ -106,6 +93,20 @@ function Content() {
     }
   }
   // console.log(content,'content data')
+
+  const getFavouriteData = async() => {
+    try {
+      const response = await axiosUrl.get('/favourite/');
+      console.log(response.data.data,'favourite list');
+      setIsFavourite(response.data.data)
+    } catch (err) {
+      console.error("Error fetching user follower data:", err);
+    }
+  }
+
+  useEffect(()=> {
+    getFavouriteData()
+  },[])
 
 
 
@@ -271,8 +272,15 @@ function Content() {
                         </button>
                           )
                         } */}
-                       <button onClick={() =>  addToCart(data._id)}>
-                          {isPostFavourite(data._id) ?  <HeartFilled style={{ color:'red' }} className="text-4xl"/> :   <HeartOutlined  className="text-4xl"/> }
+                       <button onClick={() =>  addToFavourite(data._id)}>
+                           {/* <HeartOutlined  className="text-4xl"/>  */}
+                           {isFavourite?.some(fav => fav.postId === data._id)  ? 
+                               <HeartFilled style={{ color:'red' }}  className="text-4xl"  />
+                               : 
+                               <HeartOutlined  className="text-4xl"/> 
+ 
+                          }
+                           
                         </button>
                       </div>
                     </div>
