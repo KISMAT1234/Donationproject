@@ -81,23 +81,31 @@ function Content() {
     //   return favourite.includes(postId);
     // };
     
-    const addToFavourite = async(data, id) => {
+    const addToFavourite = async(postId) => {
       // console.log(data,'data of fav')
       // dispatch(fetchUpload(data));
-      try {
-      const response = await axiosUrl.post(`/favourite/${id}`);
-      console.log(response.data.data,'response follower');
-      
-    } catch (err) {
-      console.error("Error fetching user follower data:", err);
-    }
-  }
+      setIsFavourite(prevFavs => {
+        if (prevFavs.some(fav => fav.postId === postId)) {
+          return prevFavs.filter(fav => fav.postId !== postId);
+        } else {
+          return [...prevFavs, { postId }];
+        }
+      });
+        try {
+          const response = await axiosUrl.post(`/favourite/${id}`);
+          console.log(response.data.data,'response follower');
+        
+        } catch (err) {
+            console.error("Error fetching user follower data:", err);
+          }
+        }
+        console.log(isFavourite,'favourite array list ')
   // console.log(content,'content data')
 
   const getFavouriteData = async() => {
     try {
       const response = await axiosUrl.get('/favourite/');
-      console.log(response.data.data,'favourite list');
+      // console.log(response.data.data,'favourite list');
       setIsFavourite(response.data.data)
     } catch (err) {
       console.error("Error fetching user follower data:", err);
