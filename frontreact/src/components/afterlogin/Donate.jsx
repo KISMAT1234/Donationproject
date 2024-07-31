@@ -97,10 +97,14 @@ const Donate = () => {
     },[id])
 
     const getPostData = async(id) => {
-      // console.log('call in getting post data')
-      const response = await axiosUrl.get(`/upload/${id}`)
-      // console.log(response.data,'data in response')
-      return response.data
+      try{
+        const response = await axiosUrl.get(`/upload/${id}`)
+        // console.log(response.data,'data in response')
+        return response.data
+      }
+      catch(error){
+        console.log(error)
+      }
     }
 
     const {
