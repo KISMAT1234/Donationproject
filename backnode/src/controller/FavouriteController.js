@@ -46,9 +46,15 @@ class FavouriteController {
             const userId = req.user.userId;
             const favouriteListData = await Favourite.find({userId: userId})
             console.log(favouriteListData,'favourite list data')
+
+            if(!favouriteListData){
+                return responseInstance.responseHandler(res,200,'there is no any favourite post  data',)
+            }
+
+            return responseInstance.responseHandler(res,200,'Favourites data', favouriteListData)
         }
         catch(err){
-
+          console.log(err)
         }
     }
 
