@@ -43,10 +43,12 @@ class FavouriteController {
 
     async getFavouritesDataOfUser(req,res){
         try{
-
+            const userId = req.user.userId;
+            const favouriteListData = await Favourite.find({userId: userId})
+            console.log(favouriteListData,'favourite list data')
         }
         catch(err){
-            
+
         }
     }
 
