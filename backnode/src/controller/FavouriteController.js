@@ -31,8 +31,13 @@ class FavouriteController {
     async getFavouritesById(req,res){
         try{
             const userId = req.user.userId;
-            const favs = await Favourite.find({userId});
-            return responseInstance.responseHandler(res,200,'Favourites',favs)
+            const allFavouriteModelData = await Favourite.find({userId});
+
+            if(!favs){
+                return responseInstance.responseHandler(res,200,'No favourites Id found')
+            }
+
+            return responseInstance.responseHandler(res,200,'Favourites',allFavouriteModelData)
         }
         catch(err){
             console.log(err)
