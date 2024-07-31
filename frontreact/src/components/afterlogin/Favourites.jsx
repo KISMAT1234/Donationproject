@@ -1,11 +1,32 @@
-// import axiosUrl from "../url/Axiosurl";
+import axiosUrl from "../url/Axiosurl";
 import { useSelector} from 'react-redux'
 import { DeleteOutlined } from '@ant-design/icons';
+import { useQuery } from '@tanstack/react-query';
 const Favourites = () => {
 
   const data= useSelector((state)=>state.data) || []
- 
   console.log(data)
+
+  const {
+    data:favouriteData,
+    isLoading,
+    isError,
+    isStatus
+  } = useQuery({
+    queryKey:['favourite'],
+    queryFn: () => {
+      try{
+          const response = axiosUrl.get('/favourite/data');
+          return response.data
+      }
+      catch(err){
+        console.log(err)
+      }
+    },
+    staleTime: 5 * 1000,
+  })
+  console.log(favouriteData,'list of favourite')
+
 
 return (
     <>
