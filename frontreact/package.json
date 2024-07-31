@@ -19,6 +19,7 @@
     "@stripe/stripe-js": "^3.3.0",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tanstack/react-query": "^5.49.2",
+    "@uidotdev/usehooks": "^2.4.1",
     "antd": "^5.15.2",
     "axios": "^1.6.7",
     "date-fns": "^3.6.0",
