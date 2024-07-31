@@ -6,7 +6,8 @@ const favouriteRouter = express.Router()
 const favouriteInstance = new FavouriteController();
 
 favouriteRouter.post("/:id",authenticate, favouriteInstance.addToCart)
-favouriteRouter.get("/",authenticate, favouriteInstance.getFavourites)
+favouriteRouter.get("/data",authenticate, favouriteInstance.getFavouritesDataOfUser)
+favouriteRouter.get("/",authenticate, favouriteInstance.getFavouritesById)
 
 export default favouriteRouter;
 
