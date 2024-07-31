@@ -19,7 +19,7 @@ class FavouriteController {
              const fav = new Favourite({ postId:postId, userId:userId });
              console.log(fav,'fav value')
              await fav.save();
-            //  return responseInstance.responseHandler(res,200,'Added to favourite success')
+             return responseInstance.responseHandler(res,200,'Added to favourite success')
          }
         }catch(err){
             console.log(err)
@@ -28,7 +28,7 @@ class FavouriteController {
         }
     }
 
-    async getFavourites(req,res){
+    async getFavouritesById(req,res){
         try{
             const userId = req.user.userId;
             const favs = await Favourite.find({userId});
@@ -40,6 +40,17 @@ class FavouriteController {
 
         }
     }
+
+    async getFavouritesDataOfUser(req,res){
+        try{
+
+        }
+        catch(err){
+            
+        }
+    }
+
+
 
 
 }
