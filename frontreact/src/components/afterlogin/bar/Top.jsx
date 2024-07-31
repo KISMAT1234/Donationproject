@@ -12,6 +12,7 @@ import { CiCircleRemove } from "react-icons/ci";
 
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useDebounce } from "@uidotdev/usehooks";
 
 
 const  searchHistory =  async() => {
@@ -32,7 +33,8 @@ function Topbar() {
    const [showSearchContainer,setShowSearchContainer] = useState(false)
    const [highlightedIndex, setHighlightedIndex] = useState(-1);
    const queryClient =  useQueryClient()
-   const containerRef = useRef(null);  
+   const containerRef = useRef(null); 
+   const debouncedSearchValue = useDebounce(search, 500) 
 
    const handleInputClick = () => {
       setShowSearchContainer(true);
@@ -63,9 +65,9 @@ function Topbar() {
     error: searchError,
     isLoading: searchLoading,
   } = useQuery({   
-    queryKey: ['search',search],
-    queryFn: () => fetchDataBasedOnSearch(search),
-    enabled: !!search,
+    queryKey: ['search',debouncedSearchValue],
+    queryFn: () => fetchDataBasedOnSearch(debouncedSearchValue),
+    enabled: !!debouncedSearchValue,
   });
 
     useEffect(() => {
