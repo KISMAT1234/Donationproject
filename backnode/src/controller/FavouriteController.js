@@ -33,7 +33,7 @@ class FavouriteController {
             const userId = req.user.userId;
             const allFavouriteModelData = await Favourite.find({userId});
 
-            if(!favs){
+            if(!allFavouriteModelData){
                 return responseInstance.responseHandler(res,200,'No favourites Id found')
             }
 
