@@ -56,7 +56,7 @@ function Topbar() {
    const {data,error,isLoading} = useQuery({
       queryKey: ['search'],
       queryFn: searchHistory,
-      enabled: showSearchContainer
+      enabled: !!showSearchContainer
    })
    console.log(data,'search fetched value')
 
