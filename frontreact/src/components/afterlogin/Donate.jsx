@@ -74,6 +74,7 @@ const downloadQRCode = () => {
   }
 };
 
+
   
 const Donate = () => {
     const [user, setUser] = useState([]);
@@ -194,7 +195,7 @@ const Donate = () => {
 
     //FOR COMMENTS
   const {
-    data: commentsList,
+    data,
     error,
     fetchNextPage,
     hasNextPage,
@@ -203,12 +204,12 @@ const Donate = () => {
     status,
   } = useInfiniteQuery({
     queryKey: ['comments',id],
-    queryFn: async({id , pageParam = 1}) => {
+    queryFn:async({pageParam = 1}) =>{
       const response = await axiosUrl.get(`/comment/${id}?page=${pageParam}`);
-      console.log('call in getting comment data')
-      // console.log(response.data.data,'comment data-list')
+      console.log(response.data.data,'res')
       return response.data.data
-    },
+    } ,
+
     staleTime: 9000,
     initialPageParam: 1,
     getNextPageParam: (lastPage, allPages) => {
@@ -217,8 +218,15 @@ const Donate = () => {
       }
       return undefined;
     },
-    enabled: !!id
+    // enabled: !!id
+    staleTime: 8000,
+    retry: 3,
+    retryDelay: 2000,
+    
   })
+
+  const commentsList = data?.pages?.flat() || []
+
   console.log(commentsList,'commentsList data com')
 
 
@@ -479,11 +487,11 @@ const Donate = () => {
                     }
                   }}
                   hasMore={hasNextPage}
+
+             
                 >
                  <div className="my-10">
-                      {isPending && (
-                        <h1 className="text-4xl my-10">Sending....</h1>
-                      )}
+                      {isPending && ( <h1 className="text-4xl my-10">Sending....</h1> )}
                       {isError && <p className="text-xl text-red-500">Failed to send data!</p>}
                       {
                         commentsList?.length > 0 ? (
@@ -570,7 +578,7 @@ const Donate = () => {
                       }
                  </div>
                  </InfiniteScroll>
-                <div className="my-10 text-2xl font-serif">{isFetching && !isFetchingNextPage ? 'Fetching...' : 'Nothing more to load'}</div>
+                <div className="my-10 text-2xl font-serif text-center">{isFetching ? 'Fetching...' : 'You have come to an end of the comment!'}</div>
             </div>
           </div> 
         </>
