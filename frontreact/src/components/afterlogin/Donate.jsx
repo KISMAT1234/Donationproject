@@ -21,7 +21,7 @@ import { userId } from './Mainpage';
 
 import { useDispatch, useSelector  } from 'react-redux';
 import { fetchPayment } from '../../slices/paymentSlice';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const formatNumber = (value) => new Intl.NumberFormat().format(value);
 const NumericInput = (props) => {
@@ -117,37 +117,29 @@ const Donate = () => {
        staleTime: 5 * 1000,
     })
     console.log(postData,'data in tanstack-query')
-    
-
-
-    
-
-    
-
 
     const handleLike = async(id) => {
-        console.log(id,'cmt id')
-        // if (liked) {
-        //     setLiked(false);
-        //   } else {
-        //     setLiked(true);
-        //     setDisliked(false);
-        // }
-        try {
-            const response = await axiosUrl.post(`/comment/like/${id}`);
-            // console.log(response.data.data.like,"response from backend")
-            // setLikeCount(response.data.data.like); 
-            // if (response.data.data.likeIcon === false) {
-            //   setLiked(false);
-            // } else {
-            //   setLiked(true);
-            //   setDisliked(false);
-            // }
-           
-
-        } catch (error) {
-            console.error('server error', error);
-        }
+      console.log(id,'cmt id')
+      // if (liked) {
+      //     setLiked(false);
+      //   } else {
+      //     setLiked(true);
+      //     setDisliked(false);
+      // }
+      try {
+          const response = await axiosUrl.post(`/comment/like/${id}`);
+          // console.log(response.data.data.like,"response from backend")
+          // setLikeCount(response.data.data.like); 
+          // if (response.data.data.likeIcon === false) {
+          //   setLiked(false);
+          // } else {
+          //   setLiked(true);
+          //   setDisliked(false);
+          // }
+         
+      } catch (error) {
+          console.error('server error', error);
+      }
     };
 
     // const getLike = async () => {
@@ -213,6 +205,21 @@ const Donate = () => {
 
   })
   // console.log(commentsList,'commentsList data com')
+
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+    status,
+  } = useInfiniteQuery({
+    queryKey: ['projects'],
+    queryFn: fetchProjects,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
+  })
 
   const {
     mutate:sendComment,
