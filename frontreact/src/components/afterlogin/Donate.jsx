@@ -22,6 +22,7 @@ import { userId } from './Mainpage';
 import { useDispatch, useSelector  } from 'react-redux';
 import { fetchPayment } from '../../slices/paymentSlice';
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import InfiniteScroll from 'react-infinite-scroller/dist/InfiniteScroll';
 
 const formatNumber = (value) => new Intl.NumberFormat().format(value);
 const NumericInput = (props) => {
@@ -192,22 +193,8 @@ const Donate = () => {
 
 
     //FOR COMMENTS
-    const getCommentData = async(id) => {
-      const response = await axiosUrl.get(`/comment/${id}`);
-      // console.log('call in getting comment data')
-      // console.log(response.data.data,'comment data-list')
-      return response.data.data
-  }
-  const {data:commentsList} = useQuery({
-    queryKey:['comments',id],
-    queryFn: () => getCommentData(id),
-    staleTime: 3000,
-
-  })
-  // console.log(commentsList,'commentsList data com')
-
   const {
-    data,
+    data: commentsList,
     error,
     fetchNextPage,
     hasNextPage,
@@ -215,11 +202,25 @@ const Donate = () => {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ['projects'],
-    queryFn: fetchProjects,
-    initialPageParam: 0,
-    getNextPageParam: (lastPage, pages) => lastPage.nextCursor,
+    queryKey: ['comments',id],
+    queryFn: async({id , pageParam = 1}) => {
+      const response = await axiosUrl.get(`/comment/${id}?page=${pageParam}`);
+      console.log('call in getting comment data')
+      // console.log(response.data.data,'comment data-list')
+      return response.data.data
+    },
+    staleTime: 9000,
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      if (lastPage.length > 0) {
+        return allPages.length + 1;
+      }
+      return undefined;
+    },
+    enabled: !!id
   })
+  console.log(commentsList,'commentsList data com')
+
 
   const {
     mutate:sendComment,
@@ -471,6 +472,14 @@ const Donate = () => {
                    <input  type="text" onChange={(e) => setComment(e.target.value)} value={comment} id="input-label" className="  py-3 px-4 block w-full border-gray-200 rounded-lg text-xl focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-400 dark:border-gray-700 dark:text-black" placeholder="write something..."/>
                 </form>
                 <div className="border-2 border-black mx-20 mt-10"></div>
+                <InfiniteScroll 
+                  loadMore={()=>{
+                    if(!isFetching){
+                      fetchNextPage();
+                    }
+                  }}
+                  hasMore={hasNextPage}
+                >
                  <div className="my-10">
                       {isPending && (
                         <h1 className="text-4xl my-10">Sending....</h1>
@@ -560,6 +569,8 @@ const Donate = () => {
                       
                       }
                  </div>
+                 </InfiniteScroll>
+                <div className="my-10 text-2xl font-serif">{isFetching && !isFetchingNextPage ? 'Fetching...' : 'Nothing more to load'}</div>
             </div>
           </div> 
         </>
