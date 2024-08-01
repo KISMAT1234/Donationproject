@@ -5,6 +5,7 @@ import Post from "../model/Post.js";
 import {io}  from "../../app.js";
 import Notification from "../model/Notification.js";
 import User from "../model/Userprofile.js";
+import Pagination from "../helper/Pagination.js";
 
 class CommentController{
      async storeComment(req,res){
@@ -33,9 +34,17 @@ class CommentController{
         try{
         const Id = req.params.id
         // console.log(postId,"fetch id")
+        let {skip, size } = Pagination(req)
+        console.log(skip,size)
 
         
-        const comments = await Comment.find({postId: Id}).populate('userId',['username','image']).sort({ createdAt: -1 }) .exec();
+        const comments = await Comment.find({postId: Id})
+         .populate('userId',['username','image'])
+         .skip(skip)
+         .limit(size)
+         .sort({ createdAt: -1 }) 
+         .exec()
+         
         console.log(comments,'commetn')
         return responseInstance.responseHandler(res,200,'Comment fetch successfull',comments)
 
