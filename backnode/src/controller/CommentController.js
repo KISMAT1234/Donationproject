@@ -33,9 +33,9 @@ class CommentController{
      async getComment(req,res){
         try{
         const Id = req.params.id
-        // console.log(postId,"fetch id")
-        let {skip, size } = Pagination(req)
-        console.log(skip,size)
+        console.log(Id,"fetch id")
+        let {size, skip } = Pagination(req)
+        console.log(size, skip)
 
         
         const comments = await Comment.find({postId: Id})
