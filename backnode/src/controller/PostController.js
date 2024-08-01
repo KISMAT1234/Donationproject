@@ -35,7 +35,8 @@ class PostController{
             // console.log('came here in post1')
             const userId = req.user.userId
             // console.log('userId',userId)
-            let { skip, size } = Pagination(req)
+            let { size, skip} = Pagination(req)
+            console.log(size,skip,'in post ')
         
             let {name} = req.query;
             let queryObject={}
@@ -84,10 +85,6 @@ class PostController{
        if(!userId){
         return responseInstance.responseHandler(res, 400,"Ops! you are unauthorized to delete this post");
        }
-
-    //    const post = await Post.findByIdAndDelete(postId)
-    //    const comment = await Comment.deleteMany({postId: postId})
-    //    console.log(post,'post')
 
        const [post,comment] = await Promise.all([
             Post.findByIdAndDelete(postId),
