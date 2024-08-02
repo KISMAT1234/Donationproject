@@ -2,6 +2,7 @@ import stripe from 'stripe';
 import dotenv from 'dotenv'
 import Handler from "../logger/ResponseHandler.js"
 import Payment from '../model/Payment.js';
+import emailToken from '../helper/emailToken.js';
 
 const secretKey = process.env.SECRET_STRIPE_KEY;
 const stripeInstance = new stripe(secretKey);
@@ -34,10 +35,6 @@ class PaymentController{
                   currency: "usd",
                   product_data: {
                     name: paymentData.postData.name,
-                    // images:'Image', 
-                    // metadata:{
-                    //   postId: paymentData.postId
-                    // },
                   },
                   unit_amount: paymentData.amount, 
                 },
@@ -55,7 +52,13 @@ class PaymentController{
             console.log(payment,'payment')
             await payment.save(); 
 
-            return responseInstance.responseHandler(res,200,'payment', session.id)
+            const donorDetails = await UserActivation.findById(userId)
+            const email = donorDetails.email;
+            
+
+
+         
+          return responseInstance.responseHandler(res,200,'payment', session.id)
             
         }
         catch(err){
