@@ -49,14 +49,26 @@ class PaymentController{
             //  console.log(session,'session stripe');
 
             const payment = new Payment({...paymentInfo});
-            console.log(payment,'payment')
+            // console.log(payment,'payment')
+            
+            if(!payment){
+              return responseInstance.responseHandler(res,400,'Error while sending payment')
+            }
+
             await payment.save(); 
 
             const donorDetails = await UserActivation.findById(userId)
             const email = donorDetails.email;
-            
 
-
+            let value = emailToken.token({
+                email,
+                userId,
+                reason:'payment',
+                title:'Payment Successfull',
+                subject:'Thank you for your payment!',
+                info:user,
+                template:'paymentSuccess'
+            })
          
           return responseInstance.responseHandler(res,200,'payment', session.id)
             
@@ -69,10 +81,9 @@ class PaymentController{
     
     async getPaymentHistoryByPost(req,res){
       try{
-        console.log('request came in getPayment')
         const postId = req.params.id
         const payment = await Payment.find({postId: postId}).populate("donorId")
-        console.log(payment)
+        // console.log(payment)
         if(!payment){
           return responseInstance.responseHandler(res,200,'there is no any payment in this post ')
         }
