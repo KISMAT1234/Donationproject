@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import Handler from "../logger/ResponseHandler.js"
 import Payment from '../model/Payment.js';
 import emailToken from '../helper/emailToken.js';
+import User from '../model/Userprofile.js';
 
 const secretKey = process.env.SECRET_STRIPE_KEY;
 const stripeInstance = new stripe(secretKey);
@@ -57,7 +58,7 @@ class PaymentController{
 
             await payment.save(); 
 
-            const donorDetails = await UserActivation.findById(userId)
+            const donorDetails = await User.findById(userId)
             const email = donorDetails.email;
 
             let value = emailToken.token({
@@ -66,7 +67,7 @@ class PaymentController{
                 reason:'payment',
                 title:'Payment Successfull',
                 subject:'Thank you for your payment!',
-                info:user,
+                info:donorDetails,
                 template:'paymentSuccess'
             })
          
@@ -108,6 +109,27 @@ class PaymentController{
         return responseInstance.responseHandler(res,200,'payment fetch successfull',userPaymentList )
         
       }catch(error){
+        console.log(error)
+        return responseInstance.responseHandler(res,400,'Backend Sever error')
+      }
+    }
+
+    async getPaymentByHighestDonation(req,res){
+      try{
+        
+        const maxPaymentByUser = await Payment.find()
+        
+        if(!maxPaymentByUser){
+          return responseInstance.responseHandler(res,200,'there is no any payment in this post ')
+        }
+
+        maxPaymentByUser.sort((a, b) => b.amount - a.amount);
+        // console.log(maxPaymentByUser,'after-sort')
+
+        return responseInstance.responseHandler(res,200,'payment fetch successfull',maxPaymentByUser )
+
+      }
+      catch(error){
         console.log(error)
         return responseInstance.responseHandler(res,400,'Backend Sever error')
       }
