@@ -89,7 +89,7 @@ const sidebar = () => {
                </div>
          
             </div>
-            <div className="bg-violet-600 h-[30vh] px-4 py-2 mx-4 my-2 rounded-2xl text-white hidden md:block">
+            <div className="bg-violet-600 h-[28vh] px-4 py-2 mx-4 my-2 rounded-2xl text-white hidden md:block">
                 <h1 className="text-2xl text-center text-green-400 font-bold">Top Donors</h1>
                 <div className="font-mono">
                   <div className="flex justify-between">
