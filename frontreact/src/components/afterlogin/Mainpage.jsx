@@ -11,6 +11,8 @@ import { TbDots } from "react-icons/tb";
 import { CiSquareRemove } from "react-icons/ci";
 import { formatDistanceToNow, format  } from 'date-fns';
 import { enUS } from 'date-fns/locale'
+import { Skeleton } from 'antd';
+
 
 
 import { Pagination } from 'antd';
@@ -41,7 +43,15 @@ function Content() {
   const dispatch = useDispatch();
 
 
-  const { data, error, isLoading,fetchNextPage,hasNextPage,isFetchingNextPage,isFetching } = useInfiniteQuery({
+  const { 
+    data, 
+    error, 
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isFetching 
+  } = useInfiniteQuery({
     queryKey: ['post'],
     queryFn:async({pageParam = 1}) =>{
       console.log(pageParam,'param value')
@@ -57,7 +67,7 @@ function Content() {
       return undefined;
     },
     // placeholderData: keepPreviousData,
-    staleTime: 8000,
+    // staleTime: 8000,
     retry: 3,
     retryDelay: 2000,
     refetchOnWindowFocus: false,
@@ -220,7 +230,7 @@ function Content() {
             >
               <div className="mt-28 md:mt-20 ">
                 {flattenedData.map((data, index) => (
-                  <div key={index} className="md:w-[90%]  px-5 py-5 mx-10 my-10 rounded-xl  bg-gray-400 200 border-2 hover:border-green-500 border-gray-200  shadow-md  hover:shadow-lg transform hover:scale-105  transition duration-300 ease-in-out">
+                  <div key={index} className="md:w-[90%]  px-5 py-5 mx-10 my-10 rounded-xl bg-slate-200 border-2 hover:border-green-500 border-gray-200  shadow-md  hover:shadow-lg transform hover:scale-105  transition duration-300 ease-in-out">
                     <div className="flex justify-between">
                       <div className="flex">
                         <div className="w-[10%] md:w-[20%]">
@@ -301,8 +311,16 @@ function Content() {
               </div>
             </InfiniteScroll>
             {isFetchingNextPage && <div className="text-4xl mx-10 my-10">Loading..</div>}
+            {
+            isLoading && <div className="text-4xl">
+                 <Skeleton.Input active style={{ width: '900px', height: '300px' }} className="bg-gray-400 my-2 mx-5 rounded-2xl"/>
+                 <Skeleton.Input active style={{ width: '900px', height: '300px' }} className="bg-gray-400 my-2 mx-5 rounded-2xl"/>
+                 <Skeleton.Input active style={{ width: '900px', height: '300px' }} className="bg-gray-400 my-2 mx-5 rounded-2xl"/>
+              </div>
+            }
             {/* {!hasNextPage && <div className="text-4xl my-5">No more data</div>} */}
         </div>
+
     </>
   )
 }
@@ -311,6 +329,7 @@ export default Content
 {/* <div className="my-20 flex justify-center">
   <Pagination  current={skip} onChange={onChange} total={50} />
 </div> */}
+
 
 
 
