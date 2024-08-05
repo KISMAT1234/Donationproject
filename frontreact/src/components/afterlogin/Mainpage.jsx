@@ -3,7 +3,7 @@ import axiosUrl from "../url/Axiosurl";
 import { useDispatch,useSelector } from 'react-redux';
 import {fetchUpload} from "../../slices/uploadSlice"
 import {jwtDecode} from 'jwt-decode';
-import { Star } from "../../slices/addSlice";
+// import { Star } from "../../slices/addSlice";
 import { Link, useSearchParams } from "react-router-dom";
 import { CiStar } from "react-icons/ci";
 import { MdAccessTime } from "react-icons/md";
@@ -11,6 +11,7 @@ import { TbDots } from "react-icons/tb";
 import { CiSquareRemove } from "react-icons/ci";
 import { formatDistanceToNow, format  } from 'date-fns';
 import { enUS } from 'date-fns/locale'
+
 
 import { Pagination } from 'antd';
 
@@ -59,8 +60,11 @@ function Content() {
     staleTime: 8000,
     retry: 3,
     retryDelay: 2000,
+    refetchOnWindowFocus: false,
+
   });
   console.log(data,'tanstack query data')
+  
   const flattenedData = data?.pages?.flat() || [];
   
   const removePost = (postId) => {
@@ -81,9 +85,9 @@ function Content() {
     //   return favourite.includes(postId);
     // };
     
-    const addToFavourite = async(postId) => {
+    const addToFavourite = async(data,postId) => {
       // console.log(data,'data of fav')
-      // dispatch(fetchUpload(data));
+      dispatch(fetchUpload(data));
       setIsFavourite(prevFavs => {
         if (prevFavs.some(fav => fav.postId === postId)) {
           return prevFavs.filter(fav => fav.postId !== postId);
@@ -91,14 +95,15 @@ function Content() {
           return [...prevFavs, { postId }];
         }
       });
-        try {
-          const response = await axiosUrl.post(`/favourite/${id}`);
-          console.log(response.data.data,'response follower');
-        
-        } catch (err) {
-            console.error("Error fetching user follower data:", err);
-          }
+
+      try {
+        const response = await axiosUrl.post(`/favourite/${postId}`);
+        console.log(response.data.data,'response follower');
+      
+      } catch (err) {
+          console.error("Error fetching user follower data:", err);
         }
+      }
         console.log(isFavourite,'favourite array list ')
   // console.log(content,'content data')
 
@@ -212,7 +217,6 @@ function Content() {
               }}
               // loadMore={fetchNextPage()}
               hasMore={hasNextPage}
-              endMessage={<p>End of Users</p>}
             >
               <div className="mt-28 md:mt-20 ">
                 {flattenedData.map((data, index) => (
@@ -280,7 +284,7 @@ function Content() {
                         </button>
                           )
                         } */}
-                       <button onClick={() =>  addToFavourite(data._id)}>
+                       <button onClick={() =>  addToFavourite(data,data._id)}>
                            {/* <HeartOutlined  className="text-4xl"/>  */}
                            {isFavourite?.some(fav => fav.postId === data._id)  ? 
                                <HeartFilled style={{ color:'red' }}  className="text-4xl"  />
