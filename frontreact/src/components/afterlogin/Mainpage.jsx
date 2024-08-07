@@ -110,6 +110,17 @@ function Content() {
         }
       });
 
+            
+      const updatedPosts = posts.map(post => {
+        if (post._id === postId) {
+          return {
+            ...post,
+            count: post.count + (isFavourite.some(fav => fav.postId === postId) ? -1 : 1)
+          };
+        }
+        return post;
+      });
+      setPosts(updatedPosts);
 
       try {
         const response = await axiosUrl.post(`/favourite/${postId}`);
