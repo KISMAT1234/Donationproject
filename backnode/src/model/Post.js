@@ -17,6 +17,10 @@ const uploadSchema = new mongoose.Schema({
     image:{type:String},
     userId: {type: mongoose.Schema.Types.ObjectId, ref:"User"},
     comments:{type: mongoose.Schema.Types.ObjectId, ref:"Comment"},
+    count: {
+      type: Number,
+      default: 0,
+    },
     createdAt: {
         type: String,
         default: () => {
