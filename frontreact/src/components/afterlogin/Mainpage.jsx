@@ -39,6 +39,7 @@ export const userId = decodedToken?.id || null;
 
 function Content() {
   const [isFavourite, setIsFavourite] = useState([]); 
+  const [posts, setPosts] = useState([]);
   // const [current, setCurrent] = useState(1);
   const dispatch = useDispatch();
 
@@ -74,8 +75,14 @@ function Content() {
 
   });
   console.log(data,'tanstack query data')
+
+  useEffect(() => {
+    if (data?.pages) {
+      setPosts(data.pages.flat());
+    }
+  }, [data]);
   
-  const flattenedData = data?.pages?.flat() || [];
+  // const flattenedData = data?.pages?.flat() || [];
   
   const removePost = (postId) => {
       // console.log(postId,'id to remove')
@@ -90,14 +97,11 @@ function Content() {
 
 
 
-//FAVOURITE
-    // const isPostFavourite = (postId) => {
-    //   return favourite.includes(postId);
-    // };
-    
-    const addToFavourite = async(data,postId) => {
+// ************** FAVOURITE *****************
+
+    const addToFavourite = async(value,postId) => {
       // console.log(data,'data of fav')
-      dispatch(fetchUpload(data));
+      dispatch(fetchUpload(value));
       setIsFavourite(prevFavs => {
         if (prevFavs.some(fav => fav.postId === postId)) {
           return prevFavs.filter(fav => fav.postId !== postId);
@@ -105,6 +109,7 @@ function Content() {
           return [...prevFavs, { postId }];
         }
       });
+
 
       try {
         const response = await axiosUrl.post(`/favourite/${postId}`);
@@ -229,7 +234,7 @@ function Content() {
               hasMore={hasNextPage}
             >
               <div className="mt-28 md:mt-20 ">
-                {flattenedData.map((data, index) => (
+                {posts.map((data, index) => (
                   <div key={index} className="md:w-[90%]  px-5 py-5 mx-10 my-10 rounded-xl bg-slate-200 border-2 hover:border-green-500 border-gray-200  shadow-md  hover:shadow-lg transform hover:scale-105  transition duration-300 ease-in-out">
                     <div className="flex justify-between">
                       <div className="flex">
@@ -279,31 +284,16 @@ function Content() {
                           </button>
                         </Link>
                       </div>
-                      <div>
-                       
-                        {/* {
-                          favourite?.includes(data._id) ? (
-                            <button onClick={() => addToCart(data,data._id)}>
-                              <HeartFilled style={{ color:'red' }}  className="text-4xl"  />
-                            </button>
-                          ) : (
-                        <button 
-                          onClick={()=>addToCart(data, data._id)}
-                        >
-                          <HeartOutlined  className="text-4xl"  />
-                        </button>
-                          )
-                        } */}
-                       <button onClick={() =>  addToFavourite(data,data._id)}>
+                      <div className="flex">
+                        <button onClick={() =>  addToFavourite(data,data._id)}>
                            {/* <HeartOutlined  className="text-4xl"/>  */}
                            {isFavourite?.some(fav => fav.postId === data._id)  ? 
                                <HeartFilled style={{ color:'red' }}  className="text-4xl"  />
                                : 
                                <HeartOutlined  className="text-4xl"/> 
- 
-                          }
-                           
+                            }
                         </button>
+                        <h1 className="text-4xl mx-2">{data.count}</h1>
                       </div>
                     </div>
                   </div>
@@ -313,9 +303,9 @@ function Content() {
             {isFetchingNextPage && <div className="text-4xl mx-10 my-10">Loading..</div>}
             {
             isLoading && <div className="text-4xl">
-                 <Skeleton.Input active style={{ width: '900px', height: '300px' }} className="bg-gray-400 my-2 mx-5 rounded-2xl"/>
-                 <Skeleton.Input active style={{ width: '900px', height: '300px' }} className="bg-gray-400 my-2 mx-5 rounded-2xl"/>
-                 <Skeleton.Input active style={{ width: '900px', height: '300px' }} className="bg-gray-400 my-2 mx-5 rounded-2xl"/>
+                 <Skeleton.Input active style={{ width: '600px', height: '200px' }} className="bg-gray-400 my-2 mx-5 rounded-2xl"/>
+                 <Skeleton.Input active style={{ width: '600px', height: '200px' }} className="bg-gray-400 my-2 mx-5 rounded-2xl"/>
+                 <Skeleton.Input active style={{ width: '600px', height: '200px' }} className="bg-gray-400 my-2 mx-5 rounded-2xl"/>
               </div>
             }
             {/* {!hasNextPage && <div className="text-4xl my-5">No more data</div>} */}
