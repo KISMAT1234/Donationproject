@@ -24,7 +24,10 @@ class FavouriteController {
          } else {
              const fav = new Favourite({ postId:postId, userId:userId });
             //  console.log(fav,'fav value')
-            
+             const postData = await Post.findById(postId)
+            //  console.log(postData,'post-data')
+             postData.count++
+             await postData.save()
              await fav.save();
              return responseInstance.responseHandler(res,200,'Added to favourite success')
          }
