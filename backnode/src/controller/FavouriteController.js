@@ -1,5 +1,6 @@
 import Favourite from "../model/Favourite.js";
 import Handler from "../logger/ResponseHandler.js"
+import Post from "../model/Post.js";
 const responseInstance = new Handler();
 
 
@@ -13,11 +14,17 @@ class FavouriteController {
          console.log(favourite,'checking favourite ')
          if (favourite) {
              const data = await Favourite.findByIdAndDelete(favourite._id);
-             console.log(data,'delete favourite data')
+            //  console.log(data,'delete favourite data')
+
+             const postData = await Post.findById(postId)
+            //  console.log(postData,'post-data')
+             postData.count--
+             postData.save()
              return responseInstance.responseHandler(res,200,'Remove from favourites success')
-         }else{
+         } else {
              const fav = new Favourite({ postId:postId, userId:userId });
-             console.log(fav,'fav value')
+            //  console.log(fav,'fav value')
+            
              await fav.save();
              return responseInstance.responseHandler(res,200,'Added to favourite success')
          }
