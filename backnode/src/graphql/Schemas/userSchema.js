@@ -5,6 +5,7 @@ export default gql`
         id: ID!
         username: String!
         email: String!
+        password:String!
     }
 
     type Query {
@@ -14,7 +15,7 @@ export default gql`
 
 
      type Mutation{
-        Signup(username: String!, email: String!, password: String!): User!
+        Register(data: SignupInput!): User!
     }
 
     input SignupInput {
