@@ -60,29 +60,36 @@ const App = () => {
 
   const onFinish = async(values) => {
     console.log(values,'console value')
-
-  
-   
     // if (!imageFile) {
     //   message.error('Please upload an image');
     //   return;
     // }
     // const values =  form.validateFields(); 
 
-    const { username, email, password, confirmpassword } = values;
 
-    const formData = new FormData();
-    formData.append('username', username);
-    formData.append('email', email);
-    formData.append('password', password);
+    const formData = {
+      username: values.username,
+      email: values.email,
+      password: values.password,
+      // image: values.image
+    };
+    console.log(formData,'formdsdta')
 
     try {
-      const { data: userData } = await signup({
-        variables: { username, email, password },
+      const { data } = await signup({
+        variables: { formData },
       });
-      console.log('User created:', userData.createUser);
+      console.log('User created:', data);
     } catch (error) {
-      console.error('Error creating user:', error);
+      console.error('GraphQL Error:', error.message);
+      if (error.graphQLErrors) {
+        error.graphQLErrors.forEach(({ message, locations, path }) =>
+          console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
+        );
+      }
+      if (error.networkError) {
+        console.log(`[Network error]: ${error.networkError}`);
+      }
     }
 
 
