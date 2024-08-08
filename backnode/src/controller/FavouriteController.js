@@ -5,12 +5,12 @@ const responseInstance = new Handler();
 
 
 class FavouriteController {
-    async addToCart(req,res){
+    async addToFavourite(req,res){
         try{
          const userId = req.user.userId;
          const postId = req.params.id;
 
-         const favourite = await Favourite.findOne({postId});
+         const favourite = await Favourite.findOne({postId, userId});
          console.log(favourite,'checking favourite ')
          if (favourite) {
              const data = await Favourite.findByIdAndDelete(favourite._id);
