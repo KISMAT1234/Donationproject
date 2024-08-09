@@ -163,57 +163,63 @@ function Topbar() {
                </div> 
               </div> 
            </form>
-
-
-                 {showSearchContainer && (
-                  <div
-                    ref={containerRef}
-                    className="container text-white w-[100%] z-20 bg-gray-600 border border-gray-800 h-[60vh] shadow-md p-4 rounded-md animate-fadeIn"
-                  >
-                    {searchData && searchData.length > 0 ? (
-                      searchData.slice(0, 10).map((value, index) => (
-                        <div
-                          key={index}
-                          onClick={() => handleSearchItemClick(value.search)}
-                          className={`px-2 flex justify-between hover:text-black py-2 text-2xl font-normal cursor-pointer hover:bg-gray-200 rounded-2xl ${
-                            index === highlightedIndex ? "bg-gray-300" : ""
-                          }`}
-                        >
-                          <div className="">
-                            <h1>{value.username}</h1>
-                          </div>
-                        </div>
-                      ))
-                    ) : (
-                      data &&
-                      data.slice(0, 10).map((value, index) => (
-                        <>
-                          <div className="flex justify-between">
-                            <div
-                              key={index}
-                              onClick={() => handleSearchItemClick(value.search)}
-                              className={`px-2 w-[90%] flex justify-between hover:text-black py-2 text-2xl font-normal cursor-pointer hover:bg-gray-200 rounded-2xl ${
-                                index === highlightedIndex ? "bg-gray-300" : ""
-                              }`}
-                            >
-                              <div className="flex">
-                                <h1 className="mt-2 mx-2">
-                                  <MdHistory />
-                                </h1>
-                                <h1>{value.search}</h1>
+            {showSearchContainer && (
+              <div
+                ref={containerRef}
+                className="container text-white w-[100%] z-20 bg-gray-600 border border-gray-800 h-[60vh] shadow-md p-4 rounded-md animate-fadeIn"
+              >
+                {searchData && searchData.length > 0 ? (
+                  searchData.slice(0, 10).map((value, index) => (
+                    <div
+                      key={index}
+                      onClick={() => handleSearchItemClick(value.search)}
+                      className={`px-2 flex justify-between hover:text-black py-2 text-2xl font-normal cursor-pointer hover:bg-gray-200 rounded-2xl ${
+                        index === highlightedIndex ? "bg-gray-300" : ""
+                      }`}
+                    >
+                      <div className="">
+                        <h1>{value.username}</h1>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <>
+                    { data?.length > 0 ? (
+                        data && data.slice(0, 10).map((value, index) => (
+                          <>
+                            <div className="flex justify-between">
+                              <div
+                                key={index}
+                                onClick={() => handleSearchItemClick(value.search)}
+                                className={`px-2 w-[90%] flex justify-between hover:text-black py-2 text-2xl font-normal cursor-pointer hover:bg-gray-200 rounded-2xl ${
+                                  index === highlightedIndex ? "bg-gray-300" : ""
+                                }`}
+                              >
+                                <div className="flex">
+                                  <h1 className="mt-2 mx-2">
+                                    <MdHistory />
+                                  </h1>
+                                  <h1>{value.search}</h1>
+                                </div>
+                              </div>
+                              <div>
+                                <button className="mt-2 text-4xl hover:text-red-500" onClick={(e)=>deleteSearchHistory(e,value._id)}>
+                                  <CiCircleRemove />
+                                </button>
                               </div>
                             </div>
-                            <div>
-                              <button className="mt-2 text-4xl hover:text-red-500" onClick={(e)=>deleteSearchHistory(e,value._id)}>
-                                <CiCircleRemove />
-                              </button>
-                            </div>
-                          </div>
-                        </>
-                      ))
-                    )}
-                  </div>
-                )}   
+                          </>
+                        ))
+                      ) : (
+                      <>
+                        <h1 className="text-red-400 text-center mt-40">There are no any search history</h1>
+                      </>
+                      )
+                    }
+                  </>
+                )}
+              </div>
+            )}   
            </div>
            <div className="flex px-5 py-3">
             <div className="text-3xl mx-2 mt-2 hover:text-blue-600">
