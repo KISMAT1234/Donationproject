@@ -12,7 +12,10 @@ import { CiSquareRemove } from "react-icons/ci";
 import { formatDistanceToNow, format  } from 'date-fns';
 import { enUS } from 'date-fns/locale'
 import { Skeleton } from 'antd';
-
+import { CiFlag1 } from "react-icons/ci";
+import { FaShare } from "react-icons/fa";
+import { MdNotInterested } from "react-icons/md";
+import { MdOutlineSnooze } from "react-icons/md";
 
 
 import { Pagination } from 'antd';
@@ -84,14 +87,14 @@ function Content() {
   
   // const flattenedData = data?.pages?.flat() || [];
   
-  const removePost = (postId) => {
-      // console.log(postId,'id to remove')
-      message.success('removed success');
-    }
-    const cancel = (e) => {
-      console.log(e);
-      message.error('Cancelled');
-    };
+  // const removePost = (postId) => {
+  //     // console.log(postId,'id to remove')
+  //     message.success('removed success');
+  //   }
+  //   const cancel = (e) => {
+  //     console.log(e);
+  //     message.error('Cancelled');
+  //   };
  
    
 
@@ -151,20 +154,24 @@ function Content() {
 
   const more = (
     <div className=" mx-10 block">
-      <Link to="">
-          <h1 className="text-xl hover:text-red-600 font-mono my-1">report</h1>
+      <Link to="" className="flex hover:bg-gray-200 rounded-xl px-2 py-2">
+          <CiFlag1 className="text-2xl mx-2 mt-2"/>
+          <h1 className="text-xl hover:text-red-600 font-mono my-1">Report</h1>
       </Link>
 
-      <Link to="">
-          <h1 className="text-xl hover:text-red-600 font-mono my-1">report</h1>
+      <Link to="" className="flex hover:bg-gray-200 rounded-xl px-2 py-2">
+          <FaShare className="text-2xl mx-2 mt-2"/>
+          <h1 className="text-xl hover:text-red-600 font-mono my-1">Share</h1>
       </Link>
 
-      <Link to="">
-          <h1 className="text-xl hover:text-red-600 font-mono my-1">report</h1>
+      <Link to="" className="flex hover:bg-gray-200 rounded-xl px-2 py-2">
+          <MdNotInterested className="text-2xl mx-2 mt-2"/>
+          <h1 className="text-xl hover:text-red-600 font-mono my-1">Not Interested</h1>
       </Link>
 
-      <Link to="">
-          <h1 className="text-xl hover:text-red-600 font-mono my-1">report</h1>
+      <Link to="" className="flex hover:bg-gray-200 rounded-xl px-2 py-2">
+          <MdOutlineSnooze className="text-2xl mx-2 mt-2"/>
+          <h1 className="text-xl hover:text-red-600 font-mono my-1">Snooze</h1>
       </Link>
     </div>
   );
@@ -264,7 +271,7 @@ function Content() {
                               <TbDots className="mr-2 hover:text-blue-500"/>
                             </button>
                           </Popover>
-                          <Popconfirm
+                          {/* <Popconfirm
                             title="Remove the task"
                             description="Are you sure to remove this task?"
                             onConfirm={() => removePost(data._id)}
@@ -278,7 +285,7 @@ function Content() {
                             }
                           >
                             <button className=""><CiSquareRemove className="text-4xl  hover:text-red-600 mx-5 my-5"/></button>
-                          </Popconfirm>
+                          </Popconfirm> */}
                       </div>
                     </div>
                     <div className="my-2 text-xl font-light">Name: {data.name}</div>
