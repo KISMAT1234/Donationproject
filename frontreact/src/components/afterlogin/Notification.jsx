@@ -31,32 +31,40 @@ const Notification = ({socket}) => {
 
   return (
     <div className="mt-5">
-      <h3>Notifications</h3>
       <ul>
-        {notifications.map((notification) => (
+        {notifications?.length>0 ? (
           <>
-          <div className=" bg-slate-200 px-5 py-5 my-1 rounded-2xl">
-            <div className="flex justify-between">
-              <div>
-                <h1>Image</h1>
+          <h3>Notifications</h3>
+          {
+          notifications.map((notification) => (
+            <>
+
+            <div className=" bg-slate-200 px-5 py-5 my-1 rounded-2xl">
+              <div className="flex justify-between">
+                <div>
+                  <h1>Image</h1>
+                </div>
+                <div>
+                   <h1>{notification.createdAt}</h1>
+                </div>
+                <div>
+                  <h1>...</h1>
+                </div>
               </div>
               <div>
-                 <h1>{notification.createdAt}</h1>
-              </div>
-              <div>
-                <h1>...</h1>
+                <h1>{notification.message}</h1>
               </div>
             </div>
-            <div>
-              <h1>{notification.message}</h1>
-            </div>
-          </div>
-          {/* <li key={notification._id}>{notification.message}</li> */}
-          {/* <li key={notification._id}>{notification.}</li>
-          <li key={notification._id}>{notification.message}</li>
-          <li key={notification._id}>{notification.message}</li> */}
+            {/* <li key={notification._id}>{notification.message}</li> */}
+            {/* <li key={notification._id}>{notification.}</li>
+            <li key={notification._id}>{notification.message}</li>
+            <li key={notification._id}>{notification.message}</li> */}
+            </>
+          ))}
           </>
-        ))}
+        ) : (
+          <h1 className="text-center text-2xl mt-[200px]">There are no any notification</h1>
+        )}
       </ul>
     </div>
   );
