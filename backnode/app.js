@@ -17,6 +17,7 @@ import {expressMiddleware} from '@apollo/server/express4'
 import rootSchema from "./src/graphql/Schemas/index.js"
 import rootResolver  from './src/graphql/Resolvers/index.js'
 import { setupSwagger } from './documentation/index.js';
+import sanitizeHtmlInput from './src/middleware/sanitize.js';
 
 
 
@@ -30,6 +31,9 @@ app.use(express.json());
 app.use(helmet());
 
 app.use(status())
+
+app.use(sanitizeHtmlInput)
+
 // app.use(cors());
 app.use(cors({
   origin: 'http://localhost:5173', // replace with your frontend URL

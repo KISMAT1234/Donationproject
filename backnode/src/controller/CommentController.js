@@ -10,20 +10,20 @@ import Pagination from "../helper/Pagination.js";
 class CommentController{
      async storeComment(req,res){
         try{
-          const {comment} = req.body
-          console.log(comment)
-        const postId = req.params.id
-        // console.log(postId, "post id");
-        let userId = req.user.userId
-        // console.log(userId,"user Id")
+          let {comment} = req.body
+          console.log(comment,'after sanitize')
+      //   const postId = req.params.id
+      //   // console.log(postId, "post id");
+      //   let userId = req.user.userId
+      //   // console.log(userId,"user Id")
 
-        const userCmt = new Comment({...req.body,userId:userId,postId:postId})
-        console.log(userCmt)
-        await userCmt.save();
-        if(!userCmt){
-            return responseInstance.responseHandler(res,400,'Failed to send comment')
-        }
-            return responseInstance.responseHandler(res,200,'Comment send successfull')
+      //   const userCmt = new Comment({...req.body,userId:userId,postId:postId})
+      //   console.log(userCmt)
+      //   await userCmt.save();
+      //   if(!userCmt){
+      //       return responseInstance.responseHandler(res,400,'Failed to send comment')
+      //   }
+      //       return responseInstance.responseHandler(res,200,'Comment send successfull')
           }
     catch(err){
             res.status(500).json(err);

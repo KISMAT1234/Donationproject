@@ -6,8 +6,6 @@ export const fetchUpload = createAsyncThunk("fetchUpload", async () => {
    return axiosUrl
    .get("/upload")
    .then((response)=> response.data)
-
-    
   })
 
 

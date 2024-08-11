@@ -6,6 +6,8 @@ const rootSchema = gql`
         _empty: String
     }
 
+    
+
     type Mutation {
         _empty: String
     }
