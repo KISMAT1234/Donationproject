@@ -18,6 +18,7 @@ import rootSchema from "./src/graphql/Schemas/index.js"
 import rootResolver  from './src/graphql/Resolvers/index.js'
 import { setupSwagger } from './documentation/index.js';
 import sanitizeHtmlInput from './src/middleware/sanitize.js';
+import apiRateLimiter from './src/middleware/apiLimiter.js';
 
 
 
@@ -26,13 +27,17 @@ dotenv.config();
 
 const app = express();
 
-app.use(express.json());
-
 app.use(helmet());
+
+app.use(apiRateLimiter)
 
 app.use(status())
 
+app.use(express.json());
+
 app.use(sanitizeHtmlInput)
+
+
 
 // app.use(cors());
 app.use(cors({
