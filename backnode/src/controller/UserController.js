@@ -8,6 +8,7 @@ const responseInstance = new Handler();
 import bcrypt from "bcrypt"
 import slugify from'slugify';
 import Follow from "../model/Follow.js";
+import { emailQueue, emailQueueName } from "../helper/queue.js";
 
 class UserController{
     async getOneUser(req,res){
@@ -45,13 +46,17 @@ class UserController{
     async getAllUser(req,res){
         try{
             // let {userRole} = req.user 
-            const ownerId = req.user.userId
-             const user =  await User.find({ _id: { $ne: ownerId } }).select('-password');
-            if(user){
-            //  console.log(user)
-            //  return res.status(201).json(users)
-             return responseInstance.responseHandler(res,200,'data fetch success',user)
-            }        
+            // const ownerId = req.user.userId
+            //  const user =  await User.find({ _id: { $ne: ownerId } }).select('-password');
+            // if(user){
+            //  return responseInstance.responseHandler(res,200,'data fetch success',user)
+            // }
+            // return responseInstance.responseHandler(res,200,'There is no any data')
+
+             const user =  await User.find();
+
+             await emailQueue.add(emailQueueName , user)
+
         }catch(err){
             return responseInstance.responseHandler(res,500,'failed to fetch user data')
 
