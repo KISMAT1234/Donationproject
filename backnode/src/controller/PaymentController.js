@@ -117,14 +117,11 @@ class PaymentController{
     async getPaymentByHighestDonation(req,res){
       try{
         
-        const maxPaymentByUser = await Payment.find()
+        const maxPaymentByUser = await Payment.find().sort({ amount: -1 }).limit(5)
         
         if(!maxPaymentByUser){
           return responseInstance.responseHandler(res,200,'there is no any payment in this post ')
         }
-
-        maxPaymentByUser.sort((a, b) => b.amount - a.amount);
-        // console.log(maxPaymentByUser,'after-sort')
 
         return responseInstance.responseHandler(res,200,'payment fetch successfull',maxPaymentByUser )
 
