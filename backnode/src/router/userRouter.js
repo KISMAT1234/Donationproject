@@ -17,7 +17,7 @@ const routerInstance = new UserController();
 // userRouter.post('/',validate(signupSchema),upload.single('image'), routerInstance.store)
 // userRouter.post('/',upload.single('image'), routerInstance.store)
 // userRouter.get('/admin',restrictTo(["admin"]), routerInstance.getUser)
-userRouter.get('/',authenticate,routerInstance.getAllUser)
+userRouter.get('/',routerInstance.getAllUser)
 userRouter.get('/:id',authenticate, routerInstance.getOneUser)
 userRouter.patch('/:slug', routerInstance.UpdateUserProfile)
 // userRouter.get('/',authenticate,authorize(["admin"]), routerInstance.getAllUser)
