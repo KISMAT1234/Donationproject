@@ -1,6 +1,7 @@
 import { Queue, Worker } from 'bullmq';
 import {client} from '../config/redis.js'; // Ensure this is ioredis
 import { defaultQueueConfig } from '../config/bullMq.js';
+import emailToken from './emailToken.js';
 
 export const emailQueueName = 'email-queue';
 
@@ -12,8 +13,25 @@ export const emailQueue = new Queue(emailQueueName, {
 export const handler = new Worker(
   emailQueueName,
   async (job) => {
-    console.log('Inside handler data', job.data);
-    // Your email handling logic
+    
+    const data = job.data;
+    data?.map( (user) => {
+      const email = user.email
+      const userId = user._id;
+      if(user){
+          let value = emailToken.token({
+              email,
+              userId,
+              reason:'verify',
+              title:'Verify Account',
+              subject:'Link to verify your account',
+              info:user,
+              template:'signupMessage'
+          })
+      }else{
+          return responseInstance.responseHandler(res,501,'User not found')
+      }
+    });
   },
   { connection: client }
 );
