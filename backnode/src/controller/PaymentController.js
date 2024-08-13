@@ -117,7 +117,7 @@ class PaymentController{
     async getPaymentByHighestDonation(req,res){
       try{
         
-        const maxPaymentByUser = await Payment.find().sort({ amount: -1 }).limit(5)
+        const maxPaymentByUser = await Payment.find().sort({ amount: -1 }).limit(5).populate("donorId")
         
         if(!maxPaymentByUser){
           return responseInstance.responseHandler(res,200,'there is no any payment in this post ')
