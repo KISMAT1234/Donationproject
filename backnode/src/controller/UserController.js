@@ -8,7 +8,8 @@ const responseInstance = new Handler();
 import bcrypt from "bcrypt"
 import slugify from'slugify';
 import Follow from "../model/Follow.js";
-import { emailQueue, emailQueueName } from "../helper/queue.js";
+import { emailQueue, emailQueueName } from "../queue/emailJob.js";
+import oAuth2Client from "../config/googleConfig.js";
 
 class UserController{
     async getOneUser(req,res){
@@ -55,7 +56,7 @@ class UserController{
 
              const user =  await User.find();
 
-             await emailQueue.add(emailQueueName , user)
+            //  await emailQueue.add(emailQueueName , user)
 
         }catch(err){
             return responseInstance.responseHandler(res,500,'failed to fetch user data')
@@ -221,6 +222,19 @@ class UserController{
         }
         catch(err){
             console.log(err)
+        }
+    }
+
+    async googleLogin(req,res){
+        try {
+        //    const {code } = req.query
+        //    const googleRes = await oAuth2Client.getToken(code)
+        //    console.log(googleRes, 'google token getting')
+        //    oAuth2Client.setCredentials(googleRes.tokens)
+
+        //    const userRes = await axios
+        }catch(err){
+
         }
     }
 
