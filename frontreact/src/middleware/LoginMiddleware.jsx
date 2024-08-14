@@ -28,33 +28,30 @@ function LoginMiddleware(){
             
         },[]);
 
-    useEffect(()=>{
-
-    },[loading])
-
-    
-        if(loading)
-            {
-                <h1>Loading content</h1>
-            }
-        // {
-        //             Swal.fire({
-        //               icon: "success",
-        //               title: "Login Successfull",
-        //               showConfirmButton: false,
-        //               timer: 1500
-        //             });
-        //          }
-            else{
-            if(isLogin){
-                return(
-                    <>
-                    <Layout></Layout>
-                  </>
-                );
-            }else{
-                window.location.href="/";
-            }
+ 
+    if(loading){
+        return(
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-12 text-center">
+                        <h1>Loading...</h1>
+                    </div>
+                </div>
+            </div>
+        )
+        }else{
+          if(isLogin){
+            return(
+                <>
+                <Layout></Layout>
+              </>
+            );
+        }else{
+            window.location.href="/";
         }
+    }
 }
 export default LoginMiddleware;
+
+
+
