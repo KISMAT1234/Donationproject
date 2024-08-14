@@ -3,6 +3,8 @@ import Post from "../model/Post.js";
 import TokenCheck from "../middleware/TokenVerify.js";
 import Token from "../model/Token.js";
 import emailToken from "../helper/emailToken.js"
+import Handler from "../logger/ResponseHandler.js"
+const responseInstance = new Handler();
 
 
  class LoginController {
