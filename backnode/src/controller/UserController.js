@@ -10,6 +10,7 @@ import slugify from'slugify';
 import Follow from "../model/Follow.js";
 import { emailQueue, emailQueueName } from "../queue/emailJob.js";
 import oAuth2Client from "../config/googleConfig.js";
+import axios from 'axios'
 
 class UserController{
     async getOneUser(req,res){
@@ -227,12 +228,35 @@ class UserController{
 
     async googleLogin(req,res){
         try {
-        //    const {code } = req.query
-        //    const googleRes = await oAuth2Client.getToken(code)
-        //    console.log(googleRes, 'google token getting')
-        //    oAuth2Client.setCredentials(googleRes.tokens)
+           const {code } = req.query
 
-        //    const userRes = await axios
+           const googleRes = await oAuth2Client.getToken(code)
+
+           console.log(googleRes, 'google token getting')
+
+           oAuth2Client.setCredentials(googleRes.tokens)
+
+           const userRes = await axios.get(
+            `https://www.google.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`
+           )
+           console.log(userRes,'user data response by getting from google')
+
+           const {email, username, picture} = userRes.data
+
+           let user = await User.findOne({email})
+
+           if(user){
+
+            return responseInstance.responseHandler(res,201,'User already exists')
+
+           }
+
+           let token = user.generateToken();
+           console.log(token,'tokend to send to backend')
+           
+           return responseInstance.responseHandler(res,200,'User create successfully',token)
+
+
         }catch(err){
 
         }
