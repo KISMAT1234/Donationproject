@@ -15,6 +15,9 @@ import { Link } from "react-router-dom";
 
 import { SIGNUP_MUTATION } from "../../graphql/mutations/userMutation";
 import { useMutation } from "@apollo/client";
+import google from "../../../../backnode/public/google.png";
+import { useGoogleLogin } from "@react-oauth/google"
+import { googleAuth } from "../../middleware/googleAuth";
 
 
 
@@ -91,8 +94,6 @@ const App = () => {
         console.log(`[Network error]: ${error.networkError}`);
       }
     }
-
-
     // axiosUrl.post("/user",formData).then((response)=>{
     //   console.log(response.data,'response signup')
     //   setEmailMessage(response.data.message)
@@ -119,12 +120,37 @@ const beforeUpload = (file) => {
 };
 
 
+const responseGoogle = async (authResult) => {
+  try{
+    console.log(authResult,'authresult in responseGoogle')
+    if(authResult['code']){
+      console.log('came inside auth')
+      const result = await googleAuth(authResult['code']);
+      console.log(result, result.data.user)
+      const {email,name, image} = result?.data.user
+    }
+  }catch(error){
+    console.log(error,'error in client side')
+  }
+}
+
+const googleLogin = useGoogleLogin({
+  onSuccess: responseGoogle,
+  onError: responseGoogle,
+  flow:'auth-code'
+})
+
+// const googleLogin = () => {
+//   window.open("http://localhost:6005/auth/google/callback","_self")
+// }
+
 
 
   return (
     <>
     {/* <Nav to="true"/> */}
     <div className="px-10 py-10 md:flex md:justify-around">
+      <div>
 
     <Form
     className="w-[90%] bg-stone-400 px-2 py-5 rounded-2xl shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)]"
@@ -238,11 +264,17 @@ const beforeUpload = (file) => {
         <h1 className="text-2xl">{emailMessage}</h1>
       </div>
     </Form>
-
+    <button
+      onClick={googleLogin}
+      className=" flex items-center font-semibold justify-center h-14 px-6 mt-4 text-xl  transition-colors duration-300 bg-white border-2 border-black text-black rounded-lg focus:shadow-outline hover:bg-slate-200"
+    >
+      <img src={google} alt="Google Logo" width={40} height={40} />
+      <span className="ml-4">Continue with Google</span>
+    </button>
+    </div>
     <div>
        <img src={signup} className="md:ml-5  rounded-2xl"/>
     </div>
-
     </div>
     </>
   );
