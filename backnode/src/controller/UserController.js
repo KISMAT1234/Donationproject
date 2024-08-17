@@ -184,6 +184,8 @@ class UserController{
         
         }catch(err){
          console.log(err)
+         return responseInstance.responseHandler(res,501,'Failed in server side')
+
         }
     }
 
@@ -191,7 +193,9 @@ class UserController{
         try{
             console.log('came here')
           const data = req.body
+
           const prevValue= data.previouspassword
+          
           const newValue= data.newpassword
           console.log(prevValue,'password value')
 
@@ -223,15 +227,17 @@ class UserController{
         }
         catch(err){
             console.log(err)
+            return responseInstance.responseHandler(res,501,'Failed in server side')
         }
     }
 
     async googleLogin(req,res){
         try {
+            console.log('came here in google Login')
            const {code } = req.query
+           console.log(code, 'google login code')
 
            const googleRes = await oAuth2Client.getToken(code)
-
            console.log(googleRes, 'google token getting')
 
            oAuth2Client.setCredentials(googleRes.tokens)
@@ -241,24 +247,31 @@ class UserController{
            )
            console.log(userRes,'user data response by getting from google')
 
-           const {email, username, picture} = userRes.data
+           const {email, name, picture} = userRes.data
+              console.log(email, name, picture)
 
            let user = await User.findOne({email})
 
            if(user){
-
             return responseInstance.responseHandler(res,201,'User already exists')
-
            }
+              
+            user = await User.create({
+                username: name,
+                email,
+                image: image
+            })
 
            let token = user.generateToken();
            console.log(token,'tokend to send to backend')
-           
-           return responseInstance.responseHandler(res,200,'User create successfully',token)
+
+           const userData = {user,token}
+
+           return responseInstance.responseHandler(res,200,'User create successfully',userData)
 
 
         }catch(err){
-
+            return responseInstance.responseHandler(res,501,'Failed in server side')
         }
     }
 
