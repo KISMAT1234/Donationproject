@@ -22,6 +22,7 @@ userRouter.get('/:id',authenticate, routerInstance.getOneUser)
 userRouter.patch('/:slug', routerInstance.UpdateUserProfile)
 // userRouter.get('/',authenticate,authorize(["admin"]), routerInstance.getAllUser)
 userRouter.get('/:id/verify/:token',routerInstance.verifyEmail)
+userRouter.get('/google', routerInstance.googleLogin)
 userRouter.post('/:id/forgot/:token',routerInstance.forgotPassword)
 userRouter.patch('/',authenticate,routerInstance.changePassword)
 
