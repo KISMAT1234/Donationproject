@@ -233,7 +233,6 @@ class UserController{
 
     async googleLogin(req,res){
         try {
-            console.log('came here in google Login')
            const {code } = req.query
            console.log(code, 'google login code')
 
@@ -243,7 +242,7 @@ class UserController{
            oAuth2Client.setCredentials(googleRes.tokens)
 
            const userRes = await axios.get(
-            `https://www.google.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`
+            `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${googleRes.tokens.access_token}`
            )
            console.log(userRes,'user data response by getting from google')
 
@@ -251,11 +250,12 @@ class UserController{
               console.log(email, name, picture)
 
            let user = await User.findOne({email})
+           console.log(user,'user email')
 
            if(user){
-            return responseInstance.responseHandler(res,201,'User already exists')
+            console.log('inside email exists')
+            return responseInstance.responseHandler(res,401,'User already exists')
            }
-              
             user = await User.create({
                 username: name,
                 email,
