@@ -8,8 +8,8 @@ dotenv.config();
 const userSchema = new mongoose.Schema({
     username: { type: String},
     email:{type: String},
-    password :{type:String},
-    // image:{type:String},
+    password :{type:String,default:"loginfromoauth"},
+    // image:{type:String,default:""},
     role:{
         type: String,
         enum: ["user", "admin"],
@@ -70,12 +70,13 @@ userSchema.methods.comparePassword = async function(password){
 }
 
 userSchema.methods.generateToken = function () {
+    // console.log('came here')
     let userData = {
         id: this._id,
         role: this.role,
     }
 
-    const getToken = jwt.sign(userData, process.env.JWT_SECRET,process.env.JWT_TIMEOUT)
+    const getToken = jwt.sign(userData, process.env.JWT_SECRET,{ expiresIn: process.env.JWT_TIMEOUT })
     // console.log(getToken);
     return getToken;
 }
