@@ -256,18 +256,19 @@ class UserController{
             console.log('inside email exists')
             return responseInstance.responseHandler(res,401,'User already exists')
            }
-            user = await User.create({
+            user = new User({
                 username: name,
-                email,
-                image: image
+                email: email,
             })
+            user.slug = slugify(user.username, { lower: true });
 
+           console.log(user,'user created')
+           await user.save();
            let token = user.generateToken();
            console.log(token,'tokend to send to backend')
 
-           const userData = {user,token}
 
-           return responseInstance.responseHandler(res,200,'User create successfully',userData)
+           return responseInstance.responseHandler(res,200,'User create successfully',token)
 
 
         }catch(err){
