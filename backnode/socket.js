@@ -1,10 +1,9 @@
 import { Server } from 'socket.io';
 import { createServer } from 'http';
-import dotenv from 'dotenv';
 import User from './src/model/Userprofile.js';
 import Post from './src/model/Post.js';
 import Notification from "./src/model/Notification.js";
-
+import dotenv from 'dotenv';
 
 
 dotenv.config();
