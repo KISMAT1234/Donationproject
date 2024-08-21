@@ -4,7 +4,7 @@ function sanitizeHtmlInput(req, res, next) {
     if (req.body && typeof req.body === 'object') {
       try {
         // Helper function to sanitize a value
-        console.log(req.body,'this value is not sanitized')
+        // console.log(req.body,'this value is not sanitized')
         const sanitizeValue = (value) => {
           if (typeof value === 'string') {
             return sanitizeHtml(value, {
