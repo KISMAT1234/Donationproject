@@ -126,12 +126,13 @@ const responseGoogle = async (authResult) => {
     if(authResult['code']){
       console.log('came inside auth')
       const result = await googleAuth(authResult['code']);
-      console.log(result,'result')
+      // console.log(result,'result')
       if(result.data.success === false){
         alert('Already login')
+      }else{
+      localStorage.setItem('user',result.data.data.token)
+      window.location.href="/Mainpage";
       }
-      console.log(result, result.data.user)
-      const {email,name, image} = result.data.user
     }
   }catch(error){
     console.log(error,'error in client side')
