@@ -145,10 +145,6 @@ const googleLogin = useGoogleLogin({
   flow:'auth-code'
 })
 
-// const googleLogin = () => {
-//   window.open("http://localhost:6005/auth/google/callback","_self")
-// }
-
 
 
   return (
