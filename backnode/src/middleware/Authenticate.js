@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import Handler from "../logger/ResponseHandler.js"
+const responseInstance = new Handler();
 
 dotenv.config()
 
@@ -15,11 +17,10 @@ const authenticate = async (req,res,next) => {
   if(token){
     let tokenCheck = await jwt.verify(token, 
         process.env.JWT_SECRET,
-        
     function (err, decode) {
         if (err) {
           console.log("not verified");
-          return res.status(500).json(err);
+          return responseInstance.responseHandler(res,400,'You are not verified')
         }
         // console.log(decode, 'decode info')
         let {id, role} = decode
@@ -33,7 +34,10 @@ const authenticate = async (req,res,next) => {
         )
   }
 }catch(err){
-    console.log(err)
+    // console.log(err)
+    return responseInstance.responseHandler(res,500,'Server Error')
+
+    
 }  
 
 }
