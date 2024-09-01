@@ -63,10 +63,12 @@ const App = () => {
 
   const onFinish = async(values) => {
     console.log(values,'console value')
-    // if (!imageFile) {
-    //   message.error('Please upload an image');
-    //   return;
-    // }
+
+
+    if (!imageFile) {
+      message.error('Please upload an image');
+      return;
+    }
     // const values =  form.validateFields(); 
 
 
@@ -74,26 +76,28 @@ const App = () => {
       username: values.username,
       email: values.email,
       password: values.password,
-      // image: values.image
+      image: values.image
     };
     console.log(formData,'formdsdta')
 
-    try {
-      const { data } = await signup({
-        variables: { formData },
-      });
-      console.log('User created:', data);
-    } catch (error) {
-      console.error('GraphQL Error:', error.message);
-      if (error.graphQLErrors) {
-        error.graphQLErrors.forEach(({ message, locations, path }) =>
-          console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
-        );
-      }
-      if (error.networkError) {
-        console.log(`[Network error]: ${error.networkError}`);
-      }
-    }
+    // try {
+    //   const { data } = await signup({
+    //     variables: { formData },
+    //   });
+    //   console.log('User created:', data);
+    // } catch (error) {
+    //   console.error('GraphQL Error:', error.message);
+    //   if (error.graphQLErrors) {
+    //     error.graphQLErrors.forEach(({ message, locations, path }) =>
+    //       console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`)
+    //     );
+    //   }
+    //   if (error.networkError) {
+    //     console.log(`[Network error]: ${error.networkError}`);
+    //   }
+    // }
+
+
     // axiosUrl.post("/user",formData).then((response)=>{
     //   console.log(response.data,'response signup')
     //   setEmailMessage(response.data.message)
@@ -109,14 +113,22 @@ const App = () => {
     // })
 };
 
-const beforeUpload = (file) => {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-  if (!isJpgOrPng) {
-    message.error('You can only upload JPG/PNG file!');
-  } else {
-    setImageFile(file);
+// const beforeUpload = (file) => {
+//   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+//   if (!isJpgOrPng) {
+//     message.error('You can only upload JPG/PNG file!');
+//   } else {
+//     setImageFile(file);
+//   }
+//   return false; // Prevent automatic upload
+// };
+
+const normFile = (e) => {
+  console.log('Upload event:', e);
+  if (Array.isArray(e)) {
+    return e;
   }
-  return false; // Prevent automatic upload
+  return e?.fileList;
 };
 
 
@@ -165,7 +177,7 @@ const googleLogin = useGoogleLogin({
       scrollToFirstError
     >
 
-<Form.Item
+      <Form.Item
         name="username"
         label="Username"
         rules={[
@@ -236,24 +248,36 @@ const googleLogin = useGoogleLogin({
         <Input.Password />
       </Form.Item>
 
-      <Form.Item name="image" label="Image">
-              <Upload
-                beforeUpload={beforeUpload}
-                maxCount={1}
-                listType="picture"
-                accept=".jpg,.jpeg,.png"
-                showUploadList={false}
-                fileList={imageFile}
-              >
-                <Button icon={<UploadOutlined />} className="bg-gray-400" >Click to upload</Button>
-              </Upload>
-        </Form.Item>
+      {/* <Form.Item name="image" label="Image">
+        <Upload
+          beforeUpload={beforeUpload}
+          maxCount={1}
+          listType="picture"
+          accept=".jpg,.jpeg,.png"
+          showUploadList={false}
+          fileList={imageFile}
+        >
+          <Button icon={<UploadOutlined />} className="bg-gray-400" >Click to upload</Button>
+        </Upload>
+      </Form.Item> */}
+
+    <Form.Item
+      name="upload"
+      label="Upload"
+      getValueFromEvent={normFile}
+    >
+      <Upload name="logo" listType="picture" maxCount={1} fileList={imageFile} accept=".jpg,.jpeg,.png">
+        <Button icon={<UploadOutlined />}>Click to upload</Button>
+      </Upload>
+    </Form.Item>
+      
 
       <Form.Item {...tailFormItemLayout}>
         <Button className="bg-violet-600"  type="primary" htmlType="submit">
           Register
         </Button>
       </Form.Item>
+
        <Link to="/login-form">
          <div className="text-center">
           <h1>
@@ -261,6 +285,7 @@ const googleLogin = useGoogleLogin({
           </h1>
          </div>
        </Link>
+
       <div>
         <h1 className="text-2xl">{emailMessage}</h1>
       </div>
